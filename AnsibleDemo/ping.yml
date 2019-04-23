@@ -1,0 +1,6 @@
+---
+ - hosts: all
+   tasks:
+    - name: connect all the nodes
+      ping:
+        data: pong

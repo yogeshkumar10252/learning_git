@@ -1,0 +1,335 @@
+# Disk Storage For Compute
+
+## Harddisk
+    * EBS
+        * No Matter what machine you create root volume is ebs
+        * Non epheremal
+    * Instance-Store
+        * Is always secondary for some machine types
+        * ephemeral
+* Is a paid service
+* free tier
+    * 30 GB hardisk is free
+
+* Harddisk by Hardware
+    * Magnetic
+    * HDD
+    * SSD
+* Harddisk by Speed
+    * IOPS
+        * 1 IOPS => 256 kib/s
+    * More IOPS more cost& speed
+
+* Volume Types in Amazon 
+    * General Purpose SSD
+    * Provisioned IOPS SSD
+    * Throughput optimized (It is cheaper with more storage and costlier than cold hdd)
+    * Cold HDD (It is cheaper with more storage)
+
+* EBS Volume can be attached to only one machine at any given point of time
+* Backup
+    * Snapshot 
+        * Full & then incremental 
+*  Can i change harddisk size/type while machine is running?
+    * No (1 year ago)
+    * yes (Elastic Volumes)
+    * When you change
+        * To reflect this it takes time
+        * if you want to see immedietly restart
+* From Snapshots =>  
+       * Create EBS Volumen
+       * Create AMI
+
+* AMI => Snapshot + Metadata
+### Network Drives (SAN, NAS)
+
+* EFS 
+    * Works with linux
+    * Not directly with windows
+    * EFS => Region Wise
+            => FOr every AZ a shared network storage is created 
+            => Amazon syncs the data between az
+
+### Blob Storage (Not file system)
+
+* Simple Storage Service(S3)
+   * Upload files to s3
+   * individual file size cannot be greater that 4TB
+   * Usecases
+        * Streaming
+        * Alternative to FTP
+        * Backup & Archival Solutions
+    * Cost is two fodler
+        * Cost for storage
+        * access costs
+    * AWS has storage classes
+        * Standard
+        * infrequenct access
+        * reduced redundancy
+        * Glacier (archival)
+    * S3 Lifecycle Transition
+            30 => Standard
+            30-60 => IA
+            60-90 => archive
+            120=> expire/delete
+    * S3 Versioning
+        * Enable Versioning
+        * Suspending Versioning
+
+
+
+AWS Storage Note 17 May 2019 NO Practice
+
+## Storage in AWS
+# Non Cloud Storage
+ * Harddisk's
+ * Network Storage/Storage Area Networks
+ * FTP
+Cloud Storages
+* Blob Storage:
+  * Storage over https
+     usecases:
+      * Replaces FTP
+      * Media (video/audio)
+      * Document Storage (Versioning)
+      * Backup & Archival
+AWS Specific:
+ * Simple Storage Service (S3)
+Cost
+ * Storage
+ * Transfer
+
+Harddisk
+Terms that decide:
+  Type:
+   * SSD
+   * HDD
+   * Magnetic
+Size
+Speed
+AWS Specifics:
+  Two kinds of Harddisk by thier placement
+   * instance storage
+   * EBS (Elastic Block Storage)
+Type of Hardisk by hardware
+ * Magnetic
+ * HDD
+ * SSD
+Speed: IOPS
+Size:
+Cost:
+  * Size, Speed & Type
+Network Disk
+
+  * Storage on Network
+     * Elastic File Storage
+Database (Special Treatment internally a harddisk)
+
+Backup & Restore Data from various kinds of storage
+
+Terms of intrest: 
+  * GiBi Byte, Mibi Byte (*bi)
+
+Size:
+
+1 MB = 1024 kB
+Size measured in
+
+1 Killo = 1000
+1 Kibi = 1024
+Speed of Storage:
+
+IOPS = IO per second
+
+
+
+
+
+AWS  Elastic Volume storage Note 18 May 2019
+
+Qns: can you increse the size of instance volume.
+ans: yes
+     how: 
+         create the volume in same availability zone and attach the volume of machine.
+login into the machine 
+format the new create volume
+create the directoty
+mount the directoty of new volume.
+
+Qns: how the increse the size of existing volume.
+ans: i can increse the size of root volume and secondary volume. in this case modify the size of existing volume.
+
+Qns: how to increse the size the instance from diff. region and diff . availability zone.
+ans: in this case we first create the snapshot then increase the size of instance volume(root , secondary)
+   
+
+
+
+google: EBS volume types
+         read the docs.
+
+1 IOPS =>  256/ks
+Type Of EBS:
+in general purpose you donot determine the size of EBS . it determine by the amazon itself
+in provisioning iops : is used for increase the speed .
+Throught optimized
+cold optimized
+
+
+
+snapshot is less cost storage than harddisk
+what is snapshot:
+ shapshot is the backup/restore the harddisks
+Type of snapshot:
+1.Full Backup:
+            Take the first time snapshot is called the Full backup
+2. incremental Backup:
+                    Take the snapshot after first snapshot is called the incremental shapshot.
+
+Qns:
+   can  i delete the snapshot:
+Ans: yes
+   * if delete the latest or shapshot the data will be losted
+   * but delete the older shapshot data is not lost because data is copied in the latest shanshot.
+
+
+Instance Storage:
+               instance storage in aws depends of instance type.
+
+Harddisk connect only one machine at the same time.
+
+But Sometime One Harddisk connect more virtual machine.
+  this is possibe with the help of NAS/SAN  in EFS (Elastic file storage)
+
+
+
+
+AWS  Elastic Volume storage Practice 18 May 2019
+
+create a ec2 machine
+login into machine
+sudo df -h
+Note: how to add the volume in existing instance
+ the volume create of same availability zone
+attatch the volume
+      select linux id 
+                     ok
+google: attatch ebs volume in existing instance.
+again:
+     login into machine
+      sudo df -h
+sudo lslbk
+sudo df -h
+Format the new volume 
+sudo mkfs -t ex4 /dev/xvdf
+sudo mkdir /extraspace
+mount /dev/xvdf /extraspace
+sudo df -h
+
+********************************************
+
+Create a window machine.
+create a volume in same availability 
+attach the volume:
+              instance id ......
+                            ok
+login into windows machine
+right click on computer and click on device manager
+=> disk managenet
+ Right click on Disk 1 
+                     right click online
+ again right click on disk 1
+                      click on initialize disk
+                                          ok
+right click on unallocated
+                  create a new volume
+                       next  ..
+goto the computer and see the drive.
+
+****************************************
+
+How can increase the size of secondary volume.
+goto the vloume
+click on action:
+              modify the volume
+                put the size
+                      ok
+
+test the size increae or not:
+Login into linux machine
+sudo df -h
+sudo reboot
+login again into the ec2 machine
+sudo lsblk
+mountmount /dev/xvdf /extraspace
+sudo df -h
+
+***************************
+
+
+goto the vloume
+click on action:
+              modify the volume
+                put the size
+                      ok
+
+
+login into the window machine
+right click on computer
+disk manager
+ disk management
+right click on allocated disk 
+format the disk
+right click again and click on shrink vloume.
+********************************
+
+AWS Blob simple storage service 20 May 2019
+Binary Large Object (Blob) storage
+AWS has service for Blob which is Simple Storage Service(S3)
+S3 is not file system
+S3 can store files. Unlimited files.
+Max limit of size per file is 5TB
+Use-Cases
+Document Management
+
+Versions:
+Versioing is supported by S3
+Authorization & Authentication:
+Authentication: By default AWS gives only IAM based Authentication
+Authorization: S3 supports only IAM Policy based Authorization
+Media:
+
+Videos: Supported
+Streaming: S3 can do this. Better integrated S3 with AWS Media Services (Cloudfront)
+Backup & Archival:
+
+Backup in Cloud
+Archival in Cloud
+Log's:
+
+Export all of application/system logs to S3
+Cost of S3
+Storage
+uploads/downlods (Accessing data)
+Building Blocks of S3
+Bucket:
+Logical container that holds group of files(objects) & folders
+Bucket is located in Region
+You decide configurations
+Storage Classes
+Versioning
+Lifecycle
+Public/Private
+Host static websites (html & javascript)
+Bucket name has to be unique accross accounts
+Storage Class:
+Defines usage by cost , replications
+S3 Standard
+S3 Intelligent tiering
+S3-IA
+S3-One Zone
+S3 Policy:
+
+
+
+

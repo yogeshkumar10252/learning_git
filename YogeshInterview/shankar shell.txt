@@ -1,0 +1,707 @@
+Operator:
+1. Arithemetic:
+   + , - , / * %
+
+2. Relational 
+    1. Numeric:
+        -lt , le , gt ,ge , eq , nq
+    2. String Comparision Operator:
+        < > ! =
+3. Assignment:
+    =
+
+4. Logical Operator:
+    -a (and) -O (or) !(logical not)
+
+
+File test Command:
+-f : true , if file is regular file
+-d : true , if file is directory. 
+-l : true , if file is link file
+-b : true , if file is block
+-d : true , if file is directory-
+-e : true , if file is exit
+-s : true , if file is not empty
+-x : file have a execute permission
+-r : file have a read permission
+-w " file have  a write permission
+
+
+String test command:
+ -z true: if string is empty
+ -n  true: string is not empty 
+
+adduser script:
+
+i=1
+while [ $i -eq 10 ]
+ do
+  useradd yogesh$i
+i=`expr $i+1`
+done
+
+  
+
+
+for i in $*
+ do
+  useradd $i
+done
+
+sh <scrppt name> here pass the argumensts
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  control statements
+  
+
+  if [ condition ]
+   then
+    ------------
+--------------------
+  else
+  -----------
+-==========
+fi
+
+
+2)
+
+if control commands
+then
+-------------
+-------------------
+ 
+else
+-----------------
+----------------------
+fi
+
+
+3)
+
+if-elif
+
+if [ condition ]
+then
+----------------
+-------------------
+elif [ condition 1]
+------------------
+
+elif [ condition 2]
+
+elif [ condition n]
+
+---------------
+------------------
+
+else
+------------------
+----------------------
+
+fi
+
+4)Nested if-else
+
+if [ condition ]
+ then
+-------------
+--------------
+if [ condition ]
+then
+---------------
+------------------
+
+if [ condition ]
+then 
+--------------
+--------------
+
+else
+---------------
+---------------
+fi
+
+else
+-----------------
+--------------------
+fi
+
+else
+---------------
+----------------fi
+
+
+Multiple choice:
+-----------------
+case variable in
+
+pattern 1)
+------------------
+-------------------------
+;;
+
+
+pattern 2)
+-------------------
+-------------------
+;;
+
+pattern n)
+---------------------
+--------------------
+
+;;
+
+* ) 
+-----------------------
+------------------------
+
+esac
+
+
+loop:
+-----------
+
+   i=1
+while [ condition ]
+  do
+    ----------------
+-----------------------
+  done
+ 
+
+
+
+for i in variable name
+  do 
+  --------------
+-------------------
+
+ done
+
+
+until loop:
+---------------
+
+until [ condition ]
+ do 
+   -------------------
+--------------------------
+  done
+
+
+
+
+write a script to accept a two integer number from  the keyword and display it
+vi interger.sh
+
+echo -n "enter the first number"
+read a
+echo -n "enter the second number"
+read b
+
+echo "the value of first number": $a
+echo "the value of second number is": $b
+
+
+
+write a script accept a string and find thg length of string
+
+echo -n "enter the string": 
+ read s
+echo -n l=`echo $s| wc -c`
+echo "the lengg of given string is" : $l
+
+
+
+Write a script  to open a file:
+
+echo -n "enter the file name":
+read f
+cat $f
+
+
+
+
+WAS accapt a file name and delete the empty line from the file name.
+
+echo -n "enter the file ":
+read fn
+
+grep -v "^$" $fn > temp
+mv temp $fn
+
+echo -n "the empty line is delete from the given file"
+
+
+
+WAS accept a file and delete the duplicate lines
+
+echo -n "enter the file name"
+read fn
+   
+ sort $fn | uniq -u > temp
+ mv temp $fn
+echo -n "$fn file duplicate line are deleted."
+
+
+
+WAS accept a 3 digit number and find the sum of 3 digit number.
+
+echo -n "enter the 3 digit number"
+read n
+ a=`echo $n | cut -c 1`
+ b=`echo $n | cut -c 2`
+ c=`echo $n | cut -c 3`
+
+sum= `expr $a + $b + $c `
+echo "the sum of three digit number is": $sum  
+
+
+
+
+WAS accept a empno, empname, salary and calculate bonus based on the following condition 20 % annual salary
+
+echo -n "enter the emp name":
+read ename
+
+echo -n "enter the empno.":
+read empno
+
+echo -n "enter the emp salary"
+read empsalary
+
+ann_salary=`expr $empsalary \* 12
+
+bonus=`expr $ann_salary \* 20 /100 `
+
+echo "the name of emp is": $ename
+echo " the emp no. is": $empno
+
+echo "the emp annual salary is": $ann_salary
+echo "the emp bonus is ": $bonus
+
+
+
+write a script accept a integet number and check given number is positive or nagative.
+
+echo -n "enter the number ": 
+read n
+if [$n -ge 0 ]
+then
+ echo "number is positive $n"
+ else
+  echo "number is nagative: $n"
+  fi
+
+
+
+
+write a script accept a integer number and check given number even or odd.
+
+vi even.sh
+ echo -n  "enter the number "
+read n
+if [ `expr $n %2` -eq 0]
+then 
+  echo "number is a even"
+else
+  echo "the number is a odd"
+ fi
+
+
+write a srcipt accept a number and check given number three digit or not.
+vi 3_digit.sh
+
+echo -n "enter the 3 digit number"
+read n
+
+if [ $n -ge 100 -a $n -le 999 ]
+ then
+  echo "number is three digit number"
+ else
+  echo "number is not a 3 digit number"
+  fi
+
+
+write a script accept a username(yogesh) and password (krishna) and check given user name and password valid or not
+
+echo -n "enter the user name"
+read u
+
+echo -n "enter the user password":
+read p
+
+if [$u = yogesh -a $p = krishna ]
+ then
+  echo "user is valid"
+
+ else
+  echo "user is in valid"
+ fi
+
+
+
+write a script file name and delete the file name.
+
+vi delete.sh
+echo -n "enter the file"
+read fn
+
+if rm $fn
+then 
+echo "file is deleted "
+else
+echo "file is not deleted"
+fi
+
+
+write a script accept a  user and check givin user exit or in the server or not
+vi user.sh
+echo -n "enter the user"
+read u
+if grep $u /etc/passwd
+then
+  echo "user is exit"
+else
+echo "user does not exit"
+fi
+
+
+write a script to accept a user and check given user logged or not into the server
+
+vi user2.sh
+echo -n "enter the user name"
+read u
+if gerp $u /etc/passwd 
+ then
+    if whoami | gerp yogesh
+     then 
+      echo "user is logged"
+     else
+      echo "user is not logged"
+     fi
+else
+ echo "user is not present into the server"
+ fi
+
+
+write a script accept a file and check the given file is a regular file or directory.
+vi file.sh
+echo -n "enter the file name"
+read fn
+if [-f $fn ]
+ then
+   echo "file is a regular file"
+  elif [-d $fn ]
+    then
+      echo "file is directory"
+    else
+     echo "file is not a directory"
+     fi
+
+else
+  echo "file is not a regular file"
+ fi
+
+
+
+
+
+
+
+write a script to accept a file and open the file.
+vi file2.sh
+
+echo -n "enter the file name"
+read n
+if [-e $fn ]
+ then
+   echo "file is exit"
+ if [ -f $fn ]
+  then
+    echo "file is regular file"
+   if [-r $fn ]
+    then
+      echo "file have a read permission"
+  cat $fn
+else
+ echo "file does not have a read permission"
+  fi
+
+else
+ echo "file does not a regular file"
+  fi
+ else
+  echo " file does not exit in the server"
+  fi
+
+
+
+write a script accept a  file and check the given file is empty or not
+
+vi emptyfile.sh
+echo -n "enter the file name"
+  read fn
+if [-s $fn ]
+ then
+   echo "file is not empty"
+  else
+   echo " file is empty"
+  fi
+
+
+
+write a script accept a file and check given file is executable or not
+
+vi fileexecutable.sh
+echo -n "enter the file name"
+read fn
+ if [-e $fn -a -x $fn ]
+   then
+    echo "file have a executable permission"
+   else
+    echo "file does not have a executable permission"
+    fi
+
+
+
+write a script accept two file and check file same or not.
+vi filesame.sh
+
+echo -n "enter the fisrt file name" "
+read fn
+
+echo -n "enter the second file":
+read fn
+
+a= `cmp fn1 fn2`
+if [ -z $a ]
+ then
+    echo "file is same"
+  else
+     echo "file are not same"
+   fi
+
+
+
+
+case example
+----------------
+
+vi case.sh
+echo -n "enter the value ":
+read n
+
+case var in $n
+echo "one" ;;
+echo "two" ;;
+echo "three" ;;
+echo "invalid number";;
+esac
+
+
+
+write a script accept a single character and check the given character is alphabet or digit or special character
+vi case2.sh
+echo -n "enter the character":
+read c
+case $ch in
+ [0-9] echo "Digit";;
+ [a-zA-Z] echo "alphabit"
+ [^a-zA-Z 0-9] echo "special character";;
+esac
+
+
+
+
+write a script to print the number from 1 to 10
+vi while.sh
+i=1
+while [ $i -eq 10 ]
+ do
+  echo $i
+  i= expr $i+1'
+done
+
+
+Write a script accept a string and find the reverse of given of  string.
+echo -n "enter the string":
+read fn
+
+l=`expr $fn | rev`
+echo "the reverse string is": $l
+
+
+
+infinite loop:
+------------------
+while true
+ do
+  echo "enter the file name"
+   read fn
+    if [-e $fn -a -f $fn ]
+     then
+       cat $fn
+         break
+else
+ sleep 2
+ continue
+fi
+done
+
+
+
+write a script to print number from one to 5
+for i in 1 2 3 4 5
+ do
+   echo $i
+done
+
+
+write a script print number from one to 20
+for in in {1..20}
+ do
+  echo $i
+done
+
+
+example of for loop:
+
+a=10
+b=20
+c=30
+
+for i in a b c
+ do 
+  echo $i
+done
+
+result: a
+        b
+        c
+
+a=10
+b=20
+c=30
+
+for i in $a $b $c
+ do 
+  echo $i
+done
+
+result: 10
+        20
+        30
+
+
+write a script to display a subdirectory of current directory.
+vi directory.sh
+ for  i in in *
+  do 
+   if [ -d $i ]
+     then
+       echo $i
+  else
+   ----
+ fi
+
+
+
+write a script to display details of employee who are receiving salary more than 5000 from emp file
+
+file:
+ 101, hari,9000,10
+ 102, sai, 8000,30
+ 103,siva,6000,20
+ 104,lakshmi,8000,10
+ 105,latha,3000,10
+
+for i in `cat emp`
+ do
+   j=`echo $i | cut -d "," -f 3
+   if   [$j -eq 5000 ]
+    then
+     echo "$i"
+     fi
+done
+
+
+
+
+Commndline arguments:
+----------------------
+at the time of execution of shell scripting we pass the arguments . these arguments are called the command line arguments.
+in shell scripting we have a special variable. for hold the these argumensts.
+the specail variable or system define variable.
+$0 : it hold the name of shell scripting
+$1 : it hold the first argumensts
+$2: : it hold the second argumenyts
+----
+
+
+
+
+----
+${10} : it hold the 10 arguments.
+$# it count how many argumenyt are passed
+$* it hold the all the arguments
+$@ : it hold all the arguments which enclosed with in the doube quotes
+$$: it hold the parent process id
+$? : it hold the last executed command status.
+
+
+write a scripts to display the given test.
+vi special.sh
+for i in $*
+ do
+  echo $i
+done
+
+
+
+write a scripts to add 2 numbers
+vi calc
+if [$# -eq 3 ]
+ then
+ l=`expr $1 + $2` 
+ echo "$c"
+else
+ echo "invalid arguments."
+fi
+
+
+
+write a scripts to accept a user and check the given user connected to the serv er or not
+
+if [$# -eq 1 ]
+ then
+ if who | grep -w "$1"
+  then
+   echo "user is logged"
+  else 
+    echo "user is not logged"
+fi
+else
+ echo "invalid arguments"
+fi
+
+

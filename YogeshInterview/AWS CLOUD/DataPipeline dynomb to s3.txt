@@ -1,0 +1,66 @@
+Need of data pipeline
+what is data pipeline 
+aws data pipeline components
+
+demo on Aws data pipeline
+
+
+Need Of Data pipeline
+
+What is datapipeline:
+AWS Data Pipeline is a web service that you can use to automate the movement and transformation of data. With AWS Data Pipeline,
+its a set of data processing elements connected in series, where the output of one element is the input of the next one.
+
+AWS Data Pipeline works with the following services to store data.
+Amazon DynamoDB
+Amazon RDS 
+Amazon s3
+Amazon Redshift
+Amazon EMR
+
+
+Practice:
+step: goto dynomodb  service and create a table and insert the data into the table.
+step: goto the  s3 bucket and create table.
+      goto the datapipe service
+       name :
+       source: 
+            export the dynamoDb to s3
+       source : 
+            of dynamb table name: ....
+       outPut s3 bucket:
+                  select the folder and select the s3 bucket
+        select the region: ---
+
+         Run: datapipelime
+     source: dsibled
+     iam: default
+   create the datapipeline:
+
+
+Activity:
+ Name: TestbackupActivity
+Type: EmrActivity
+Output: s3bucket
+Input: DDservice
+
+
+Other:
+default: 1
+Name: Success
+Type: Sns/Alarm
+     here goto the datapipe and copy the url of datapipelime and paste here
+IaM role: default
+
+
+
+default: 2
+Name: Failure
+Type: Sns/Alarm
+     here goto the datapipe and copy the url of datapipelime and paste here
+IaM role: default
+
+create:
+
+goto the s3 bucket and check it 
+or download the table from s3 bucket and check this table present in dynomdb .

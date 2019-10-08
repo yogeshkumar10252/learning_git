@@ -1,0 +1,185 @@
+echo "create the public key with the help of":
+ssh-keygen
+echo "now copy the public key from master to the server"
+for i in `cat serverip.sh`
+do
+  echo $i
+  ssh-copy-id -i ~ /.ssh/id_rsa.pub root@$i
+done
+
+vi serverip.sh
+172.31.29.85
+
+
+
+vi install.java 
+clear
+echo "install the java 8"
+sudo apt-get update
+sudo apt install openjdk-8-jdk -y
+java -version
+sudo apt update
+sudo vi /etc/environment
+JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/bin/" 
+:wq
+source /etc/environment
+echo $JAVA_HOME
+
+sudo apt-get install apache2 -y
+sudo apt-get update
+
+
+
+vi lampstak
+sudo apt-get update
+sudo apt install apache2 -y
+echo ""
+echo "Now check the status of apache2"
+sudo systemctl status apache2
+
+echo ""
+echo "install the php package"
+sudo apt install php libapache2-mod-php php-mysql -y
+
+echo "now copy the php page "
+sudo vi /var/www/html/info.php
+  <?php
+  phpinfo();
+  ?>
+:wq
+echo "again restart the apache2 service"
+sudo systemctl restart apache2
+
+
+
+Vi Backup.sh
+clear
+echo "i want to wast is the size of /etc"
+du -sh /etc
+echo "\n"
+
+echo "now take the backup from /etc/ file syetem"
+tar -cvzf /opt/file.tar.gz /etc
+if [ $? -eq 0 ]
+then
+  echo "back up is successful"
+else
+  echo "backup is failed"
+fi
+
+echo ""
+echo "now i  want to read the backup"
+du -sh /opt/file.tar.gz
+
+echo "restore the Backup"
+tar -xvzf /opt/file.tar.gz -C /yogesh
+if [ $? -eq 0 ]
+then
+        echo "Restore is succesfull yogesh"
+else
+        echo "restore is failed"
+fi
+
+
+VI Copy the Backup another server
+Vi Backup.sh
+clear
+echo "i want to wast is the size of /etc"
+du -sh /etc
+echo "\n"
+
+echo "now take the backup from /etc/ file syetem"
+tar -cvzf /opt/file.tar.gz /etc
+if [ $? -eq 0 ]
+then
+  echo "back up is successful"
+else
+  echo "backup is failed"
+fi
+
+echo ""
+echo "now i  want to read the backup"
+du -sh /opt/file.tar.gz
+
+echo "restore the Backup"
+tar -xvzf /opt/file.tar.gz -C /yogesh
+if [ $? -eq 0 ]
+then
+        echo "Restore is succesfull yogesh"
+else
+        echo "restore is failed"
+fi
+
+echo "copying the backup another server"
+ssh-keygen
+ssh-copy-id root@<ip>
+scp -rv /yogesh root@172.31.29.85:/opt
+if [ $? -eq 0 ]
+then 
+   echo "copying is successful"
+else
+  echo "copying is failed"
+fi
+
+
+shell scripting install the docker
+
+#!/bin/bash
+sudo apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+sudo apt-get update
+sudo apt-get install -y docker-ce
+sudo docker run hello-world
+# Linux post-install
+sudo groupadd docker
+sudo usermod -aG docker $USER
+sudo systemctl enable docker
+
+
+
+## From alpine
+   Run apk update
+   Run apk add python -y
+   ENTRYPOINT ["echo","yogesh"]
+   CMD ["echo", "radhe"]
+   
+mkdir yogesh
+cd yogesh
+vi dockerfile.sh
+From alpine
+   Run apk update
+   Run apk add python -y
+   ENTRYPOINT ["echo","yogesh"]
+   CMD ["echo", "radhe"]
+:wq
+
+
+
+
+vi dockerfile.sh
+
+echo "now check the docker command with the help of docker help"
+docker --help
+docker image ls
+
+echo "now create the container "
+echo ""
+
+docker container run -d -p 80:80 game:1.0
+docker container run -d -p 8080:8080 tomcat:8
+
+docker container ls
+
+movies flix.cc
+
+
+

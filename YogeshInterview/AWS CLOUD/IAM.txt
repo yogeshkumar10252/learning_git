@@ -1,0 +1,295 @@
+ 15/04/2019 notes
+https://aws.amazon.com/iam/faqs/
+
+
+
+
+what is IAM:
+           AWS Identity and Access Management (IAM) enables you to manage  and the access  AWS services and resources securely way. 
+           Using IAM, you can create and manage AWS users and groups, 
+           and use permissions to allow and deny their access to AWS resources. 
+
+
+What is user:
+          An AWS Identity and Access Management (IAM) user is an entity that you create in AWS to represent the person or application that uses it to interact with AWS.
+          A user in AWS consists of a name and credentials.An IAM user with administrator permissions is not the same thing as the AWS account 
+          root user. For more information about the root user, see The AWS Account Root User.
+
+
+What is Role:
+         An IAM role is an IAM identity that you can create in your account that has specific permissions. An IAM role is similar to an IAM user.
+         A role is service which provide the service to other services in aws account.
+      
+       Ex: BackUpRole: this role provide the service to another service (backup)  to take the back of any resource in aws. 
+
+           Roles can be used by the following:
+            An IAM user in the same AWS account as the role
+            An IAM user in a different AWS account than the role
+
+
+
+What is Policy:
+           aws policy everything is a resource and each resource is identify by ARM(Amazon resource name).
+            ex: you create a ec2 machine it will be ARM
+                create a s3 it will be ARM
+                general: you create any thing i aws its will be ARM.
+
+
+
+
+
+
+
+Aws IAM(Identify & access management):
+
+*user
+    * giving access to access person /or non aws resource.
+*Role
+    * giving access to aws resources.
+*policy
+   * Resource(ARN)
+   * Effect = Allow/Deny
+   * Action:
+* Group
+     * set of users
+     * set of policy.
+
+
+
+in aws policy everything is a resource and each resource is identify by ARM(Amazon resource name).
+ex: you create a ec2 machine it will be ARM
+    tou create a s3 it will be ARM
+general: you create any thing i aws its will be ARM.
+
+
+note: you have a resource do you want access to it .or do not want to access to it.
+     access /deny comes under the effect.
+
+
+Action: you have a resource its have multiple action.
+ex: you have a ec2 machine. the ec2 machine have multiple action.like stop,start and terminate.
+
+user:
+   the user is a not aws resource.or non aws entity. the user will get access or will not get the access depends on policy.
+   
+definition: the user is non aws entity and user something want to access the aws resource and user have the policy.
+
+Roles:
+   Giving the access the aws resource.
+  ex: you create a ec2 machine and use it and want to stop another. ec2 machine use the role.
+
+note: The user is a non aws resource entity ans role is a aws resource entity.
+   
+Policy:
+  * it can be define as json file
+  * it can be define as you use aws console.
+
+but  aws understand the json
+if you writing the policy you the json format.
+
+
+qns: the user have a policy with allow everything.
+     and this user add the group with deny everything . what happend.
+  ans: deny everything
+
+qns: group have allow everything and user have deny everythin and this user add to the group the what heppend.
+ans:deny is always winner.
+
+because deny have the higer priority.
+
+
+
+
+***********************************************************************
+
+
+
+
+
+ AWS IAM PRCTICE 15/04/2019
+
+Create a user.
+
+goto the aws console.
+  service: IAM
+  user name: tester(for non aws entity)
+   programtic access. (no need user name and passwd)
+   Aws Management access:(need user name passwd)
+   custom password
+    *******
+    permission
+    attach existing policy (any policy see aws icon is called the aws resource)
+     search
+      Ec2
+  this ec2 have read only access.  and i give the read only access.
+  next tag.
+  create user.
+copy the link and paste in the url.
+
+ IAM user name: tester
+  password: -----
+
+
+goto the service.
+create the ec2 machine. 
+
+goto the service s3
+but its show the error because user have only ec2  policy.
+
+note: what user can do and what user can not do depends on what policy assign to the user.
+
+Roles:
+ goto the roles
+  create a roles.
+role: testerrole
+note: role is a permission which can give the any aws resource.
+ex: i can give the access the ec2 machine
+   search: ec2 read only access
+    nest
+   create role.
+  .
+  goto the service:
+   ec2 machine
+   i give the name of role:
+
+note: role is givin to existing service. 
+note:
+  if you make the any user administractor it means it can access all the aws service.
+
+policy:
+  click on administractor access.
+
+goto another policy:
+ ec2 read only
+ see the policy:
+
+
+google: IAM action ec2
+        action defined by amazon ec2.
+
+what is action: the action is the activity. each action denote doing something for aws.
+ ex: associate route table to the subnet.
+  action : deny
+then user not access the subnet.
+
+
+Assignment:
+  * Two policy
+     * network Engineer
+              google: IAM ec2 action.
+              action defined by ec2.
+     
+ * system administraction.
+ * Database Administractor
+ * Storage Administractor.
+ all are the custom policy.
+
+
+
+
+
+WS 16/04/2019 PRACTICE IAM POLICY:
+
+note: Every service have a resouce and every resource have action.
+
+step: Login into aws
+  IAM
+ Policy
+ create policy
+  Service:
+    choose: Ec2
+Actions:
+     list
+      Read []
+      write
+Resource: all
+Request condition: 
+   review policy
+  policy name: ec22reader
+               create policy.
+ now i give the this policy to the user.
+  user
+  add permission
+  add existing policy
+  serch: ec2reader
+   nest review
+    next permission.
+    
+create another policy
+ create policy
+  select service:
+   ec2
+  write
+ security group select all security group.
+ resource :all
+ policy name: managesecurity group
+  create policy
+  goto the user:
+   addpermission
+attatch existing policy.
+search managesecurity group
+ review
+  addpermission:
+now user have permission for cerate the security group and ec2 machine.
+
+goto the deshboard and copy the link and paste the new tab browser.
+and create the ec2 machine and security group.
+
+ 
+here selection make the action .action is the activity.
+
+
+********************************************************************
+
+Conditional: actions:
+
+ex: i give the permission to user to cerate or delete the security group 
+   in ohai and orgen region not other region .how.
+
+note:
+    in amazon create any resource is called ARM.Amazon resource Management.
+
+google:Arm for security group.
+ click on aws Security Credential in right. and see.
+
+
+fisrt thing serach the region code of ohai.
+accout-id: goto the our account and click and copy the account.
+go the region orgen and goto the security group and copy the security id.
+ region code:us-east-2
+ account-id:
+ security_group_id:
+
+copy the this format 
+and goto the policy and serch the managesg clcik json and change the resource action and paste the copy format.
+ 
+and goto the other region like N.vergina and goto the security group and delete the security and its sho the error
+ because user donot have a  permission in this region.
+
+ex: goto the orgen region and goto the security group and deletye the security group  its success because user have a  permission.
+
+********************************************************************************
+ex: goto the policy 
+    search the ec2reader 
+    add permission
+     edit json
+   resource: paste here.
+   create.
+its give error.
+
+************
+google: iam resource syntax. see the resource syntax.,
+
+
+
+
+
+
+google : iam json example.
+
+
+
+
+
+
+

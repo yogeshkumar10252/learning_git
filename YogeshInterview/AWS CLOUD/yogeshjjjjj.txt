@@ -1,0 +1,57 @@
+Roles and Responsibilites.
+
+Deploying the build in dev and QA Environment.
+
+    Q: How you are deploying the build in your environment.
+
+      Ans: 
+           In order to deploy the build in DEV environment 
+           - We run a Jenkins job, by giving branch name and GIT hash, so that it will create the AMI's in Dev account. 
+           - Then we run deployment script, to deploy the code stack on existing Infra stack.
+           - Then we wait for 30 min so that Instance will come up and Ansible will copy the public keys to all instance. 
+             So that we can able to ssh with our private key.
+           - Then we login to each instance and check all services are up or not. If not then we start it. If it is not starting
+           - Then we check logs and troubleshoot it.
+           - Then we delte the older code stack from cloud formation.
+           - And give the new ELB end points to dev team.
+
+
+ 	  - In order to deploy the Build in QA.
+	  - We run a Jenkins job to copy the AMI from dev account to QA account by giving specific GIT has in as parameter.
+          - Then we run deployment script, to deploy the code stack on existing Infra stack.
+          - Then we wait for 30 min so that Instance will come up and Ansible will copy the public keys to all instance. 
+             So that we can able to ssh with our private key.
+          - Then we login to each instance and check all services are up or not. If not then we start it. If it is not starting
+          - Then we check logs and troubleshoot it.
+          - Then we delte the older code stack from cloud formation.
+          - And give the new ELB end points to QA team.
+ 
+ 
+Deploying the build in dev and QA Environment.
+Working on AWS cloud like
+  - Creating Data pipleline jobs to take backup of DynamoDB to S3 Bucket.
+  - Creating IAM users and replicating extisting users permission to new user.
+  - Managing Shared S3 Bucket, like Bucket Policies, Life cycle rules and Access control list.
+  - Whitelisting IP address
+  - Wroking on ASG as per devlopers requiest
+Taking MySQl table dumps as per developers request to reproduce the prod issues.
+Working on containerization like writing Docker file, creating Images and publishing it to internal repository.
+Troubleshooting GIT repository permission issues.
+Working on ansible deployments, written various ansible playbooks with multiple roles, tasks with loops, templates, host variables, group variables etc. 
+Managing the services through the monit. 
+
+
+
+
+Tech Dynamix
+Address: #203 Oxford Towers HAL ???????? ????? Bangalor 560008 IN, HAL Old Airport Rd, Bengaluru, Karnataka
+Phone: 080 4216 0009
+
+
+
+
+
+
+
+
+

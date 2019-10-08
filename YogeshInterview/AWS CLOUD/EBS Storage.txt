@@ -1,0 +1,125 @@
+WS Notes Compute EC2 21May 2019
+Google: Instance type read the docs
+
+Ec2
+* Abstracted from Storage & networking
+* Processing Power & RAM (instance type)
+* AMI (Amazon machine Image)
+
+Instance Types
+ * Instance types are decided by Amazon
+ * Instance Family:
+    * Created based out of needs
+    * General Purpose:
+       *some instance families
+        * t2-series
+    * Compute Optimized
+    * Storage Optimized
+    * Memory Optimized
+    * GPU
+
+Cost Impact
+ * Cost
+   * instance type
+   * region
+   *Ec2 way of hosting
+     *on-demand
+       * Costliest Option
+           * Billing:
+           * hourly
+            * seconds
+       * Billing of Ec2:
+           * only when ec2 is running
+       *reserved
+         * Particular ec2 machine/instance type for next 1 or 3 years
+         * But billing can be reduced by 58%
+         * Payment modes:
+            * Full-payment of 3 years upfront:
+            * Partial Payment upfront
+            * pay per mont
+* spot
+    *  Gamble
+    * bid for ec2 machine
+
+Qns: increse the existing size in ec2 instance.
+
+This can be applied whenever you need to extend your EBS volume size avoiding to stop the instance and detach the volume.
+
+Cool if you need to do it on prod, right ? :)
+
+In order to extend the volume size, follow these simple steps:
+
+Login to your AWS console
+Choose “EC2” from the services list
+Click on “Volumes” under ELASTIC BLOCK STORE menu (on the left)
+Choose the volume that you want to resize, right click on “Modify Volume”
+You’ll see an option window like this one:
+Step:
+lsblk
+sudo resize2fs /dev/xvdf 
+lsblk
+
+
+
+AWS reduce volume size
+
+1.In AWS Console:
+1.Stop the instance you want to resize.
+2.Create a snapshot of the active volume and then create a "General Purpose SSD" volume from that snapshot.
+3.Create another "General Purpose SSD" volume to the size you want.
+4.Attach these 3 volumes to the instance as: ...
+5.Start the instance.
+
+
+
+or
+
+
+n AWS Console:
+
+Stop the instance you want to resize
+
+Create a snapshot of the active volume and then create a "General Purpose SSD" volume from that snapshot.
+
+Create another "General Purpose SSD" volume to the size you want.
+
+Attach these 3 volumes to the instance as:
+
+/dev/sda1 for the active volume.
+/dev/xvdf for the volume that is the target size.
+/dev/xvdg for the volume made from the snapshot of the active volume.
+Start the instance.
+
+Log onto the new instance via SSH.
+
+create these new directories:
+
+mkdir /source /target
+
+create an ext4 filesystem on new volume:
+mkfs.ext4 /dev/xvdf
+
+mount it to this directory:
+mount -t ext4 /dev/xvdf /target
+
+This is very important, the file system needs an e2label for linux to recognize it and boot it, use "e2label /dev/xvda1" on an active instance to see what it should be, in this case the label is: "/"
+e2label /dev/xvdf /
+
+mount the volume created from the snapshot:
+mount -t ext4 /dev/xvdg /source
+
+Copy the contents:
+rsync -ax /source/ /target
+
+Note: there is no "/" following "/target". Also, there may be a few errors about symlinks and attrs, but the resize was still successful
+
+Umount the file systems:
+umount /target
+umount /source
+
+Back in AWS Console: Stop the instance, and detach all the volumes.
+
+Attach the new sized volume to the instance as: "/dev/sda1"
+
+Start the instance, and it should boot up.
+         

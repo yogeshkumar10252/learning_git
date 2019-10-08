@@ -1,0 +1,23 @@
+          ##CloudTrail:
+https://www.youtube.com/watch?v=A08idgfQZDE
+
+
+The CloudTrail is service in aws which store all the activity or event. happend the your aws account.
+just like crete the user, create the ec2 instance, create the database etc.
+in cloudtrail all the activity are store in event in cloudtrail. if can export the activity into the s3 bucket.
+here you can show the activity by event.
+
+for exapmle: i want to show the activity of console. or user etc
+
+here you can create the trail to store the record of your cloud trail events. with a  trail you can create the metrics. trigger and alerts.
+
+
+Thear are two type of events
+
+1.management events:
+          iam user, rds
+          Read
+            : describe the information
+          write: run the instance
+2. Data events:
+            get the data from the s3

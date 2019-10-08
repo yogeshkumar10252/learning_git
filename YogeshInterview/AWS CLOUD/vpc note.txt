@@ -1,0 +1,196 @@
+What is Cloud Computing?
+Cloud computing is the on-demand delivery of compute power, database, storage, applications, 
+and other IT resources via the internet with pay-as-you-go pricing.
+
+DEFINITION
+cloud computing
+Cloud computing is a general term for anything that involves delivering hosted services over the Internet. 
+These services are broadly divided into three categories: Infrastructure-as-a-Service (IaaS), Platform-as-a-Service (PaaS) 
+and Software-as-a-Service (SaaS). The name cloud computing was inspired by the cloud symbol that's often used to represent the 
+Internet in flowcharts and diagrams.
+
+
+Simply put, cloud computing is the delivery of computing services—including servers, storage, databases, networking, software,
+ analytics, and intelligence—over the Internet (“the cloud”) to offer faster innovation, flexible resources, and economies of scale. 
+You typically pay only for cloud services you use, helping lower your operating costs, run your infrastructure more efficiently and scale 
+as your business needs change.
+
+
+Top benefits of cloud computing:
+Cost
+Cloud computing eliminates the capital expense of buying hardware and software and setting up and running on-site datacenters—the racks of servers,
+ the round-the-clock electricity for power and cooling, the IT experts for managing the infrastructure. It adds up fast.
+
+Speed
+Most cloud computing services are provided self service and on demand, so even vast amounts of computing resources can be provisioned in minutes, 
+typically with just a few mouse clicks, giving businesses a lot of flexibility and taking the pressure off capacity planning.
+
+Global scale
+
+The benefits of cloud computing services include the ability to scale elastically. In cloud speak, that means delivering the right amount of IT 
+resources—for example, more or less computing power, storage, bandwidth—right when it is needed and from the right geographic location.
+
+Productivity
+On-site datacenters typically require a lot of “racking and stacking”—hardware setup, software patching, and other time-consuming IT management 
+chores. Cloud computing removes the need for many of these tasks, so IT teams can spend time on achieving more important business goals.
+
+Performance
+The biggest cloud computing services run on a worldwide network of secure datacenters, which are regularly upgraded to the latest generation of fast
+ and efficient computing hardware. This offers several benefits over a single corporate datacenter, including reduced network latency for applications and greater economies of scale.
+
+Reliability
+Cloud computing makes data backup, disaster recovery and business continuity easier and less expensive because data can be mirrored at multiple 
+redundant sites on the cloud provider’s network.
+
+Security
+Many cloud providers offer a broad set of policies, technologies and controls that strengthen your security posture overall, helping protect your 
+data, apps and infrastructure from potential threats.
+
+Types of cloud computing
+Not all clouds are the same and not one type of cloud computing is right for everyone. Several different models, types and services have evolved to
+help offer the right solution for your needs.
+
+First, you need to determine the type of cloud deployment or cloud computing architecture, that your cloud services will be implemented on. 
+There are three different ways to deploy cloud services: on a public cloud, private cloud or hybrid cloud.
+
+
+Public cloud
+Public clouds are owned and operated by a third-party cloud service providers, which deliver their computing resources like servers and 
+storage over the Internet. Microsoft Azure is an example of a public cloud. With a public cloud, all hardware, software and other supporting 
+infrastructure is owned and managed by the cloud provider. You access these services and manage your account using a web browser.
+
+Private cloud
+A private cloud refers to cloud computing resources used exclusively by a single business or organisation. A private cloud can be physically located
+on the company’s on-site datacenter. Some companies also pay third-party service providers to host their private cloud. A private cloud is one in which the services and infrastructure are maintained on a private network.
+
+Hybrid cloud
+Hybrid clouds combine public and private clouds, bound together by technology that allows data and applications to be shared between them. 
+By allowing data and applications to move between private and public clouds, a hybrid cloud gives your business greater flexibility, more deployment
+options and helps optimise your existing infrastructure, security and compliance.
+
+Types of cloud services: IaaS, PaaS, serverless and SaaS
+Most cloud computing services fall into four broad categories: infrastructure as a service (IaaS), platform as a service (PaaS), serverless and 
+software as a service (SaaS). These are sometimes called the cloud computing stack because they build on top of one another. Knowing what they are 
+and how they are different makes it easier to accomplish your business goals.
+
+Infrastructure as a service (IaaS)
+The most basic category of cloud computing services. With IaaS, you rent IT infrastructure—servers and virtual machines (VMs), storage, networks, 
+operating systems—from a cloud provider on a pay-as-you-go basis
+
+Learn more about IaaS
+Platform as a service (PaaS)
+Platform as a service refers to cloud computing services that supply an on-demand environment for developing, testing, delivering and managing 
+software applications. PaaS is designed to make it easier for developers to quickly create web or mobile apps, without worrying about setting up or 
+managing the underlying infrastructure of servers, storage, network and databases needed for development.
+
+Learn more about PaaS
+Serverless computing
+Overlapping with PaaS, serverless computing focuses on building app functionality without spending time continually managing the servers and 
+infrastructure required to do so. The cloud provider handles the setup, capacity planning and server management for you. Serverless architectures 
+are highly scalable and event-driven, only using resources when a specific function or trigger occurs.
+
+Learn more about serverless computing
+Software as a service (SaaS)
+Software as a service is a method for delivering software applications over the Internet, on demand and typically on a subscription basis. 
+With SaaS, cloud providers host and manage the software application and underlying infrastructure and handle any maintenance, like software upgrades and security patching. Users connect to the application over the Internet, usually with a web browser on their phone, tablet or PC.
+
+Learn more about SaaS
+Browse a dictionary of common cloud computing terms
+Uses of cloud computing
+You are probably using cloud computing right now, even if you don’t realise it. If you use an online service to send email, edit documents, watch movies or TV, listen to music, play games or store pictures and other files, it is likely that cloud computing is making it all possible behind the scenes. The first cloud computing services are barely a decade old, but already a variety of organisations—from tiny startups to global corporations, government agencies to non-profits—are embracing the technology for all sorts of reasons.
+
+Here are a few examples of what is possible today with cloud services from a cloud provider:
+
+Create new apps and services
+Quickly build, deploy and scale applications—web, mobile and API—on any platform. Access the resources you need to help meet performance, security and compliance requirements.
+
+Test and build applications
+Reduce application development cost and time by using cloud infrastructures that can easily be scaled up or down.
+
+Store, back up and recover data
+Protect your data more cost-efficiently—and at massive scale—by transferring your data over the Internet to an offsite cloud storage system that 
+is accessible from any location and any device.
+
+Analyse data
+Unify your data across teams, divisions and locations in the cloud. Then use cloud services, such as machine learning and artificial intelligence, 
+to uncover insights for more informed decisions.
+
+Stream audio and video
+Connect with your audience anywhere, anytime, on any device with high-definition video and audio with global distribution.
+
+Embed intelligence
+Use intelligent models to help engage customers and provide valuable insights from the data captured.
+
+Deliver software on demand
+Also known as software as a service (SaaS), on-demand software lets you offer the latest software versions and updates around to customers—anytime 
+they need, anywhere they are.
+
+
+what is amazon vpc:
+Amazon Virtual Private Cloud (Amazon VPC) enables you to launch AWS resources into a virtual network that you've defined
+
+A virtual private cloud (VPC) is a virtual network dedicated to your AWS account. It is logically isolated from other virtual networks in the 
+AWS Cloud. You can launch your AWS resources, such as Amazon EC2 instances, into your VPC. You can specify an IP address range for the VPC, 
+add subnets, associate security groups, and configure route tables.
+
+
+
+what is subnet:
+A subnet is a logical partition of an IP network into multiple, smaller network segments. It is typically used to subdivide large networks into smaller, more efficient subnetworks. ... Each subnet allows its co
+connected devices to communicate with each other, and routers are used to communicate between subnets.
+
+
+what is internet Gateway:
+An Internet gateway is a network "node" that connects two different networks that use different protocols (rules) for communicating. ... 
+If you have a Wi-Fi connection at home, your Internet gateway is the modem or modem/
+router combination that your ISP provides so that you connect to the Internet through their network.
+					
+
+what is Nat-Gattway:
+NAT Gateways. You can use a network address translation (NAT) gateway to enable instances in a private subnet to connect to the internet or other 
+AWS services, but prevent the internet frosing a NAT gateway in your.
+
+
+what is router table:
+A route table contains a set of rules, called routes, that are used to determine where network traffic is directed.
+Each subnet in your VPC must be associated with a route table; the table controls the routing for the subnet.
+A subnet can only be associated with one route table at a time, but you can associate multiple subnets with the same route table.
+
+
+what is router:
+A computer network is a digital telecommunications network which allows nodes to share resources.
+A router is hardware device designed to receive, analyze and move incoming packets to another network.
+
+
+
+what is bastion host:
+A NAT (Network Address Translation) instance is, like a bastion host, an EC2 instance that lives in your public subnet. A NAT instance, however, allows your private instances outgoing connectivity 
+to the internet while at the same time blocking inbound traffic from the internet.
+
+
+what is vpc peering:
+A VPC peering connection is a networking connection between two VPCs that enables you to route traffic between them using private 
+IPv4 addresses or IPv6 addresses. Instances in either VPC can communicate with each other as if they are within the same network. 
+You can create a VPC peering connection between your own VPCs, or with a VPC in another AWS account. 
+The VPCs can be in different regions (also known as an inter-region VPC peering connection).
+
+
+
+what is the Network:
+ A network is defined as a group of two or more computer systems linked together. There are many types of computer networks, 
+including the following: local-area networks (LANs): 
+The computers are geographically close together (that is, in the same building).
+
+
+what is internet:
+The Internet is a global wide area network that connects computer systems across the world. It includes several high-bandwidth data lines 
+that comprise the Internet "backbone." These lines are connected to major Internet hubs that distributedata to other locations, 
+such as web servers and ISPs.
+
+
+
+what is Protocol:
+A protocol is a standard set of rules that allow electronic devices to communicate with each other. ... Similarly, 
+if two hardware devices support the same protocol,they can communicate with each other, regardless of the manufacturer or type of device.
+
+

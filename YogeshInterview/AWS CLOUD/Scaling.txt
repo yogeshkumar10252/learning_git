@@ -1,0 +1,174 @@
+what is auto scaling group :
+                        auto scaling group is group of ec2 machine in which you write the rules for increase or decrease the ec2 machine.
+                        generally those rules depends on  system resource. some system resource are cpu utilization ,network harddisk etc.
+
+
+Userdata: create a machine out of image some scripting runs only once is called the user data.
+
+google: shabang 
+
+#! /bin/bash
+ sudo apt-get update
+ sudo apt-get install stress -y
+
+
+# Introduction to Scaling
+
+* EC2 not meeting your needs
+   * increase ram (cpu resources) in normal world (vertical scaling)
+   * you can move to next instance size or any instance size 
+   * AWS => Scale up & Scale down (elasticity)
+   * if you have vertically scale => changing instance size/type we have to shutdown machine (means downtime)
+   * changing size has zero impact on hard disk
+   * stop instance & change instance size
+
+   * Other kind of scaling is called as horizontal scaling
+   * you dont change size but you add one/more ec2 instances
+   * Concept: Auto Scaling Group, Load balancer, Target Groups
+
+* Other Areas:
+   * Every Ec2 machine machine has an ip address 
+        * private ip address
+        * public ip address
+   * When you shutdown & start the machine 
+        * private ip doesnt change
+        * public ip changes
+        * if you dont want to change public ip (Elastic IP) => EC2
+
+    
+
+
+        A  => 
+        B (A) EIP
+
+
+
+AWS Autoscaling practice 22 May 2019
+
+Step:
+1. create a ec2 machine and install some application.
+    ex: install the lampstack
+2. create a image.
+3. click on autoscaling group. get started
+4. choose ami
+5. launch configuration
+                    name: ..
+   userdata:
+        #!/bin/bash
+      sudo apt-get update
+      sudo apt-get install stress -y
+6. select the security group and open the 22 and 80 port.
+7. select the key pair.
+8 ok
+9. create the Auto scaling group.
+   * give the name of auto scaling group.
+     select the network. choose default
+     select subnet.
+     click on advance option. no edit
+10. Configure scaling ploicies.
+      * use scaling ploicies to adjust the capicity of the group.
+       scale b/w 1 to .. i choose 4
+Increse Group Size.
+ create the alarm
+  whenever
+   is >= 65    of cpu utilization
+
+ Name of Alarm.....
+  create a larm
+Take the action.   1 instance.
+
+
+Decrese the 
+ create the Alarm
+ Whenever  :
+ is <= 50
+For at least:
+1    5 minute.
+name of the alarm:... ex.
+create alarm
+
+Tale the action:
+   remove 1
+
+11. configure notification.
+12. configure tag.
+   .review
+13 . click on view of auto scaling group.
+14 . scroll down and click on ec2 machine.
+15. copy the public ip and paste into the url:
+    http://<public ip>/info.php
+16. login into ec2 machine
+17 create the load balancer
+    choose classic load balancer
+                 
+17. goto the auto scalingscaling group
+              edit
+choose the load balancer name
+                save
+18. copy the dns name paste into the url
+19. login into ec2 machine 
+     run following command:
+    sudo apt-get install stress -y
+    stress --version
+   stress --help
+   copy the example  and run 
+
+20. after some time machine automatically increse.
+21. after increase the machine delete the machine , delete the load balancer and delete the autoscaling group. and delete the shanpshot and ami.
+
+
+
+
+******************************************************
+
+Create a target group:
+                  name:
+                my target is : instance
+
+goto the autoscaling group:
+click on ami and follow the step
+configure auto scaling group:
+                     name: ..
+configure scaling policies:
+
+Configure notification
+no change
+configure tag:
+     name:
+Review:
+view autoscaling 
+
+goto the load balancer
+select the http and create
+  name: ...myalb
+  scheme: internet-facing
+Configure security setting
+ select all
+
+configure security group
+ select group:
+
+configure Routing
+Target group: New Target group
+  name: mytg
+  Target type: instance
+  protocol http
+
+Health check:
+          /info.php
+
+Advance health check:
+  change time out: 6
+
+Register Target:
+         next
+Review:
+    create:
+     close
+
+goto the autoscaling group:
+            edit
+            select my target group: ...
+
+goto the  load balancer and copy the dns name paste the url.
+

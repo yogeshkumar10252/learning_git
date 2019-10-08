@@ -1,0 +1,533 @@
+AWS 20/04/2019 Notes.
+ Migrate
+
+All migration under the following condition.
+
+application migration
+data migration
+
+all company follw the 6R 's technique.
+
+google: 6R's migration.
+    Read the documentaion.
+
+1. Rehost:
+        The rehost is the technique do not change the application.
+ ex: appliaction running in your office and same application running in cloud.
+    is called the Rehost. rehost is lift and shift.
+
+2.Replatform:
+          your application do not directly move to the cloud because it have the some changes.
+ex: your orgnization use the mysql 4 and you desided into cloud which have mysql 4 .
+   then first migrate the mysql4 to mysql5 . it means it have some minor change .then move to the cloud.
+  note: tinker make some changes.
+
+3. Repurpose:
+           Repurpose specially used in third party software
+
+
+4. Refactor /Re-architect:
+
+
+
+5. Retire:
+        this identify this software is useless.
+
+6. Retain:
+
+
+note: Rehost is complete the automatically but remaining 5 are automatic and manually.
+ 
+
+Data Migration:
+       ex: some data in your office and want to migrate info cloud. what consider first migrate the data.
+
+1. identify the size of data.
+google: data upload time calculator.
+ 1. Data Transport offline:
+         aws something called the snowball edge
+        azure  Databox
+ 2. special Network Connection From office to cloud.
+       Direct connect to aws
+       Express Route in azure 
+   land line.
+
+3. CLI/Console/
+   rsync b/w two folder
+   based on script based.
+
+4. Storage Gatways:
+   aws and azure give you storage devices to store the data of office from company server.
+   and compress the data and shrink the these deives from aws and azure data center.
+     
+
+    
+**********************************************************************************************************************
+
+Database Migrations:
+
+1. Snapshot Migration
+       take the snapshot stopped the application and take the image(snapshot) and create the database and start the application.
+        and start the database.
+      ex: sbi work has stopped at 5 clock after that take the snapshot and move the snapshot in cloud.
+2. Incremential Migrations:
+               Database in office is aware of Database in cloud  
+ex: data is in large amount it can be migrate in incremental form.
+    it means some data migrate today ,some after .... after sometime your company data will be migrate some time.
+
+
+3. Transactional Migration:
+                    your database already present in cloud and some changes in database.
+                    in that case Tranctional database migration used.
+                  (DR)
+
+4.Replicated Migration:
+                    in Replication Migration your database will be replicated in cloud database.
+                     its takes more time and it a very cost effictive.
+ in replicated migration data will be migrate some time.  
+
+note: if database is small the snapshot is the better option.    
+      if database are large the incermental database migration are better option. because database will be send in chunck .
+      replicated migration will be inpect on performance of the database. because two database will be sink.
+
+
+DMS
+ASR 
+
+*********************
+
+AWS practice note 26/04/2019
+
+window non home edition:
+enable hyper-v
+goto to the control pannel turn on progamms
+click on hyper-v
+ok
+install the vagrant:
+choco install vagrant -y
+Create the directory
+mkdir jenkins
+cd jenkins
+google: vagrant public box
+open the powershell paste the given command.
+vagrant box add bento/ubuntu-16.04
+vagrant init bento/ubuntu-16.04
+
+goto  the jenkins folder some change in  vagrant file  remove the comment
+at config line ,at volume and end line and save file
+
+vagrant up --provider hyperv
+vagrant box list
+search the hyper 
+hyper -v manager
+click on virtual Switch manager
+
+
+there are three switch
+1. external:
+          in external switch  your virtual machine getting the same netwotk connection as your laptop network connection.
+     ex: your laptop connected to the router then your virtual machine also connectig to the router.
+
+2. Internal:
+    the cummunicate b/w your laptop and virtual machine try to create.
+
+3. private:
+         No network . the private network is a network create b/w virtual machine.
+
+
+
+create a external:
+select the ethernet
+
+
+goto the powershell
+select the option 6 as vagrant
+delete the linux default folder from Hyper v page.
+vagrant ssh 
+        this command is used to login into the machine
+
+otherway:
+open the gitbash copy the ip add. from hyper virtual machine
+ssh vagrant@<ip addres>
+sudo apt-get update
+
+sometimes it donot work there are another way
+goto the hyper virtual machine
+just double click on jenkins_default then terminal is created.
+username: vagrant
+password: 
+
+
+ region: why use vagrant:
+   the region of vagrant is it create the virtual machine easily. othewise you download the iso image of vitutal machine.
+
+
+install the jenkins in virtual machine.
+Create a Ubuntu linux vm
+install Openjdk 8
+Link
+sudo apt-get update
+sudo apt install openjdk-8-jdk -y
+java -version
+# ls /usr/lib/jvm/java-1.8.0-openjdk-amd64/bin
+# where is java
+# set JAVA_HOME Environment variable
+   why set the environments:
+     you programmer write the java applocation use the java and they look the path of the java. so define the environments variable:
+sudo nano /etc/environment
+JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/bin/"
+sudo vi /etc/environment
+# save the file
+Now reload this file to apply the changes to your current session:
+source /etc/environment
+
+Verify that the environment variable is set:
+echo $JAVA_HOME
+
+install jenkins: Refer here
+#wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+Before executing install of jenkins lets try to find the possible jenkins versions available
+
+sudo apt-cache madison jenkins
+Note: In this documentation 2.138.3 will be used
+
+Installing Specific Version of Jenkins
+sudo apt-get install jenkins=2.138.3 -y
+Note: Follow this steps to install any LTS version of jenki
+copy the public key and paste 
+public key:8080 enter
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+paste password
+continue
+install suggested plugins
+ 
+username: yogeshkumar
+password: yogeshkumar
+emaidid: kshankar10252@gmail.com
+fullname: yogeshkumar
+
+install configuration:
+   change the ip of jenkins url and paste the private ip
+ex:
+http://172.31.21.187:8080/
+save and finish
+stating using jenkins
+click on new item
+             project name: helloworld
+              freestyle
+ok
+click on build
+add build
+ execute shell
+    echo "helloworld"
+    pwd
+    whoami
+save 
+build now.
+
+
+
+  AWS Migration 27/04/2019 Practice
+
+step:
+login into aws account
+goto the aws service
+search the aws migration hub
+click on orgen west-2
+move server, application and data collector once generally
+goto the Tools
+  AWs Discovery connector:
+    download if you working with VM ware. or migrate the multiple virtual machine then download this.
+
+AWS Discovery Agent:
+ if you migrate only single machine the download Discovery aganet.
+  download the discovery agent
+     if migrate window server then download for window
+     if migrate linux server then download for linux
+  
+open the powershell as administractor
+copy the path of where your vagrant file stored and paste at the powershell
+
+vagrant up
+username: vagrant
+
+open the  download folder and open the gitbash here
+ssh vagrant@<ip address>
+sudo service jenkins restart
+exit
+now upload discovery in linux server
+
+Command:
+   scp aws-discovery-agent.tar.gz vagrant@<ipaddress>:/home/ubuntu
+  password: vagrant
+
+if some problem arised during copy then
+  copy the discovery agnet  where vagrant file
+  open the gitbash 
+  scp aws-discovery-agent.tar.gz vagrant@<ipaddress>:/home/ubuntu
+  password: vagrant
+
+
+login into vagrant virtual machine:
+ Command:
+     ssh vagrant@<ip>
+      
+     ls
+
+
+Google: aws Application Discovery agent
+           discovery agent
+             Topics:
+               prerequest for Agent Installation
+               agent installation on linux
+                Agent installation on window
+
+click on agent installation on linux
+  copy the four commands and run at the virtual machine.
+
+now need of secreat key and access key
+goto the service
+search the IAM
+create a user
+name: <ex: discoveryagent>
+programmtic access
+attatch existing policy
+select administractor
+next
+create user
+close
+copy the access and secret key on notpad
+
+copy the this commamd from doc
+ to run this command to get the signature of agent for cummunicate with the aws.
+sudo bash install -r us-west-2 -k <aws key id> -s <aws key secret>
+chage the key id and secrey key
+
+paste this command at  linux VM
+if discovery agent install in linux machine its speak with aws
+if key are wrong it not might work.
+
+goto the migration hub and see the server ,application and datacollector and tools
+discover and see the one agent.
+
+
+* start Discovery Agnet Data collection:
+  now deployed and install the configured the discovery agnet.
+   there are two way.
+ start the data collection using the migration hub console
+ start the data collection using the AWS CLI 
+
+
+i am using the cli
+
+install the aws cli
+
+python --version
+pip --version
+sudo apt-get install python3
+google: install python 3 , install pip3
+sudo apt-get install python3-pip -y
+install the aws cli with pip
+command:
+       pip3 install awscli --upgrade --user
+       aws configure
+       access key:
+       secret key:
+       region: us-west-2
+      json:
+
+start the data collection using the AWS CLI 
+aws discovery describe-agent
+copy the agent id
+
+aws discovery start-data-collection-by-agent-ids --agent-ids <agent id>
+change the agent id
+paste the this command at the VM machine.
+goto the aws migration hub
+data collector
+click on agent
+choose the data collector
+enable data Athena
+              starting
+
+note: python have many packages to download all packages use or install the pip
+
+note:
+   AWS server Migration Service:
+    use aws server migration service import VM image from existing environment to ready to use Amazon ec2 instance to aws sms.
+
+goto  migration hub
+ server
+ see the entry and click on machine. and see the details about the machine like ip address, and cpu utilization.
+
+note:
+ ex: you migrate six server and six server have two applicatin.
+    assume that each server have one application.
+
+the group of server is called the application.
+
+now migrate the VM machine into the aws 
+
+goto the Migrate 
+           tools
+            AWS server MIgration service
+               connect.
+                   SMS console (service migration service.)
+                     Get Started
+
+qns:
+    how can migrate running VM individually and physical machine in aws
+  Migration:
+1  => import image
+        create a AMI
+2. scripted MIgration
+   Terraform
+   machine running 16.04
+            running application jenkins
+            16.04 => AWS AMI
+                    ansible/chef/sh
+server migration does not supports every environment.
+
+look the first option:
+
+google: migrating physical server to aws 
+         AWS Docs.
+google: aws import image.
+         read the docs
+        paste the aws import
+import image
+instance import
+shapshot import
+VM export
+
+google: virtualbox export VM to Vhd
+google:
+choco install workbentch5.7.18
+ choco  install mysql.workbentch --version 6.0.8
+
+google:
+   google: xmind
+    download install the xmind
+
+
+
+
+
+AWS 30/04/2019 Note  DataBaseMigration
+
+## How To Migrate databases:?
+1. Migrate from same dbms to rds
+     * eg. mysql to mysql in rds
+     * tools might not be necessary for offline migration.
+      what is offline migration:
+                  in offline migration asked the user donot use the database for sometime till migrate the database in aws is finished.
+                  when migrate is complete then start the working. in offline migration downtime is required.
+     * online migration => replication
+     * sample
+           * Create rds for musql
+     * Export Db from on-premise
+     * Import Db from the exported file
+
+2. migrate from different dbms to rds.
+    * eg. sql server to aurora in rds
+    * we need to use tools from aws
+    * database Migration Service (AWS DMS) can help you out.
+    * Schema Conversion
+    * migrate
+
+
+Post database migration:
+                    in post database migration activity need some change in dns server do not want to change the name
+
+
+
+AWS Practice 30/04/2019 DataBase Migration
+
+step: 
+1. open or create the vm 
+2. service and search the rds
+3.  DataBase section
+      * create database
+      * select the free  egable
+      * mysql
+      * version of mysql: 5.7.18
+      * DB instance type: t2.micro
+      * DB instance name: learning
+      * master user: root
+      * password: ....
+         next
+      * public accessibility
+         yes
+      * choose security group
+      * database name: learning
+      * backup : 0
+      * Maintenance:
+          i disable everything
+      * Delete proction
+          enable delection protection: yes
+      * create database
+
+now goto our database which install on window
+      * search: mysql
+      * mysql connection:
+            host name: localhost
+              test connection press
+                    ok
+      * click on localhost
+
+google: mysql employee sample database
+          goto to the github
+             copy the clone and open the gitbash in any folder and paste
+               git clone <employee database clone>
+              ls
+now goto the database and import the employee database
+     click on file :
+            run sql script:
+                  import the employee.syl
+             shema:
+                   here ask the user name password.
+
+                       ok
+
+now again to aws mysql and copy the endpoint 
+and click at localhost:
+            connection name: awssamedb  ex.
+            connection method: TCP /IP
+            hostname: paste here the end point
+             Test connection :
+                 ask the password:
+                         username: root
+                         password: ....
+                 ok
+       
+
+create the awssamedb and click
+             goto the file:
+                       import/export
+
+                 import from self content file: employee.sql
+                   i am import employee.sql in learning database(aws)
+                              start import.
+                    
+            
+
+       
+     
+
+      
+
+
+
+
+
+
+ 
+
+ 
+
+
+
+
+                      

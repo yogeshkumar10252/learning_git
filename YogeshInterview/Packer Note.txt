@@ -1,0 +1,751 @@
+packer: the packer is a open source tool is used for creating the machine and generating the multiple image from same configuration
+        file in diff. platform. the packer is light weight and it can be used any operating system.
+                                 
+                                          OR
+
+         Packer is an open source tool for creating identical machine images for multiple platforms from a single source configuration. Packer is 
+        lightweight, runs on every major operating system, and is highly performant, creating machine images for multiple platforms in parallel.
+       we can use the configuration server to install the software. ex: ansible, chef ,puppet.
+
+Why use packer:
+            Super fast infrastructure deployment.
+                                       : the images is created by packer is used when we launch the machine from this image in development
+                                         environment. because it take few second.  
+            Multi-provider portability. 
+            Improved stability.
+                         Packer installs and configures all the software for a machine at the time the image is built. 
+                         If there are bugs in these scripts, they'll be caught early, rather than several minutes after a machine is launched.
+            Greater testability.
+
+Use case of packer:
+               Continuous Delivery
+               Dev/Prod environment.
+
+
+What is Builders:
+             Builders are responsible for creating machines and generating images from them for various platforms. 
+             For example, there are separate builders for EC2, VMware, VirtualBox, etc
+
+
+
+
+Provisioners:
+            the provisioners are used for install the third party application or package.
+            common use of provisioners:
+              * installing packages
+              * patching the kernel
+              * creating users
+              * downloading application code
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7 date:
+
+Create  Virtual infrastructure to deploy your application
+
+how do i create Viinfr?
+********************
+
+VIrtual infrastructure
+
+On-Prem
+     VMWare EXCI => VMWARE SDK
+     Hyper -V
+
+Cloud
+   AWS
+   Azure
+   Google
+
+when we want to create virtual infrastructure on various diff. provider  there is a Organization Hasicorp they give some 
+tools:
+    packer
+         => create images
+
+   Terrform
+          => create executing environments
+
+note: to create a virtual infrastucture from tools(packer ) is simple then VMWARE and Hypey-V
+
+
+
+**************************************************
+imp:
+## Infra Provisioning
+     Need
+Creating multiple environments during your application development/testing/releases
+## How do you create multiple environments
+    manual
+      * it is time consuming
+      * same state is not guarnteed
+automated
+  * Specific Tools
+  * ARM Templates
+  * Cloud formation
+Problem : Very specific to cloud provider. Cannot be reused if you want same automation in different cloud
+Generic Tools
+  * Packer
+  * Terraform
+Advantage: One way of working with any cloud provider
+## Purpose of Image
+Reuse same applications/os in your pipeline
+Packer is generic tool to create reusable images
+
+*****************************************************************
+
+ packer note 8may 2019
+
+1. AWS EC2 Machine
+          git
+          VPC
+2. Azure VM
+        git
+        VNET
+
+qns: team want to git but questions is which operating syatem
+OS =>
+   1. Ubuntu (18.04/16.04)
+   2. Redhat 7,6
+
+************************************
+A Launch VM
+B some commands (provisioning)
+C create image
+
+lauch a VM is always same. either you create a ubuntu or redhet
+ create a imgae is always same.
+the work which are doing by you is always change, is called provisioning.
+
+
+note: privisoining can be done by some automation tool
+  by shell scripting
+
+note: image is some shot of commpressed persentation if form of hardisk.
+
+
+note: every relsease packer create the image but not create the image pr commit.
+      
+********************************************  
+
+Packer Practice 8May 2019 2 Day
+
+step:
+1. create a ec2 machine(ubuntu 18.04/16.04)
+2. login into machine
+3. install some software:
+    Command:
+         sudo apt-get update
+         sudo apt-get install git -y
+            mkdir test
+            mkdir test/ 1
+            mkdir test/2
+         sudo apt-get install tree -y
+4. goto the AWS service click on Ec2 
+5. click on Action and create image
+6. give the some name of image.
+        name: 
+Note:
+    now you want see what is the advantage of create a image.
+7. goto the AMI and see the create image.
+8. click on select and launch the create image.
+9. login into the machine
+10. there a one problem with user you change the user .
+11.you run the given command:
+   tree
+Result: the result you install the software in ubuntu machine . those software present in this machine.
+
+Now install the packer -y
+
+choco install packer -y
+packer --version.
+
+
+
+Packer Practice Create Image by Packer 3DAy 9May 2019
+***********************************************************
+step: 
+1. google: packer 
+    Read the doc and follow the documentaion.
+2. create a file for ex. intro and write the code in json format for create a image.
+  
+{ 
+"builders"[
+   "type": "amazon-ebs",
+   "ami_name": .....
+   "source_ami": ...select the source ami from cloud ami
+   "region": <code of the region>,
+   "secret_key": note: create userfrom IAM service and give the secret key and access key
+   "access_key":
+  "instance_type": "t2.micro",
+  "ssh_username": "ubuntu"
+   
+}
+
+
+## How to Run this packer file.
+
+3. open the powershell as administractor and paste the path where you create  a packer file.
+4. Command:
+    packer --help
+    packer validate --help
+    packer validate <file of packer>
+    packer 
+    packer Build --help
+    packer build <file>
+
+5. go to the amazon and see ami is create.
+
+
+
+Packer Note 4Day 10May 2019
+********************************
+
+
+google: packer docs
+        provisionor
+shell:
+     the command execute at the terminal is called the shell.
+shell(local):
+           The machine is created by packer or machine running in remotely is called the shell(local)
+inline: inline is the list of commands.
+
+
+Command:
+   packer --help
+   packer validate --help
+   packer validate <template name>
+   packer inspect <template name>
+   packer build -debug <template>
+
+
+This command is used for passed the value at command line for more resuable in many providers
+
+    packer build -debug -var 'my_access_key= ........' -var 'my_secret_key= ........' \<file name>
+
+
+*********************************************8
+{
+  "variable":{
+  "my_aws_access_key": "",
+  "my_aws_secret_key": "",
+},
+
+
+
+{
+ "builders":[
+{
+  "type": "amazon_ebs",
+  "ami_name": "yogesh",
+   "region": "",
+ "source_ami": ....
+ "access_key": "",
+ "secret_key": "",
+ "instance_type": "t2.micro",
+ "ssh_username": "ubuntu"
+
+   }
+],
+"provisioners":[
+{
+"sudo apy-get update",
+"sudo apt-get install git -y",
+"sudo apt-get install tree -y"
+}
+],
+
+
+Packer practice 5Day 11May 2019
+
+Note:
+ packer is a open source tools which is used to create a multiple image across multiple platform with the of same (one ) configuration file.
+write a json file.
+
+{
+ "Builders": [
+    {
+  "type": "amazon-ebs",
+  "ami_name": "packerdemo",
+  "source_ami": "",
+  "access_key": "",
+  "secret_key": "",
+  "region": "",
+  "instance_type": "",
+  "ssh_username": ""
+   },
+    {
+  "type": "amazon-ebs",
+  "ami_name": "packerdemo",
+  "source_ami": "",
+  "access_key": "",
+  "secret_key": "",
+  "region": "",
+  "instance_type": "",
+  "ssh_username": ""
+   }
+],
+"provisioners": [
+  {
+    "type": "shell",
+     "inline": [
+   "sudo apt-get update",
+    "sudo apt-get install git -y",
+    "sudo apt-get install tree -y"]
+   }
+]
+}
+  
+
+Packer Practice 6Day 12May 2019
+
+{
+ builders: [
+       {
+           type: "azure-arm",
+       },
+
+        {
+            "type": "amazom",
+        }
+
+      ],
+       "provisioning": [
+              {
+                 "type": "shell",
+                  "inline":[
+                      
+                            ]
+                     }
+
+     ]
+},
+
+result: this do the work can try
+
+
+note: you can have a multiple builders of different type in same file to create a multiple images.
+*************************************************
+
+
+
+{
+ builders: [
+       {
+           type: "amazon-ebs",
+       },
+
+        {
+            "type": "amazon-ebs",
+        }
+
+      ],
+       "provisioning": [
+              {
+                 "type": "shell",
+                  "inline":[
+                      
+                            ]
+                     }
+
+     ]
+},
+
+
+result: invalid
+region: you cannot have same builders of type at same time in same file.
+
+**************************************************************
+
+
+{
+ builders: [
+       {
+           type: "azure-arm",
+       },
+
+        {
+            "type": "amazom",
+        }
+
+      ],
+       "provisioning": [
+              {
+                 "type": "shell",
+                  "inline":[
+                      
+                            ]
+                     }
+                        {
+                          "type": "ansible"
+                         }
+
+                              ]
+},
+
+
+Qns: can you have same provisioning in same file
+
+
+run this file and check it run or not . if run this file then check it which machine.
+********************************************************
+
+New concept:
+             i want to create a same image every day or create a image after the build . 
+               in this case packer have some function to create a image every day.
+
+google. packer function=> totorial=> template.
+note: you can replace with the double carlebraces.
+
+ex: "ami_name": "packerdemo"
+   function:
+    "ami_name": "msbuild-{{isotime | clean_image_name}}",
+     "ami_ami": "openarms-{{isotime | clean_resource_name}}," 
+
+google: isotime
+
+Qns: how can create different image from packer file.
+Ans: "msbuild-{{isotime | clean_image_name}}"
+
+
+Note:
+   set command show all the environmental variable in linux machine.
+
+
+**************************
+
+google: packer  variable Environment
+        template=> engine
+
+There are two types of variable
+1. user label
+2. os label
+
+variable file is nothing but is a simple json file.
+google: packer-varfile
+
+
+create a var-file
+
+****************************************
+
+google: post processor;
+
+*****************************************
+
+{
+ builders: [
+       {
+           type: "azure-arm",
+       },
+
+        {
+            "type": "amazom",
+        }
+
+      ],
+       "provisioning": [
+             { "p1"
+},
+{
+"p2"
+}
+
+
+qns: i want to run p1 in amazon arm and virtual box but i want to run p2 in virtual box only
+    how
+
+ans: ansible when
+
+packer give some support:
+ "only": ["virtualbox-iso"]
+
+
+
+resume:
+ps: professional summary: i have a good experience work creating a resuable images in various cloud environment.
+
+R&R:
+  Roles And Responsibility:
+  insure for responsible building resuable cloud image for every stable release.
+  
+ex: when software release then create image.
+                   
+
+
+
+
+
+
+Packer Practice in sequence ways:
+********************************** 
+example:1
+
+{
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "ami_name": "packerdemo",
+            "source_ami": "ami-005bdb005fb00e791",
+            "access_key": "AKIAWXCRVVQ5OQFABVSF",
+            "secret_key": "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",
+            "region": "us-west-2",
+            "instance_type": "t2.micro",
+            "ssh_username": "ubuntu"
+        }
+    ]
+}
+
+example: 2
+
+{
+ "builders":[
+{
+  "type": "amazon_ebs",
+  "ami_name": "yogesh",
+   "region": "",
+ "source_ami": ....
+ "access_key": "",
+ "secret_key": "",
+ "instance_type": "t2.micro",
+ "ssh_username": "ubuntu"
+
+   }
+],
+"provisioners":[
+{
+"sudo apy-get update",
+"sudo apt-get install git -y",
+"sudo apt-get install tree -y"
+}
+]
+},
+
+
+
+example: 3
+
+
+    "variables": 
+    {
+        "my_aws_access_key": "",
+        "my_aws_secret_key": "",
+        "my_region": "us-west-2",
+        "my_instance_type": "t2.micro",
+        "sourceami": "ami-005bdb005fb00e791"
+    },
+
+   "builders": [
+        {
+             "type": "amazon-ebs",
+             "ami_name": "packerdem2",
+             "source_ami": "{{user `sourceami`}}",
+             "region": "{{user `my_region`}}",
+             "access_key": "{{user `my_aws_access_key`}}",
+             "secret_key": "{{user `my_aws_secret_key`}}",
+             "instance_type": "{{user `my_instance_type`}}",
+             "ssh_username": "ubuntu"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "sudo apt-get update",
+                "sudo apt-get install tree -y",
+                "sudo apt-get install git -y"
+            ]
+        }
+    ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+example:4
+
+{
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "ami_name": "",
+            "source_ami": "",
+            "region": "",
+            "access_key": "",
+            "secret_key": "",
+            "instance_type": "",
+            "ssh_username": ""
+        },
+        {
+            "type": "Azure",
+        },
+        {
+            "type": "virtual box",
+        }
+    ],
+        "provisioners":[
+            {
+                "type": "shell",
+                "inline": [
+                    "sudo apt-get update",
+                    "sudo apt-get install git -y",
+                    "sudo apt-get install tree -y"
+                          ]
+            }
+    ]
+}
+
+
+
+Note: we can have the multiple builders (diff. type )for creating the multiple images in same packer file.
+
+
+
+
+
+ example:4
+
+{
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "ami_name": "",
+            "source_ami": "",
+            "region": "",
+            "access_key": "",
+            "secret_key": "",
+            "instance_type": "",
+            "ssh_username": ""
+        },
+        {
+            "type": "Azure",
+        },
+        {
+            "type": "virtual box",
+        }
+    ],
+        "provisioners":[
+            {
+                "type": "shell",
+                "inline": [
+                    "sudo apt-get update",
+                    "sudo apt-get install git -y",
+                    "sudo apt-get install tree -y"
+                          ]
+            }
+    ]
+}
+
+
+
+Note: we can have the multiple builders (diff. type )for creating the multiple images in same packer file.
+
+
+
+example: 5
+
+
+{
+ "Builders": [
+    {
+  "type": "amazon-ebs",
+  "ami_name": "packerdemo",
+  "source_ami": "ami-0a313d6098716f372",
+  "access_key": "AKIAWXCRVVQ5FKX2ZCPF",
+  "secret_key": "Cx/YZKXSQivZde+Fjuclwl+0qYaOg+wsXZlShkkl",
+  "region": "us-west-2",
+  "instance_type": "t2.micro",
+  "ssh_username": "ubuntu"
+   },
+    {
+  "type": "amazon-ebs",
+  "ami_name": "packerdemo1",
+  "source_ami": "ami-098bb5d92c8886ca1",
+  "access_key": "AKIAWXCRVVQ5FKX2ZCPF",
+  "secret_key": "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",
+  "region": "us-west-2",
+  "instance_type": "t2.micro",
+  "ssh_username": "ec2-user"
+   }
+],
+"provisioners": [
+  {
+    "type": "shell",
+     "inline": [
+   "sudo apt-get update",
+    "sudo apt-get install git -y",
+    "sudo apt-get install tree -y"]
+   }
+]
+}
+
+
+
+example: 6
+
+
+{
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "ami_name": "",
+            "source_ami": "",
+            "region": "",
+            "access_key": "",
+            "secret_key": "",
+            "instance_type": "",
+            "ssh_username": ""
+        },
+        {
+            "type": "Azure",
+        },
+        {
+            "type": "virtual box",
+        }
+    ],
+        "provisioners":[
+            {
+                "type": "shell",
+                "inline": [
+                     "sudo apt-get update -y",
+                      "sudo apt-get install software-properties-common ",
+                      "sudo apt-add-repository --yes --update ppa:ansible/ansible ",
+                      "sudo apt-get install ansible -y"
+                          ]
+            },
+           {
+               "type": "ansible_local",
+               "playbook_file": "./ansible.yml"
+           },
+
+    ]
+}
+
+
+Note: we have  a different provisioners in different and same builders.
+
+Note: we can have the multiple builders (diff. type )for creating the multiple images in same packer file
+
+
+
+

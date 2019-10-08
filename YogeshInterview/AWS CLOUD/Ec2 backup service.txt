@@ -1,0 +1,36 @@
+AWS Ec2 backup:
+
+AWS Backup is a fully managed backup service that makes it easy to centralize and automate the backing up of data across AWS services. With AWS Backup, 
+you can create backup policies called backup plans. You can use these plans to define your backup requirements, such as how frequently to back up your 
+data and how long to retain those backups. AWS Backup lets you apply backup plans to your AWS resources by simply tagging them. AWS Backup then 
+automatically backs up your AWS resources according to the backup plan that you defined.
+
+
+How AWS Backup Works with Other AWS Services
+
+Many AWS services offer backup features that help you protect your data. These features include Amazon Elastic Block Store (Amazon EBS) snapshots, 
+Amazon Relational Database Service (Amazon RDS) snapshots, Amazon DynamoDB backups, and AWS Storage Gateway snapshots.
+
+AWS Backup provides a centralized backup console that offers backup scheduling, retention management, and backup monitoring
+
+
+
+To create a backup plan
+
+Sign in to the AWS Management Console, and open the AWS Backup console at https://console.aws.amazon.com/backup.
+
+Choose Start from an existing plan.
+
+Choose a plan from the list; for example, Daily-Monthly-1yr-Retention.
+
+Give your plan a name; for example, BusinessCriticalBackupPlan.
+
+To edit a rule, choose the rule and then choose Edit. Review and choose the values that you want for your rule. For example, you can extend the retention period of the backup in the Monthly rule to three years instead of one year.
+
+For the backup vault, choose Default.
+
+When you have finished editing the rule, choose Create plan.
+
+assign the resource for ex: if you want to take the back of shapshot assign the snapshot id ,or if you take tha back up of vloume assign the snapshot 
+resource id.
+create the backup.

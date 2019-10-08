@@ -1,0 +1,171 @@
+                                            AWS codecommit:
+
+        AWS CodeCommit is a version control service hosted by Amazon Web Services that you can use to privately store and manage  
+       (such as documents, source code, and binary files) in the cloud. 
+
+     CodeCommit is a secure, highly scalable, managed source control service that hosts private Git repositories.
+
+
+
+
+Bebifits:
+   *  Benefit from a fully managed service hosted by AWS.
+   *  Store your code securely.
+   *  Easily scale your version control projects. 
+                                             - CodeCommit repositories can scale up to meet your development needs.
+   * Store anything, anytime. 
+                       - CodeCommit has no limit on the size of your repositories or on the file types you can store. 
+
+
+
+How Does CodeCommit Work?
+               * CodeCommit provides a console for the easy creation of repositories and the listing of existing repositories and branches.
+
+Note: in aws code commit just like the git server
+
+
+step: 
+1.login into aws accout:
+2. service and serch the code commit
+3. create a repository
+     repositort name: spring-petclinic
+     Description: this repo is used for spring petclinic
+
+4. create
+note:
+   this is a private repository: there are two ways to access the repository:
+    a. https: https based on username and passwprd
+    
+    b. ssh : use the punlic key and the private key
+
+for example:
+   google: github.com ex: i use the repository of sir
+  practice=>  spring petclinic=> setting=>ssh
+ 
+now open the gitbash in user=>yogesh and generate the key
+ssh-keygen
+ls
+cd .ssh/
+ls
+cat is_rsa.pub
+copy the key and paste in github=> spring-petclinic=> ssh and add the ssh key
+goto the spring petclinic and see some change in url.
+copy the url and  paste in url at gitbash in and folder 
+
+cd spring petclinic
+vi readme.txt
+some change.
+wq
+git status
+git add .
+git status
+git commit -m "adding some changes."
+git push
+
+note: if you remove the key and lost the key push the commit is fail.
+
+note: there are two way to the repository
+       1. http: user name and password
+       2. ssh : based on key
+
+
+*******************
+
+
+i am using the aws repository . there are two ways the to access the repositort
+ 1. Https : user name and password:
+ 2. ssh
+ 
+
+
+## AWS Build Practice 3/5/2019
+step:
+1. login into aws account and goto the service and search the aws code commit
+2. create a repository
+3. create a user and this user attatch to the aws code commit policy.
+4. copy the url or open the new tab of the user
+     username:
+     password:
+5. install the git
+6. goto the IAM service select the user and choose the security credential
+   and generate the credendtal https git for aws code commit.
+7. copy or download the user name and password.
+8. and goto the which region where your repository
+9. select the repository and copy the url and paste the gitbash
+10. its asked the username and password. 
+
+
+
+
+                                         Aws Code Build:
+              
+              AWS CodeBuild is a fully managed continuous integration service that compiles source code, runs tests, and produces 
+              software packages that are ready to deploy.
+
+
+
+                                             Benifits:
+         Fully managed build service:
+                                     AWS CodeBuild eliminates the need to set up, patch, update, and manage your own build servers and software. 
+                                     There is no software to install or manage.
+
+        Continuous scaling:
+                         AWS CodeBuild scales up and down automatically to meet your build volume.
+        Pay as you go:
+        Secure:
+
+
+
+
+
+
+
+Qns:How to deploy a code in aws :
+Ans: There are following step to deploy the application in aws
+step:
+1. first create a key-value in aws if allready have a key value there is no need the create a key-value pair.
+2. goto the aws console and search the awscodedeploy service and select the simple.
+3. create a ec2 machine
+4.AWS CodeDeploy uses application names during code deployments to make sure .
+5.Create a Deployment Group
+   A deployment group is a set of individual EC2 instances that CodeDeploy deploys revisions to. 
+   A deployment group contains individually tagged instances, Amazon EC2 instances in Auto Scaling groups, or both.
+6. Create a Service Role
+    AWS CodeDeploy permission to deploy to your instances. You create a role for an AWS service when you want to grant permissions to a service 
+    like Amazon EC2 or AWS CodeDeploy. These services can access AWS resources, so you create a role to determine what the 
+    service is allowed to do with those resources.
+
+ Service Role: Choose Create a new service role.  If you already have a service role, you can choose Use an existing service role.
+
+ Role Name: You can accept default value of CodeDeploy_HelloWorld.  If you are using an existing service role, choose it from the Role Name drop-down list.
+
+7.Deploy Your Application
+8. Clean Up Your Instances
+
+
+Advantage of code deploy in aws:
+   Automated deployments
+    AWS CodeDeploy fully automates your software deployments, allowing you to deploy reliably and rapidly.
+
+
+
+
+
+CodePipeline:
+---------
+AWS CodePipeline is a continuous integration and continuous delivery service 
+CodePipeline builds, tests, and deploys your code every time there is a code change, based on the release process models you define..
+
+
+Advantage:
+Rapid delivery
+Improved quality
+Configurable workflow
+Fast setup
+
+
+Qns: What is scale in and scale out.
+ans: the login in aws autoscaling group is called the scale in and move or out from scaling is called the scale out.
+
+Qns: What is scale up and scale down.
+ans: the increse the ec2 machine is called the scale up and down the ec2 machine is called the scale down.

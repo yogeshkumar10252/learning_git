@@ -1,0 +1,1084 @@
+Terraform Note. 13 May 2019
+
+                                                   What is terraform:
+
+Terraform is used to create, manage, and update infrastructure resources such as physical machines, VMs, network switches, containers, 
+
+Note: There are two aspect with terraform.
+1. create the insfrastructure it means (Creating VM?cloud)
+2. Doing something with this infrastructure. doing something with the help of  provisioning tool. the
+   provisioning done by shell scripting ansible/chef /powershell.
+
+
+Note: 
+1. Terraform cannot do something with physical machine
+2.Terrform is aware of AWs VMWARE and Azure it means it create the infrastructure at this places.
+3. Terraform like solution in AWS is a cloud formation.
+4. Terraform like solution in Azure is ARM Template. 
+5. Terraform cannot work with only single cloud. it works with multiple cloud.
+6. Terraform work with one machine at a time.
+
+What is Diff b/w packer and the Terraform.
+Ans: Packer creating the image which are used  sometimes  in a future. but  terraform creating something which doing start immediately.
+
+7. The Terraform used in any Continuous Integratin tools where needs to the deployment.
+8. using the Terraform including the Creating the infrastructure.
+9. Terraform is a simple tools which written in DCL (Domain Specific Language) language.
+10. extenison of terraform is .tf
+
+Note: Terraform Basically used in non physically environment.
+      Terraform basically create the environment. the Environment create when we crate the resources.
+
+
+
+Note: Terraform something is called the Provider.
+       => Where should environment be created
+
+Resource:
+       Resource means creating something
+        ex: create harddisk is called the Resource
+             create a network that becomes a resource
+output.
+
+
+
+
+
+Terraform Practice. 13 May 2019
+google: Terraform.io and read the docs.
+
+Installing the Terraform
+step:
+1.open the powershell
+2. choco install terraform -y
+   * if you have a older version
+3.choco upgrade terraform -y
+4. open the visualstdio code
+   search the extension of terraform
+5. install the extension of terraform
+  * check the terraform install or not
+6. terraform --version
+
+
+
+Terraform Note 14 May 2019 creating first environment
+
+* Terraform creating something which can used directly.
+  ex: VM ,database.
+
+* Provider is the place where you want to create the environment.
+
+* Resource:
+          Any thing and everything is created by terraform is called the resource.
+         ex: create security group, key-pair network etc.
+
+
+
+# Terraform
+
+## Building blocks
+
+*_Providers_:
+  * where the environment has to be created
+  * it also has the way to connect to environment
+  * Defines type of provider & connection parameters
+  * syntax:
+  ---------
+    provider <type>
+   {
+   <argument> = <value1>
+    ..
+    ..
+    ..
+   ..
+    <argement> =<value>
+     }
+------------
+
+ex: provider 'aws' {
+       access_key =
+       secret_key =
+       region =
+     }
+------ 
+
+* Resource_:
+  * What is that want to create.
+  * Every Provider has set of supported resource. 
+  * Syntax:
+   -------
+
+resource '<type>', '<name>' {
+   <argument> =<value1>
+   ...
+   ...
+   ...
+   ...
+   <argument> = <valuen>
+ }
+  
+
+
+Google: Terraform.io
+            docs
+               providers
+                  major cloud
+                      AWS
+     here show the resource=> EC2 => EC2 instance   
+
+
+
+
+
+Terraform Practice 14 May 2019 creating first environment
+
+Google: Terraform.io
+            docs
+               providers
+                  major cloud
+                      AWS
+     here show the resource=> EC2 Resource => EC2 instance
+
+**********************************************
+ex:
+   provider "aws"
+   {
+     region: ""    
+     access_key: ""
+     secret_key: ""
+}
+ 
+Resource "aws_instance", "hello"
+ {
+  ami =""
+  key_name = ""
+  instance_type = ""
+}
+
+
+How to work terraform
+step:
+1. open the powershell as administractor
+2. copy the folder not the file because terraform work with folder(dir)
+   ex: E:\Terraform\TerraformFirtFolder
+3.  paste the path of directort
+4. terraform --help
+5. terraform init --help
+6. terraform init <dir>
+  Note: terraform installation by default will not include provider.
+7.terraform --help
+8. terraform validate --help
+9. terraform validate <dir.>
+10.terraform --help
+11. terraform apply <dir path .>
+     yes
+    terraform apply <dir .path> note: if you try to run this command it said machine already created . if terminated the machine and run this command  then machine will create.
+12.terraform destroy <dir path.>
+    yes        
+
+
+
+Terraform Note 15 May 2019
+what is purpose of terraform init:
+when we install the terraform . the only terraform is installed . not install the provider.
+*
+ when you want work with  any provider it need executed init because provider will downloaded in .terraform directory.
+* provider not provide the automatically its executed the init .so whenever you create a new folder init in mandotory.
+
+
+* How to login into the machine.
+ans:  Connection is a Object which helps of connection or login into the machine.
+
+
+## Basics on working with terraform.
+VVVimp:
+Note:
+1. Terraform individaul provisioning accepts folder
+2. Every TF file in the directory will be picked up
+3. At least one provider is required
+4. Provider accepts the input in the form of _arguments_
+5. Every Provider will have resources
+7. When the resources is created some details of the resources are made available using _ attributes_
+8. Any custom action in the resources can be achived using _provisioning_.
+9. provisioning might required _connection_ to be created
+
+
+
+## Terraform Practice 15 May 2019:
+google:
+Terraform connection:
+
+Directory : Apache server/main.tf
+Note: how to login into aws account.
+ans: in programmtic way we can login into accout only with the access key and secret key
+provider "aws"
+{
+ access_key = ""
+ secrey_key = ""
+ region = ""
+}
+
+Note: what is  resource type
+Ans: here my resource is ec2_instance
+     and passed the input is called the arguments
+
+resource "ec2_instance","apache"
+{
+ ami = ""
+ key_pair = ""
+ instance_type = "t2.mirco"
+ security_group = [""]
+
+Note: how to login into this machine
+Connection is a object which help or connection or login into the machine.
+ 
+connection
+{
+ type = "ssh"
+ user = ""
+ private_key = (path)
+ ex:          "${file("./vpclearn.pem")}"
+}
+
+Note: where run this scripts
+Ans: I want to run this script at remote server so we use the "remote-exec"
+The remote-exec provisioner invokes a script on a remote resource after it is created.
+
+provisioner "remote-exec"
+{
+  inline = ["sudo yum install httpd -y", "sudo service httpd restart"]
+}
+}
+
+
+
+## Terraform Note Azure 18 May 2019 And Variable concept
+-------------------------------------------------------------
+
+
+Terraform Practice Azure 18 May 2019 And Variable concept
+Step:
+1. google : Terrafirm Azure
+2. configure and install the terraform
+3.az account show --query "{subscriptionId:id, tenantId:tenantId}"
+4.az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/${SUBSCRIPTION_ID}" use the subscription.
+5
+
+provider "azurerm" {
+ client_id = ""
+subscription_id = ""
+tenant_id = ""
+client_secret = 
+}
+
+search resource_azurem
+
+resource azurerm_resource_group
+{
+ name = ""
+ location = "Central_us"
+  tags = {
+  environment = "Development" 
+}
+}
+
+create another file :
+serch vnet
+
+resource "azure_virtual_network" "ntire" {
+ name = "$(azurerm_resource_group.ntier.name)"
+ location  = "azurerm_resource_group.ntier.location)"         
+resource_group_name = "ntire"
+address_space = ["192.168.0.0/16"]
+
+subnet {
+    name           = "web-1"
+    address_prefix = "192.168.1.0/24"
+  }
+
+  subnet {
+    name           = "business-2"
+    address_prefix = "192.168.2.0/24"
+}
+
+subnet {
+    name           = "db-3"
+    address_prefix = "192.168.2.0/24"
+}
+
+Run this script here.
+Command:
+  terraform init : install the provider 
+  terraform plan --help
+terraform plan -out <file.plan>
+terraform apply <folder>
+
+
+Note: terraform.tf.state : tells what is the current state
+Again 
+terraform destroy <directory>
+ terraform plan -out <>
+ my mistake delete the any subnet
+again apply the terraform
+
+ Note: This script run only my account  i want this script run other account in this case we use the variable.
+
+
+### Terraform variable:
+
+create a another file
+ varaible "Scription_id" {
+  type = "string"
+}
+
+varaible "tenant_id" {
+  type = "string"
+}
+varaible "clientsecret"
+ {
+  type = "string"
+}
+varaible "clientid" {
+  type = "string"
+}
+
+
+run this script with the help of the variable at the command.
+terraform apply -var 'subscription_id=' -var 'tanant_id=' -v
+ar 'client_id=' -var 'clientsecret'
+
+
+*********************************************
+create a another file infra.tf
+Terraform :
+resource:  azure_virtual_machine : read the doc
+
+first need the machines is public ip
+search public_ip
+serch security_group
+search network_interface _card
+
+run this script here with the help of variables
+*******************************************
+
+now create the vm
+terraform azure
+search the virtual machine
+terraform virtual machine
+
+
+
+Terraform Practice output and local 19 May 2019
+
+
+Terraform Note output and local 19 May 2019
+Start form the vm section:
+provisioners:
+first login into azure machine:
+google: terraform connection
+
+variable section:
+
+variable "username"
+{
+ type = "string"
+ default = "yogesh"
+}
+
+variable "password"
+{
+ type = "string"
+ default = "radhe"
+}
+
+
+
+
+
+
+
+
+VM section:
+connection {
+type = "ssh"
+user = "$(var.username)"
+password = "$(var.password)"
+}
+provisioner "remote-exec"
+{
+ inline = [
+  "sudo apt-get update"
+  "sudo apt-get install apache2 -y"
+  ]
+}
+
+**********************************************
+output.tf 
+terraform provider
+azure public ip
+output 
+run : with variable use the -auto -approve
+terraform function
+caocat
+
+***********
+output "webserver" 
+{
+ value = "${azure_public_ip.web.ip_address}"
+}
+**************************************
+terraform logs
+
+
+*********************************
+
+Resource :creating something
+Datasource: asked something
+
+terraform Datasource
+search azurerm-subnet
+
+datasource.tf
+
+
+
+
+
+Terraform Note DataQuery 20 May 2019
+
+                Module
+           ********************
+
+* module is nothing but it is a resuable entity of terraform
+* module
+       variable => arguments
+       outputs => attributes
+
+
+
+
+
+
+Create the vpc in azure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Terraform Build Notes and environment 21May 2019
+
+* writing the terraform scripting in local folder is called the workspace.
+* Backend just place of storing state files. backend is called the remote backend.
+google: terraform backend 
+         use : s3
+          dynamic db
+        terraform backend azure
+
+Google:
+      QualityThrought/course material.
+
+Dependency:
+           i want to create the resource so some resource to be created.
+ex: for create subnet  vpc is need .
+
+
+## Some Commands:
+***********************
+
+* terraform apply --help
+  - target=resource
+  - parallelism=n
+terraform --help
+  taint
+  untaint
+ terraform import --help
+terraform --version
+terraform --help
+terraform graph --help
+ -draw-cycle
+terraform env --help
+ex: mkdir envdemo
+cd envdemote
+terraform env new --help
+terraform env new dev
+terrafrom env new prod
+terrafrom env list
+terraform env  select dev
+terraform workspace --help
+
+
+
+Terraform Build Practice and environment 21May 2019
+
+
+for check the env :
+resource "null_resource test"
+{
+provisioner "file"
+ source = "1.txt"
+ destination = "2.txt"
+}
+
+
+
+
+Practice:
+example:1
+
+mkdir radhe
+cd radhe
+vi main.tf
+
+provider "aws" {
+    access_key = "AKIAWXCRVVQ5LKO2FXE6"
+    secret_key = "kwlyOyniYbjiFRI+EJHF12IkmchZj7JAkcSZ76rV"
+    region = "us-west-2"
+}
+resource "aws_instance" "radhe" {
+    ami = "ami-005bdb005fb00e791"
+    instance_type = "t2.micro"
+    key_name = "vpc"
+  
+}
+
+Example: 2
+
+
+provider "aws" {
+    access_key = "AKIAWXCRVVQ5P6T63C6C"
+    secret_key = "M74z6zzLDDoaeqYi5uqX3PNNMcdtHS8u2vSPGQW0"
+    region = "us-west-2"
+   
+}
+resource "aws_instance"  "apache" {
+    ami = "ami-0cb72367e98845d43"
+    key_name = "vpc"
+    instance_type = "t2.micro"
+    security_groups = ["vpc"]
+
+connection 
+{
+    type = "ssh"
+    user = "ec2-user"
+    private_key = "${file("./vpc.pem")}"
+
+}
+ provisioner "remote-exec"
+ {
+   inline = ["sudo yum install httpd -y", "sudo service httpd restart"]
+ }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+Example:3
+Create the vpc in aws.
+
+mkdir krishna
+cd krishna
+vi main.tf
+
+provider "aws" 
+{
+    access_key = "AKIAWXCRVVQ5F6EJPFYP"
+    secret_key = "G+/KvIZiJP0XKktsj4cIKr6rSO8Wzn1C2iuTRh6G"
+    region = "us-west-2"
+
+}
+resource "aws_vpc" "learning" {
+    cidr_block = "10.10.0.0/16"
+    tags {
+        Name = "learning"
+    } 
+}
+resource "aws_subnet" "web" {
+    vpc_id = "${aws_vpc.learning.id}"
+  cidr_block = "10.10.0.0/24"
+    tags {
+        Name = "web"
+
+    }
+}
+
+
+    resource "aws_subnet" "Business" {
+    vpc_id = "${aws_vpc.learning.id}"
+  cidr_block = "10.10.1.0/24"
+    tags {
+        Name = "Business"
+        
+    }
+    }
+
+
+    resource "aws_subnet" "dbserver" {
+    vpc_id = "${aws_vpc.learning.id}"
+  cidr_block = "10.10.2.0/24"
+    tags {
+        Name = "dbserver"
+        
+    }
+    }
+     resource "aws_instance"  "web" {
+    ami = "ami-08692d171e3cf02d6"
+    key_name = "vpc"
+    instance_type = "t2.micro"
+ 
+    subnet_id = "${aws_subnet.web.id}"
+    
+        tags
+        {
+            Name = "Ubuntu1"
+    }
+
+}
+
+resource "aws_instance"  "Business" {
+    ami = "ami-08692d171e3cf02d6"
+    key_name = "vpc"
+    instance_type = "t2.micro"
+   
+    subnet_id = "${aws_subnet.Business.id}"
+
+    tags {
+        Name = "Ubuntu2"
+    }
+}
+
+resource "aws_instance"  "dbserver" {
+    ami = "ami-08692d171e3cf02d6"
+    key_name = "vpc"
+    instance_type = "t2.micro"
+    
+    subnet_id = "${aws_subnet.dbserver.id}"
+
+    tags {
+        Name = "Ubuntu3"
+    }
+}
+
+
+
+
+
+Example:
+
+mkdir yogi
+cd yogi
+vi main.tf
+
+
+     resource "aws_instance"  "web" {
+    ami = "ami-08692d171e3cf02d6"
+    key_name = "vpc"
+    instance_type = "t2.micro"
+ 
+    subnet_id = "${aws_subnet.web.id}"
+    
+        tags
+        {
+            Name = "Ubuntu1"
+    }
+
+}
+
+resource "aws_instance"  "Business" {
+    ami = "ami-08692d171e3cf02d6"
+    key_name = "vpc"
+    instance_type = "t2.micro"
+   
+    subnet_id = "${aws_subnet.Business.id}"
+
+    tags {
+        Name = "Ubuntu2"
+    }
+}
+
+resource "aws_instance"  "dbserver" {
+    ami = "ami-08692d171e3cf02d6"
+    key_name = "vpc"
+    instance_type = "t2.micro"
+    
+    subnet_id = "${aws_subnet.dbserver.id}"
+
+    tags {
+        Name = "Ubuntu3"
+    }
+}
+
+
+
+
+
+
+
+
+Example:
+
+mkdir Azurefirst1
+cd Azurefirst1
+
+vi main.tf
+
+
+provider "azurerm" {
+    subscription_id = ""
+    tenant_id = ""
+    client_id = ""
+    client_secret = ""
+  
+}
+resource "azurerm_resource_group" "myterraformgroup" {
+    name = "Vnet"
+    location = "Central_Us"
+    resource_group_name = "learning"
+  
+}
+
+
+
+vi resource.tf
+
+resource "azurerm_virtual_machine" "myVnetgroup" {
+    name = "ntier"
+    location = "${azurerm_resource_group.myterraformgroup.location}"
+    resource_group_name = "${azurerm_resource_group.myterraformgroup.name}"
+    address_space = ["192.168.0.0/24"]
+    tags = 
+    {
+        environment = "development"
+    }  
+}
+resource "azurerm_subnet" "myterraformsubnet" {
+    name = "web1"
+    location = "${azurerm_resource_group.myVnetgroup.location}"
+    resource_group_name = "${azurerm_resource_group.myVnetgroup.name}"
+    address_prefix       = "192.168.1.0/24"
+  
+}
+
+
+vi infra.tf
+
+resource "azurerm_public_ip" "myterraformpublicip" {
+    name                         = "myPublicIP"
+    location                     = "${azurerm_resource_group.myterraformsubnet.location}"
+    resource_group_name          = "${azurerm_resource_group.myterraformsubnet.name}"
+    allocation_method            = "Dynamic"
+
+    tags {
+        environment = "Terraform Demo"
+    }
+}
+
+resource "azurerm_network_security_group" "myterraformnsg" {
+    name                = "myNetworkSecurityGroup"
+    location            = "${azurerm_resource_group.myterraformsubnet.location}"
+    resource_group_name = "${azurerm_resource_group.myterraformsubnet.name}"
+    
+    security_rule {
+        name                       = "SSH"
+        priority                   = 1001
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "22"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+    }
+
+    tags {
+        environment = "Terraform Demo"
+    }
+
+
+
+    
+Vi variable.tf
+
+variable "subscriptionid" {
+    type = "string"
+  
+}
+variable "tenantid" {
+    type = "string"
+
+  
+}
+
+variable "clientid" {
+    type = "string"
+
+  
+}
+
+variable "clientsecret" {
+    type = "string"
+  
+}
+
+
+
+
+
+Example: 2 in Azure
+
+mkdir AzureHello
+cd Azurehello
+vi main.tf
+
+
+provider "azurerm" {
+    subscription_id = ""
+    tenant_id = ""
+    client_id = ""
+    client_secret_id = ""
+   
+}
+resource "azurerm_resource_group" "ntier" {
+    name = "learning"
+    location = "Central_Us"
+    tags {
+        environment = "Development"
+    }
+  
+}
+
+
+Vi resource.tf
+
+resource "azurerm_virtual_machine" "MyVnet" {
+    name = "MYvpc"
+    resource_group_name = "${azurerm_resource_group.ntier.name}"
+    location = "${azurerm_resource_group.ntier.location}"
+    address_space = ["192.168.0.0/16"]
+  
+}
+
+resource "azurerm_subnet" "mysubnet1" {
+    name = "web1"
+    resource_group_name = "${azurerm_resource_group.ntier.name}"
+    location = "${azurerm_resource_group.ntier.location}"
+    address_prefix = "192.168.0.0/24"
+    virtual_network_name = "${azurerm_resource_group.MyVnet.name}"
+}
+
+resource "azurerm_subnet" "mysubnet2" {
+    name = "db"
+    resource_group_name = "${azurerm_resource_group.ntier.name}"
+    location = "${azurerm_resource_group.ntier.location}"
+    address_prefix = "192.168.1.0/24"
+    virtual_network_name = "${azurerm_resource_group.MyVnet.name}"
+  
+}
+
+vi infra.tf
+
+resource "azurerm_public_ip" "webipassress" {
+    name = "webip"
+    resource_group_name = "${azurerm_resource_group.ntier.name}"
+    location = "${azurerm_resource_group.ntier.location}"
+    allocation_method = "dynamic"
+}
+resource "azurerm_network_security_group" "myterraformsg" {
+    name = "MYSecurityGroup"
+    resource_group_name = "${azurerm_resource_group.ntier.name}"
+    location = "${azurerm_resource_group.ntier.location}"
+
+    security_rule {
+        name                       = "SSH"
+        priority                   = 1001
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "22"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+    }
+
+    tags {
+        environment = "Terraform Demo"
+    }
+}
+
+resource "azurerm_network_interface" "myWebNIC" 
+{
+    name = "Webnic"
+    resource_group_name = "${azurerm_resource_group.ntier.name}"
+    location = "${azurerm_resource_group.ntier.location}"
+    network_security_group_id = "${azurerm_network_security_group.myterraformsg.id}"
+    
+    ip_configuration {
+        name                          = "webnic_inconf"
+        subnet_id                     = "${azurerm_subnet.myterraformsg.id}"
+        private_ip_address_allocation = "Dynamic"
+    }
+ 
+
+
+  
+}
+
+  
+
+vi vm.tf
+
+resource "azurerm_virtual_machine" "myterraformvm" {
+    name                  = "myVM"
+    location              = "${azurerm_resource_group.ntier.location}"
+    resource_group_name   = "${azurerm_resource_group.ntier.name}"
+    network_interface_ids = ["${azurerm_network_interface.myWebNIC.id}"]
+    vm_size               = "Standard_DS1_v2"
+ storage_image_reference {
+        publisher = "Canonical"
+        offer     = "UbuntuServer"
+        sku       = "16.04.0-LTS"
+        version   = "latest"
+    }
+
+storage_os_disk {
+        name              = "myOsDisk"
+        caching           = "ReadWrite"
+        create_option     = "FromImage"
+        managed_disk_type = "Premium_LRS"
+}
+ os_profile {
+        computer_name  = "yogesh"
+        admin_username = "yogesh"
+        admin_password = "motherindia@123"
+    }
+
+    os_profile_linux_config {
+        disable_password_authentication = false
+    }
+
+
+connection = {
+    type = "ssh"
+    user = "yogesh"
+    password = "motherindia@123"
+
+}
+
+provisioners "remote-exec"
+{
+    inline = [
+        "sudo apt-get update"
+        "sudo apt-get install apache2 -y"
+    ]
+}
+}
+
+vi variable.tf
+
+variable "subscriptionid" {
+    type = "string"
+  
+}
+variable "tenantid" {
+    type = "string"
+  
+}
+
+variable "clientid" {
+    type = "string"
+  
+}
+
+variable "clientsecret" {
+    type = "string"
+  
+}
+
+
+
+vi output.tf
+
+output "webserverip" {
+  value = "${azurerm_public_ip.webipassress.id}"
+}
+
+
+
+
+
+Example: with multiple provisioners
+
+mkdir multiprovisioner
+cd multiprovisioner
+vi main.tf
+
+provider "aws" {
+    access_key = "AKIAWXCRVVQ5DFSBMMOU"
+    secret_key = "t0AhJC30kaxTxCboj13M3U0EYoOYvYkZAbqOu72O"
+    region = "us-west-2"
+  
+}
+resource "aws_instance" "ansible" {
+    ami = "ami-005bdb005fb00e791"
+    key_name = "vpc"
+    instance_type = "t2.micro"
+    security_groups = ["vpc"]
+
+connection {
+    type = "ssh"
+    user = "ubuntu"
+    private_key = "${file("./vpc.pem")}"
+
+}
+
+  provisioner "file" {
+  source      = "./ansible.yml"
+  destination = "/home/ubuntu/ansible.yml"
+}
+  
+  provisioner "remote-exec" {
+      inline = [
+
+          "sudo apt-get update",
+          "sudo apt-get install software-properties-common -y ",
+          "sudo apt-add-repository --yes --update ppa:ansible/ansible -y",
+          "sudo apt-get install ansible -y "
+      ]
+  }
+}
+
+
+
+
+
+Example: Module.
+
+
+
+
+
+
+
+
+
+
+
+

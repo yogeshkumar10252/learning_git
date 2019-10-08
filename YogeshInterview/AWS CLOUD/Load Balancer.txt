@@ -1,0 +1,16 @@
+AWS Network Load Balancer (NLB) is an Amazon Web Services (AWS) tool that distributes end user traffic across multiple cloud resources 
+to ensure low latency and high throughput for applications. ... When a target becomes slow or 
+unavailable, the Network Load Balancer routes traffic to another target. at work on a layer 4 means tcp. 
+
+
+application load balancer load the balance the traffic come from the https and http. and application load balancer work at the layer seven 
+means applictaion layer.
+
+
+
+A classic load balancer distributes incoming application traffic across multiple EC2 instances in multiple Availability Zones. 
+and increse the fault tolerance application.
+
+
+AMI: Amazon Machine image.
+Ec2 : Elastic Compute Cloud.

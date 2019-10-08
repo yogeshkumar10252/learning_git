@@ -1,0 +1,352 @@
+
+     Groovy:
+The official website for Groovy is http://www.groovy-lang.org/
+
+Groovy is an object oriented language which is based on Java platform. Groovy 1.0 was released in January 2, 2007 
+with Groovy 2.4 as the current major release.
+
+
+node('MAVEN_NODE') {
+    // some block
+  stage('git')
+   git branch: 'master', url: 'https://github.com/spring-projects/spring-petclinic.git'
+   
+   stage('Build')
+   sh label: '', script: 'mvn package'
+   // This step should not normally be used in your script. Consult the inline help for details.
+ stage('Archive')    
+  archive 'target//* .jar'
+  junit 'target/surefire-reports/*.xml'
+
+}
+
+jenkins with Sonar:
+
+node('MAVEN_NODE') {
+    // some block
+  stage('git')
+   git branch: 'master', url: 'https://github.com/spring-projects/spring-petclinic.git'
+   
+   stage('Build')
+   sh label: '', script: 'mvn package'
+   // This step should not normally be used in your script. Consult the inline help for details.
+ stage('Archive')    
+  archive 'target//* .jar'
+  junit 'target/surefire-reports/*.xml'
+
+  stage('sonar')
+   {
+    withSonarQubeEnv('sonarcube')
+    {
+     // Require sonar qube scanner for maven 3.2+
+sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+}
+}
+
+
+
+node('MAVEN_NODE') {
+    // some block
+  stage('git'){
+
+   git branch: 'master', url: 'https://github.com/spring-projects/spring-petclinic.git'
+   }
+   stage('Build')
+{
+   sh label: '', script: 'mvn install'
+}
+stage('dummy')
+{
+pwd
+}
+   
+// This step should not normally be used in your script. Consult the inline help for details.
+ stage('Archive')
+{    
+  archive 'target//* .jar'
+  junit 'target/surefire-reports/*.xml'
+}
+
+}
+
+
+Pipeline for ansible.
+
+node('ansible')
+{
+ stage('Deploy')
+{ 
+sh 'ansible-playbook -i <inventory> hosts.yml spring-petlinic.yml'
+}
+}
+
+
+PineLine for Kubernetes.
+
+node('kuber8')
+{
+ stage('Deploy)
+{
+ sh 'kubectl apply -f <deployment.yml>'
+}
+}
+
+How To diff.  from environments or run the pipeline.
+
+
+Pipeline for ansible.
+
+node('ansible')
+{
+ stage('Deploy')
+{ 
+sh 'ansible-playbook -i Dev\<inventory> hosts.yml spring-petlinic.yml'
+}
+}
+
+
+PineLine for Kubernetes.
+
+node('kuber8')
+{
+ stage('Deploy)
+{
+ sh 'kubectl apply -f Prod\<deployment.yml>'
+}
+}
+
+
+Pipeline for docker.
+ode('MAVEN_NODE') {
+    // some block
+  stage('git'){
+
+   git branch: 'master', url: 'https://github.com/spring-projects/spring-petclinic.git'
+   }
+   stage('Build')
+{
+   sh label: '', script: 'mvn install'
+   sh 'docker build -t <image name>:1.0'
+   sh 'docker push'
+}
+stage('dummy')
+{
+pwd
+}
+
+
+Qns: how many server using for one project.
+ans:  i am using the 15 server for for complete pipeline.
+
+Qns: how many server use in ansible
+ans: it depends or company to company but my company use 6 server for ansible.
+
+Qns: How to configure the sonar-qube.
+ans: goto the manage jenkins=> configure system=>
+     name of the node and set the url of sonarqube such as https://192.168.50.250:9000
+      and give the name and password.
+
+
+Qn: How to configure the arctifactory.
+ans: goto the manage jenkins=> configure system=>
+     serverid: jfrog-arctifactory
+     url: https://192.56.69.12:8081/arctifactory
+     username:
+     password:
+
+step: of complete pipeline.
+git
+compile the code
+test the code
+package the code
+
+static code analysis by sonarqube
+show test result
+
+archive the arctfact
+
+we send to the arctifactory to the other destination.
+deploy the code
+
+QA environment
+
+pre environment.
+
+
+loops:
+-------
+
+while loop: in while loop first check the condition if condition is true the executed the statment. otherwise come out from the loops
+ex: 
+i=1
+while(1<=10)
+{
+ system.out.println("$i")
+ i++;
+}
+
+
+do while loop: in do while loop first statement is executed then condition is check.
+syntax:
+i=1
+do
+{
+system.out.println("radhe radhe")
+i++;
+}while(i<=10)
+
+
+for loop: in for loop we can do initialize the loop, test the loop and iterate the loop in one line.
+
+for(int i=1; i<=10; i++)
+{
+system.out.println("radhe");
+}
+
+## Build flow plugins:
+
+buildTrigger = build("Trigger")
+
+parallel(
+    {
+        buildA = build("A")
+        buildA1 = build("A1")
+        parallel(
+            {
+                buildA2 = build("A2")
+            },
+            {
+                buildA3 = build("A3")
+            },
+        )
+    },
+    {
+        buildB = build("B")
+        buildB1 = build("B1")
+    },
+)
+
+buildResults = build("GatherResult")
+ 
+
+
+
+MultiJob project plugins: with the help of this plugins we can run the multiple jobs paralley. or sequence vise.
+
+
+
+Which plugins are you using in  jenkins.
+multijobs.
+buildmonitoring 
+backup
+amazons3 plugin
+import and export 
+sonarqube plugins
+arctifactory plugins
+build parameter plugins
+amazon sdk 
+flow plugins
+Kubernetes Plugin. The 'Kubernetes plugin' works, surprisingly, with Kubernetes. ...
+Self-Organizing Swarm Modules Plugin. ...
+Amazon ECS Container Service. ...
+Azure Container Service.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Jenkins Plugins
+
+1. Dashboard View Plugin
+The ‘Dashboard view plugin’ provides a new Jenkins dashboard that allows you to monitor the status of all the tasks. 
+
+2. View Job Filters Plugin
+The ‘View Job Filters plugin’ is an out-of-the-box method to build different views for all your Jenkins jobs. 
+
+3. Folders Plugin
+The ‘Folders plugin’ is a great method for grouping your Jenkins tasks. T
+
+4. Monitoring Plugin
+The ‘Monitoring Plugin’ uses JavaMelody to keep track of Jenkins. This plugin allocates charts for CPU, HTTP response time, memory, and much more. It further provides information on HTTP periods, logs accounts, head dumps, and other data. With this plugin, you can check the status/progress of jobs under consideration and view statistics that will help you proactively manage Jenkins via the interface.
+
+5. Metrics Plugin
+The ‘Metrics Plugin’ provides health checks by exposing the Dropwizard Metrics API to Jenkins for application-level metrics to keep you informed of whats happening in real-time.
+
+Performance Enhancers
+6. Performance Plugin
+Use this plugin in both Jenkins pipelines and GUI jobs. The tool provides report capturing capabilities through a whole range of favorite testing tools like JMeter, JUnit or Taurus. You can watch your project’s performance via trend reports and graphs, and set your build status to either right, unstable or failed.
+
+7. Performance Publisher Plugin
+An outstanding feature of Performance Published plugin is that it is designed to work with every testing tool by generating trend and global reports for test result analysis. It computes stats, underlines regressions and modifications, and creates any number of trend graphs, but you need to generate the XML files with your own testing tool.
+
+Scaling Jenkins Setup
+Setting up Jenkins is straightforward for immediate CI functionality and to run automated tests on its own. But as you run more jobs on your Jenkins server, it will quickly become apparent that one instance is not enough even assuming they might run in parallel to each other. For these occurrences, Jenkins provides the “master/slaves” mode.
+
+There are numerous ways to configure the Jenkins’ master and slaves. The best recommendation is to allocate new slaves’ instances only when they are necessary and to exclude them when it’s not convenient having them.
+
+The next two plugins are great for handling Jenkins server scalability.
+
+8. Kubernetes Plugin
+The ‘Kubernetes plugin’ works, surprisingly, with Kubernetes. So, if you plan to use Kubernetes for your infrastructure, this plugin is the way forward for setting up and tearing down Jenkins’ agents. While moving to Kubernetes is not the easiest process, the results are worth it.
+
+9. Self-Organizing Swarm Modules Plugin
+The decision for using this plugin or the one above lies simply with, are you using Docker Swarm or Kubernetes? This plugin offers just another method to spin up and pull down Jenkins slaves.
+
+10. Amazon ECS Container Service
+Use the ‘Amazon ECS Container Service’ plugin to manage Jenkins cloud slaves and deploy Docker-based applications on a cluster.
+
+11. Azure Container Service
+Your new AKS (rebranding by Azure) cluster orchestration plugin to run a container as an agent through Jenkins.
+
+Tests Analysis Plugins
+Jenkins is the ultimate companion for performing your tests as part of CI. However, Jenkins doesn’t provide any way of studying test results after execution, which is an essential aspect of testing.
+
+12. Test Results Analyzer
+The Test Results plugin is preferable as it offers greater visibility on tests results and execution trend patterns as well as allowing easy installation. The ‘Tests Result Analyzer’ gives many different graphical representations and a quite detailed matrix table that will direct you to the outcome of each test for all the builds you’ve had. A reliable method of identifying unstable tests.
+
+13. Bootstrapped-multi-test-result-report plugin
+The ‘bootstrapped-multi-test-result-report plugin’ enables you to build HTML reports based on tests’ results. A major advantage of this plugin is its ability to make interactive reports that enable you to see the overall picture of all outcomes as well as detailed results of steps statuses.
+
+
+Pipeline / Flow
+14. Job DSL plugin
+This plugin allows users to describe tasks, handle scripts, and update Jenkins jobs. With Job DSL you can define jobs by bare minimum programmatic form with the help from templates. You also gain various jobs views such as ‘BuildMonitorView’, ‘BuildPipelineView’, ‘CategorizedJobsView’, and many others. These views provide high visibility of the status of selected Jenkins jobs.
+
+15. Build Pipeline Plugin
+This plugin provides a view of the jobs that make up your build pipeline, upstream and also downstream. Furthermore, it allows you to define manual triggers for specific tasks that may need intervention before their execution. Build Pipeline Plugin is a game changer for Jenkins’ users because it makes pipelines scriptable as well as providing an incredibly powerful avenue in which to develop complex DevOps pipelines.
+
+16. Multijob Plugin
+This plugin allows you to express complex tasks and then organize them according to their structures in the Jenkins. You can use this plugin whenever you need to clean up the mess for chain definitions with upstream or downstream jobs. You may also use it when you need to create a hierarchy of tasks to be executed sequentially.
+
+Upon its installation, you can create ‘Multijob’ projects, and also define phases that can hold more than one job in addition to executing jobs in parallel to each other.
+
+17. Pipeline Plugin
+‘Pipeline’ attempts to automate your continuous delivery pipeline and performs other complex tasks in Jenkins using traditional plugins and freestyle projects.
+
+
+
+
+Source Control Management (SCM)
+SCM allows for the referencing of multiple repositories in a Jenkins job.
+
+18. SCM API
+This plugin supplies a next-generation API for interacting with SCM systems including a full-featured event system that allows developers to provide fine-grained alerts to consumers.
+
+19. Git Plugin
+Provides access to GitHub as an SCM which acts as a repository browser for many other providers.
+
+20. GitHub Integration Plugin
+This is the most fundamental plugin needed for integrating Jenkins with GitHub projects.With this plugin,
+you can schedule your build, pull code and data files from GitHub repositories to Jenkins, and automatically trigger each build as needed.

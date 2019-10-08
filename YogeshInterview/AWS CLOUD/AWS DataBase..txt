@@ -1,0 +1,133 @@
+ AWS DataBase.
+Database:
+1. creation
+2. user management (partial)
+3. backup
+4. replication/failover
+5. performance
+6. Readonly replication (select QUERIES)
+7. Cluster Creation.
+PAAS
+ => RDS
+      Supported
+       => SQL Server
+       => Oracle
+       => mysql
+       => PostgreSQL
+ => DynamoDb
+
+************************************************
+14 March 2019
+
+# Database as a Service
+
+* This is PAAS
+* Admin activities that are completely/partially done by AWS
+    * Backup
+    * Upgrade
+    * Replications
+    * Read Replications
+    * Failover
+
+* Plans:
+    * [Free tier plan](https://aws.amazon.com/rds/free/)
+    * [Pricing](https://aws.amazon.com/rds/pricing/)
+
+* Options
+    * instance type (impact pricing & performance)
+    * disk storage size/type
+    * Engine (database & version)
+    * MultiAZ deployment
+    
+
+
+
+
+machine:
+db.t2.micro
+750 free
+20 Gb store
+20 GB backup
+
+
+***********************************
+Practice:
+create the database:
+
+step:
+1. login into aws account
+2. search the rds service
+3. select create the database
+4. select the engine(database) select the free tier
+5. select the general purpose licese
+6. select the db engine 5.6
+7. db instance class
+              db.t2.micro
+8. allocate storage
+                 20 GB
+9. DB instance indentifier
+database name
+
+10. Master user name(select the root user)
+     root
+11. Master password
+     <.....>
+
+12. Network and security
+13. public accessibility
+     yes but always no
+14. vpc security group
+    create SG
+15. Database option
+      name:
+
+16. port info
+    3306
+
+
+
+17. Encryption
+
+18. Backup
+     0 Days
+
+Monitoring
+  select disable
+
+20.Maintaence:
+   disable auto minor version
+   No prefrence
+21. create database.
+22. click on security group and open the all tcp port.
+23. install the my sql workbench 
+24. click at add connection 
+25. copy host or dns name of database and paste into the url.
+26. click at test connection.
+27. give the password.
+    result ; success
+28. click at rdsnew
+29 . goto the database name and select the table and create the table.
+
+qns: can your database used one region to another region
+ans: yes, how  first take the snapshot(backup) the copy the shapshot into another region then used the database.
+
+Note: amazon internally create a machine which have the database.
+google: amazon rds instance type 
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

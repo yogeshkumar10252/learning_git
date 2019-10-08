@@ -1,0 +1,2719 @@
+-igoogle : kubernetes concepts pods imp: 
+           Kubernetes
+-----------------------------------
+
+
+Kubernetes is a free and open-source container management system that provides a platform for deployment automation, scaling, and operations 
+of application containers across clusters of host computers. 
+
+14 june 2019 Notes. no practice 
+* master manage the nodes
+* master manage the state. state means what we want
+ex: i want three container with databases.
+   if xyz any container is died the kubernetes automactically create the container with database.
+
+* google internelly use the prodoct is brog . and brog something called the omega
+  and kubernetes is the dna of both.
+* master acts as a incharge and node (minion) do the work or job.
+* master is kind of person which gives orders and other(nodes) executed order.
+
+Master have the four componets.
+1. API: api are used for communication .
+   ex: the interact b/w consumer and customer.
+
+2. Cluster Storage: whatever happend in kubernetes are storage in cluster storage.
+                    cluster storage is the whole memeory of kubernetes.
+
+3. controller manager : this component is responsible for maintain the state.
+
+4. Scheduler: scheduler is responsible for create the pod. 
+              creation is done by scheduler
+
+
+to make the manager is higher available.
+
+
+## Kubernetes
+
+## Installation;
+There are multiple ways
+ * Bare metal
+ * sandbox => minikube
+ * simplified
+ * Turnkey solution
+ * cloud solution.
+******************************
+15 june 2019 No practice.
+here more explain about the four componet.
+
+Master have the four componets.
+1. API: api are used for communication .
+   ex: the interact b/w consumer and customer.
+
+2. Cluster Storage: whatever happend in kubernetes are storage in cluster storage.
+                    cluster storage is the whole memeory of kubernetes.
+
+3. controller manager : this component is responsible for maintain the state.
+                 There are two state.
+                 1. desired state
+                 2. Actual state
+4. Scheduler: scheduler is responsible for create the pod. 
+              creation is done by scheduler
+
+google: etcd: this is nothing but distributed reliable key -value  storage .
+           etcd is the moemory of kuberntetes. everything happend in kubernutes is storage in kubernetes.
+           for example. delete the node, add the node, delete the container,
+                        as a user make a request is stotage in etcd.
+
+in practice we use one master but in real time we use multi master.
+
+Qns: why are using etcd storage while we have more key-value storage.
+
+
+Note: Any thing which we want to speak with kubernetes we use the API server.
+      There are two way for using the APL
+1. Directly using the Rest APL. we donot use the Rest API.
+
+2.we using kubectl or kubecontrol (command line utility) which speak with kubernetes.
+
+
+google: kubernetes component:
+
+What is the Rest API:
+----------------------
+-----------------------
+google: jsonplaceholder
+Rest API expose the service over http with http action/methods
+
+Method
+
+GET
+PUT
+POST
+HEAD
+DELETE
+
+google.com f12 
+
+Rest api give the data not the html page.
+
+
+Node Components:
+--------------------
+--------------------
+Node have three componets.
+1. Kubelets
+   Kubelets is a agnet its take the command. and it perform the action accroding to the asked by the master. kubelets donot make any dision.
+  it take the command and executed the command.
+
+2. Container Engine:
+      This is container engine
+
+3. Kube.proxy:
+             all about the network and service discovery kube proxy is responsible.
+ for example: you have a multiple machine how can communicate the each other. this can be done bt kube proxy.
+
+
+
+Note: Kubernetes create the pods not create the container. pods is the smallest and automic unit.
+      kuberntes cannot use docker container because kubernetes use other container 
+
+  pods not a container but pods has a container and it have some stack. in which the memeory to the pod.
+* pods have multiple container  
+  ans : yes but no sence.
+  pod is a top layer of containers.
+  kube -proxy give the unique ip to the pods.
+
+
+life cycle of pod.
+start
+stop
+pause
+unpause resume
+successed/failure
+peanding
+
+diff.b/w request and service.
+ex: quality thought have three courcse. aws devops and azure
+   resuest : i want to do only one course.
+
+* when any pod is  died  then new pod is created. and its get new ip address which are differ from died pods
+* when you trying the microserves in which we use the dependency. it means one pod is depend on another pod but
+ problem is if ex(database) is pods is died and new pod is created but its gets the new ip address how can communicate to application service to the database pods.
+ for solve this problem we use the service concept.
+* service is not a pod it have  a ip address and this ip address will not change.
+* we create the lavel in the database pods.
+*  create the service which have the level db.
+* web pod dealing with service not the database pods.
+* pods work with the lavel concepts.
+* any communication happend via API server.
+  for example: CM  want to communicate etcd . in this case CM server first communicate with API then with the help of API CM Communicate with etcd.
+  ex: 2. if SCH want to communicate with the node component this can be done by only APL
+
+Note: API is a interface for communicate from one component to another componet.
+
+google: kube admin installation.
+17 june 2019
+step:
+1. create the two ec2 machine with 2 VCpu and 4 GB RAM In t2.micro(ubuntu 14.02> machine).
+2. login into master machine
+3. sudo apt-get update
+4. https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/ first read the documents and use it.
+5. sudo -i
+6.apt-get update && apt-get install apt-transport-https ca-certificates curl software-properties-common
+  
+  ### Add Docker’s official GPG key
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+
+### Add Docker apt repository.
+add-apt-repository \
+  "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) \
+  stable"
+
+
+## Install Docker CE.
+apt-get update && apt-get install docker-ce=18.06.2~ce~3-0~ubuntu
+
+
+# Setup daemon.
+cat > /etc/docker/daemon.json <<EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF
+
+
+mkdir -p /etc/systemd/system/docker.service.d
+
+# Restart docker.
+systemctl daemon-reload
+systemctl restart docker
+
+docker info
+exit
+docker info
+sudo usermod -aG docker ubuntu
+exit
+again login and check docker info
+docker container ls
+
+sudo -i
+
+now install the kubeadmin  kubelet and kubectl
+
+kubeadmin: command is useful for create the multiple cluster.
+
+kubelet: the component that runs on all of the machines in your cluster and does things like starting pods and containers.
+
+kubectl: the command line util to talk to your cluster.
+
+
+apt-get update && apt-get install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
+cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+
+initialize the kubeadmin which are responsible for creating the cluster.
+
+kubeadm init
+after installation copy the kubernetes control-plane token.
+
+creating home directry and configure the kubernetes.
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $home/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Note: kubectl is command which speak with kubernetes.
+
+kubectl get nodes
+
+install the pod network to up the kubernets. and use the flannel or use the waves
+
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/62e44c867a2846fefb68bd5f178daf4da3095ccb/Documentation/kube-flannel.yml
+
+kubectl get nodes
+kubectl get nodes -o wides
+docker container ls
+
+,kubectl get pods -o wide
+kubectl get namespace
+
+kubectl get nodes
+kubectl get pods --help | less list all the pods
+
+kubectl get pods -A  this pods create the kubernetes and maintain the master.
+
+
+now install the kubernetes in Nodes.
+
+sudo apt-get update
+5. sudo -i
+6.apt-get update && apt-get install apt-transport-https ca-certificates curl software-properties-common
+  
+  ### Add Docker’s official GPG key
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+
+### Add Docker apt repository.
+add-apt-repository \
+  "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) \
+  stable"
+
+
+## Install Docker CE.
+apt-get update && apt-get install docker-ce=18.06.2~ce~3-0~ubuntu
+
+
+# Setup daemon.
+cat > /etc/docker/daemon.json <<EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF
+
+
+mkdir -p /etc/systemd/system/docker.service.d
+
+# Restart docker.
+systemctl daemon-reload
+systemctl restart docker
+
+
+docker info
+exit
+docker info
+sudo usermod -aG docker ubuntu
+exit
+again login and check docker info
+docker container ls
+
+sudo -i
+
+now install the kubeadmin  kubelet and kubectl
+
+kubeadmin: command is useful for create the multiple cluster.
+
+kubelet: the component that runs on all of the machines in your cluster and does things like starting pods and containers.
+
+kubectl: the command line util to talk to your cluster.
+
+
+apt-get update && apt-get install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
+cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+
+
+now executed the token or worker node.
+exit
+
+again goto the master
+kubectl get nodes    result : master and node join
+
+kubectl get pods -A its show the pods
+kubectl --help | less
+
+kubectl api-resources --help : it print all supported api resources.
+kubectl api-resources -o wide  it print all supported api resources. with more information.
+kubectl api-resouces --help
+kubectl --help
+kubectl get --help | less
+kubectl get pods
+kubectl get namespace
+kubectl get deployments
+kubectl get deploym
+
+Note: kubectl is a command which apply api resources.
+
+18 june 2019.
+
+* when we install the flannel or kubernetes we gotted the kube-proxy.
+* this kube -proxy create some adapter
+* the kube -proxy have CNI (container network interface). the container network interface is standard . the implementation of CNI there are various famous people is called the flannel.
+* the flannel is nothing but its a plugin it insure that running the multiple machine or running the multiple pods inside the machine communicate to each other using the CNI.
+* when we create the pod kube proxy  give the ip address of this pods.
+* any CNI plugins(ex . weave net or flannel) installed will become a adapter.
+  how can profe it. install the weave net
+  Commands: ifconfig
+
+and this adapter is responsible for giving the ip address of pod.
+
+* not use the ip address of pod in this case we use the service concepy.
+but how can work service concept.
+
+* service is not a pod and service run anywhere.
+* how to create the service. 
+* send the request to the api server and api server send the request to the every kube -proxy . the kube -proxy create the virtual ip in the node which are matching the node ip address.
+* runnig the multiple pods in same service there is no nedd the use the load balancer.
+* service is four layer load balancer
+* ingress is a seven layer.
+
+
+kubectl --help
+kubectl create --help
+
+
+kubernetes ymal:
+ kubernetes ymal is used for maintain the state.
+
+apiVersion: apiVersion tells what is version of your api resource
+kind: tells what kind of api resource do you want to create.
+
+metadata: tells add some extra information.
+spec: it tells desired state.
+
+firstkubernetes ymal file:
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: my-first-pod
+spec:
+ # hostNetwork: true
+ containers:
+  - name : my-first-container
+    image: nginx
+    ports:
+     - containerPort: 80
+
+login into master 
+step:
+ mkdir pod
+cd pod
+mkdir test
+cd test
+vi hello-pod.yam
+paste the above ymal file
+wq
+
+kubectl apply -f hello-pod.yml  
+kubectl get pods
+kubectl get pod -o wide
+kubectl get pods -A
+kubectl describe pods   describe is used for describe the information.
+kubectl get pod
+kubectl describe nodes
+
+
+
+19 june 2019: set up of kubernetes installation by sir docs.
+
+Kubernetes Setup with kubeadm
+Steps
+Create three linux machines with atleast 2 vcpu’s and 4gb ram in any environment
+Login into the three machines and install docker using following instructions
+# Install Docker CE
+## Set up the repository:
+### Install packages to allow apt to use a repository over HTTPS
+apt-get update && apt-get install apt-transport-https ca-certificates curl software-properties-common
+
+### Add Docker’s official GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+
+### Add Docker apt repository.
+add-apt-repository \
+  "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) \
+  stable"
+
+## Install Docker CE.
+apt-get update && apt-get install docker-ce=18.06.2~ce~3-0~ubuntu
+
+# Setup daemon.
+cat > /etc/docker/daemon.json <<EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF
+
+mkdir -p /etc/systemd/system/docker.service.d
+
+# Restart docker.
+systemctl daemon-reload
+systemctl restart docker
+Add the current user to the docker group and logout & login
+sudo usermod -aG docker <yourusername>
+Become root user
+Install kubeadm, kubelet and kubectl on all the three nodes
+
+apt-get update && apt-get install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+apt-mark hold kubelet kubeadm kubectl
+
+Bootstrap the cluster on the master node using
+kubeadm init --pod-network-cidr=10.244.0.0/16
+make the note of join command printed out
+
+Switch to non root user or exit from root
+
+Setup kubeconfig using the following on the master
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Login into the nodes and become root
+Join the cluster using join command noted during kubeadm init execution
+Login into the master and execute
+
+kubectl get nodes
+
+You will observe nodes in not ready state, So its time to setup cluster network. We will be using flannel, you can choose any from the kubernetes documentation
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/62e44c867a2846fefb68bd5f178daf4da3095ccb/Documentation/kube-flannel.yml
+Execute kubectl get nodes -w you should see the nodes turing into ready state
+
+Execute kubectl get pods -A and ensure all the pods are running
+
+##Setup Kubectl auto completion on master
+
+source <(kubectl completion bash)
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+
+********
+practice:
+kubectl get nodes
+kubectl get pods -all-namespace
+kubectl get nodes -w
+kubectl get componentstatues
+install the extension of kubernetes in VSCode
+
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: hello-pod
+spec:
+ # hostNetwork: true enable the access the container from external world
+ containers:
+   - image: nginx
+     name : my-nginx
+    ports:
+     - containerPort: 80
+
+login into master 
+step:
+ mkdir pod
+cd pod
+mkdir test
+cd test
+vi hello-pod.yam
+paste the above ymal file
+wq
+
+kubectl apply -f hello-pod.yml  
+kubectl get pods
+kubectl get pod -o wide
+kubectl get pods -A
+kubectl describe pods   describe is used for describe the information.
+kubectl get pod
+kubectl describe nodes
+kubectl delete -f hello-pod.yml if you want to delete the pod
+check the network communication create atleast two pod.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: shankar
+spec:
+ # hostNetwork: true
+ containers:
+ - name : test
+   image: nginx
+   ports:
+    - containerPort: 80
+
+login into master 
+step:
+ mkdir pod
+cd pod
+mkdir test
+cd test
+vi test-pod.yam
+paste the above ymal file
+wq
+
+kubectl apply -f test-pod.yml  
+kubectl get pods
+kubectl get pods -o wide
+kubectl exec test-pod ping <ip address of another pods >
+
+check the pod to pods communication.
+kubectl exec hello-pod.yml ping test-pod.yml
+result:no communication 
+why: because dns have certain statements which will do later.
+
+delete the pod because there is no maintain the  state.
+state is maintain by Replica so we use the replica.
+
+Replica Concepts:
+---------------------------------
+---------------------
+
+kubectl api-resource | gerp repli*
+
+* apiVersion: tell what is version of api resource
+* kind: what kind of api-resource or object do you want create.
+* metadata:
+* template: template are used for writing about the pod.
+* spec: spec is used for create the container in the pod.
+
+google: kubernetes api-reference
+
+
+
+kubectl ger 
+
+
+
+
+
+
+
+
+* in real time scenrio we do not create the pod.
+
+*********************
+20 june 2019
+
+AKS(Azure kubernetes cluster):
+-------------------------
+--------------------------------
+
+* when we install the kubeadmin . we identify the master and node when we add the new node in this case we create the token again .but with the AKS do not need to use the token
+  to add the nodes. you can increase the node any master. when we use the AKS kubernetes master automatically created.
+
+* advantage of AKS on installation of master and nodes.
+
+google aks azure and select the quick start.
+https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough
+
+practice:
+step: 
+1. login into azure account.
+
+2. open the terminal in azure.
+ Commands:
+## create the resource group.
+  az group create --name myResourceGroup --location eastus
+
+## create the aks cluster:
+az aks create \
+    --resource-group myResourceGroup \
+    --name myAKSCluster \
+    --node-count 1 \
+    --enable-addons monitoring \
+    --generate-ssh-keys
+
+
+##connect the aks cluster
+ az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+Commands:
+kubectl get nodes
+goto the resource group and go the als cluster and click at scale put the 2.
+kubectl get nodes
+vi azure-sample.yaml
+copy the file and save the file.
+kubectl apply -f azure-sample.yml --record
+kubectl get deployments
+kubectl get rs
+kubectl get pod
+kubectl get svc
+kubectl get svc -w
+kubectl get  pods and copy the ip address of load balancer and paste into the url
+here change the replica  replace 1 by 2 set into vi azure-sample.yml
+wq
+
+kubectl describe rs azure-back-end
+kubectl rollout status deployments azure -back-end
+kubectl rollout history
+
+now some change.
+
+kubectl apply -f azure-sample.yml --record
+kubectl describe rs azure-back-end
+kubectl rollout status deployments
+kubectl rollout history
+
+
+
+kubectl apply -f hello-alpine.yml
+kubectl get pods
+kubectl exec alpine cat /etc/reslov.conf
+kubectl get pods -o wide 
+kubectl exec alpine ping <another ip of another pod>
+kubectl exec alpine ping 10-244-1-4.default.pod.cluster.local this is the default dns of kubernets.
+kubectl get svc -o wide
+kubectl exec alpine ping take some service ip
+
+
+servicename.namespace.cluster.local
+
+
+
+kubectl delete -f azure.sample.yml
+
+
+
+vi testdeploy.yml
+
+kubectl apply -f testdeploy.yml
+kubectl get pods
+kubectl get rs 
+kubectl get pods -o 
+
+
+
+vi test-service.yml
+
+kubectl apply -f test-service.yml
+
+kubectl get pods
+kubectl get rs 
+kubectl get pods -o
+kubectl get svc -w 
+
+kubectl get deployments
+kubectl rollout history deployments name of deplyments
+
+
+
+
+
+
+
+
+
+
+
+
+Deployments:
+--------------
+--------------------
+* pushing the new version and back to the old version this can be done by deployments.
+* kubernetes deployments tells about the deployments of application without takes the downtime.
+* create the deployment and having the older deployment without having the downtime. this is basically do interm of continuous deployments.
+* deployment internally create the replication controller and replica set
+* replica set and replica controller have small difference.
+* replica set and replica controller both create the pods. but replica set store any where as a file
+  ex of replica set :
+   change the file and create the new state but not go back to the older state.
+* replica controller = replica set + saving file
+
+* rolldown and rollout strategy  desided by you.
+  ex: create the new pod and delete the odd pod.
+* in deployment all about deploy the app. and save the state the application so go back to the older version.
+* replica set have the persistent volume. 
+* to speak two kind of pods which means two kind of deployments and handle two kind of deployments having two kind of service.
+* i can expose the service using the porr or load balancer.
+* deployments create the replica set and replica set create the pods.
+* in deployment go to new deployments and go back to the older version.
+
+
+Deomen set:
+-------------
+--------------
+* you cannot create multiple deaomen set you can create only single deomen set.
+* when we create deomen set the pod will  be create all possible node of complete cluster.
+* it create the pod all the node.
+
+google : kubernetes concepts pods imp: 
+
+*********************
+Replica set:
+* Ensure that a specified number of pods are running at any time.
+* Replicaset basically used to create the multiple pods based on configuration file.
+* what is link b/t replicaset and pods.
+* Replicaset and pods are assocaited with "labels"
+* what is diffrence between replicatSet and the replication controller.
+   replicaset is the Nest-generation of replication  controller
+* both have the same purpose but it have the one difference.
+
+  replicaset                      replication controller
+  set-based Selectors                  Equality-based Selectors
+
+
+what is Label & Selectors
+
+Pod just like a virtual machine:
+Qns: How to manage the pod in kubernets
+Ans: pod are manage by replication controller ,service Daemon set etc.
+
+Qns: How these controller And service Aware of pods to manage it.
+Ans: Labels and Selectors
+  labels: the labels have the key value which attach the pod.
+
+Qns: How can manage these pods in Cluster(master).
+Ans: These Pod are manage by Selector. Selector match the same labels based.
+
+
+
+
+
+
+
+
+
+
+Qns: How many PODs exits on the system;
+And: kubectl get pod
+
+Qns. How many raplicaset in system
+ans. kubectl get replicaset.
+
+Qns: How about now ? How many replicaset do you see.
+Ans.kubectl get replicaset
+
+Qns. How many desired in the new replica-set.
+Ans. kubectl get replicaset ans see the desired status
+
+Qns: what is the image used to create the pods in the new-replica-set?
+ans: kubectl describe replicaset and see the image.
+
+Qns: how many pods are ready in the new replicaset
+and:kubectl get replicaset and see the ready status.
+
+Qns:Why do think pods are not ready.
+Ans:kubectl describe replicaset
+
+Qns: Delete any one of the 4 pods
+      kubectl get pods
+Ans. kubectl delete pod replica-set
+
+
+Qns: why are there still 4 pods ,even after you deleted one.
+ans: replicaset ensure that desired number of pods always.
+
+
+deployments:
+the deployments are used to push the version and back to old version is called the deployments.
+or with the deployments we can deploy the new version and back to the older version .
+deployments spec containe the replicaset and replicaset spec contain the pods.
+
+ex: 
+apiVersion: v1
+kind: deployment
+metadata:
+ name: jenkins-deploy
+ labels:
+   deploy: jenkins
+spec:
+ replicas: 1
+ selector:
+  matchlabels:
+    delpoy: jenkins
+ template:
+  metadata:
+   name: jenkins-pod
+   lebels:
+     deploy: jenkins
+ spec:
+  container:
+    - image: jenkins
+      ports:
+       containerport: 8080
+
+kubectl apply -f <file name>
+kubectl get deployments
+kubectl rollout status deployments
+
+
+apiVersion: v1
+kind: deployment
+metadata:
+ name: nginx-deploy
+ labels:
+   deploy: nginx
+spec:
+ replicas: 1
+ selector:
+  matchlabels:
+    delpoy: nginx
+ template:
+  metadata:
+   name: jenkins-pod
+   lebels:
+     deploy: nginx
+ spec:
+  container:
+    - image: nginx
+      ports:
+       containerport: 80
+
+
+kubectl apply -f <file name>
+kubectl get deployments
+kubectl rollout status deployments <deployments name>
+kubectl rollout history deployments <deployments name>  
+
+how to rollout from nginx to jenkins;
+this can be done by rollout undo command.
+
+command.
+ kubectl rollout undo deployments <deplyments name> --to revision=1
+
+
+what is rollout:
+ans: rollout is used to go to new version(deploy) to the older version or older version to the new  version.
+
+
+
+Concept:
+ a. why Persistent Volume(PV)
+ b. What is the persistent volume (PV) and persistent Volume claim(pvc)
+ c. PV Lifecycle
+ d. Types of provisioning PV
+     static PV
+     dynamic PV
+
+
+apiVersion: v1
+kind: replicaset
+metadata:
+  name: my-replicaset
+spec:
+  replica:2
+  selector:
+    matchLabels:
+      env: Dev
+  template:  //writing about the pods
+    metadata:
+       name: my-first-pod
+       labels:
+         env: Dev
+  spec:
+    container:
+      image: nginx
+      ports:
+       - containresPort: 80
+  
+
+google: kubernets api reference
+
+apiVersion:v1
+kind: replicaset
+metadata:
+   name: my-replcaset
+   lebels:
+     version: 0.0.1
+spec:
+  replica: 3
+  selectors:
+     matchLabels:
+        project: my-project
+        role: front-end
+   templates:
+     metadata:
+       name: first-pod
+       lebels:
+         project: my-project
+         role: front-end
+         run : dev
+   spec:
+     container:
+       - name : my-pod-for-rs
+         image: nginx
+         ports:
+         - containerPort: 80 
+
+
+google: kubernets concept pods
+
+
+ 
+
+
+
+Qns: what is service in kubernetes.
+ans: service is used the manage the pods in kubernetes.
+
+how.
+
+ex: apiVersion: v1
+    kind: service
+    metadata:
+     name: nginx-service
+     ports
+      - 6788
+     selectors:
+       matchlebels:
+        app: nginx 
+
+
+kubectl apply -f <file name>
+kubectl get service
+kubectl get service -w : w for watch more
+
+service manage the pods in kubernets with the help of lebels.
+
+
+kubectl get logs
+kubectl logs pod name
+kubectl logs resource name
+
+
+kubernets volume:
+   pod use the  epherimal volume . the ephemaral means when pod is died data is lost.
+   every pod have a volume but volume life cycle died when pod is died.
+
+There are two type of volume:
+persistent volume
+persistent volume claims
+
+persistentvolume means when pod is died then data will be persistent.
+
+   volume is called the storage.
+   where we created the stoarge
+
+There are many place where we crated the storage.
+node
+nfs
+ebs
+azdisk
+azfile
+
+Storage class are used in PVC persistent volume claim
+
+what is Persistent Volume Claim:
+Ans: you create the disk in aws or azure and how many pod used it .one pod or many number of pod where you tells. this tells in PVC.
+Persistent volume claim used in persistent volume and persistent volume used in pod
+
+Persistent volume clain have Multiple claims
+multiple claims means
+ReadWriteOnce means one pod have read and write permission.
+Readmany means  and other pods have only read permission.
+
+* only one claims is applied on one pod
+ex: readwrite  
+
+
+google:AKS Persistent Volume.
+google: kubetnets storage class
+        persistent volume claims
+                       accessmode are imp.
+
+kubectl get logs pods name
+kubectl events
+ google: kubernetes dashboard
+
+
+what is difference b/w persistent volume and persistent claims.
+to keep the back of data we used the persistent volume and how many pods use the volume is done by persistent volume claims.
+
+
+How to create the higer available cluster:
+Ans: copy the etcd to another server to create the higer available cluster.
+
+
+
+
+EKS: Elastic kunetnets service:
+************************************
+the hole purpose of eks to maintain the master.
+google: aws eks architecture.
+
+step: login into aws accout and goto the eks and click at the eks 
+       There are two thing
+        a. EKS Control plane  0.20/per
+        b. worker Ec2 per Ec2 Cost
+
+
+
+
+
+read the Documentaio.
+Note: eks works with in the region. 
+Qns: we can create a some nodes in us and some nodes in mumbai 
+Ans: no
+
+
+Master create the different network and nodes create the different network manage by the load balancer.
+
+
+Elastic Container Service(ECS):
+**************************************
+
+There are Two Flavors
+1.per machine cost
+2. per container cost
+
+Amazon have a special ami with docker all ready install and agent is running. it means you create a any thing in ecs speak with the agent
+then agent get the job done. here do not choice to choose ami here only choose the amazom ami.
+ 
+Task definition: means what do you want
+
+we push the image in intermediate registery . the test is successful the push the image from intermediate registert to main registery by cli .
+
+
+
+
+
+
+
+Kubernetes Namespace Concept:
+-----------------------------------
+namespace are used to create the logical partition into the kubernetes cluster.
+with the help of namespace concept we can create the two pods with the same name.
+commands: kubectl create namespace <name of the namespace>
+
+
+ConfigMap
+*************
+What are config map
+when to use configMaps
+use case for Configmap
+Overview of Secret
+Using Secrets
+Key Takeways
+
+
+kubernetes ConfigMap:
+---------------------------
+configmap file stored all the configuration file 
+for ex: httpd server ki configuration file. or ssl configuration.
+ if apache container is run  in the pod . apache container need some configure file . then in this case we maps the these file in to the
+ pods with the help of configmap concept
+kubectl create configmap <name > and the ymal file of configmap.
+if config map is create then we map the this configmap into the deployment file with the volume. after that we mount the this config map with the volume.
+ 
+ 
+
+Secret object or resource:
+*****************************
+secret object are use for store the all secret information just like password , some certificate,etc.
+the pods is requied these secret the we map the these secret from this file in the pod or deployment ymal file.
+step:
+first we create the secret
+kubectl create secret <secret name> and the ymal file which store the secret.
+ then we mount the these secret into the deployments file.
+
+
+https://Github.com/praqma-training/kubernets-katas
+
+
+what is level: and why use the lavel:
+level is the key value pair and basically used the lavel is that  this pod for this sevive. or this pod for this cluster.
+
+Lavelselector:
+
+
+
+what is service:
+service is the logical collection of pods 
+
+
+stateful and stateless service:
+in stateful volume is persistent and where as in stateless volume is not persistent
+
+
+
+
+Role based access control:
+---------------------------------
+in role based access  there are different type of user and here diff. type of access.
+namespace concept provide the logical partion in kubernets cluster.
+provide the particular namespace (resouce) to the partiular group of users or user that why be define the role. and this is manage by administractor.
+in role we define create the resource delete the resource etc.
+
+there are two type of role 
+cluster role : means  complete cluster.
+scope with the namespace role.
+
+Assign the role to the user is called the role binding .
+RBAC:
+   deny all expect those in an allow list
+   Deny only those who specially apper in a deny list.
+
+
+
+ex: apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    metadata:
+           namespace: default
+           name: pod-reader
+  rules:
+   -apigroup: [""]
+    resource: ["pod","deployments"]
+    verbs: ["get","watch","list"]
+
+
+
+
+
+Service.definition.yml
+---------------------------
+apiVersion: v1
+kind: Service
+metadata:
+    name: myapp-service
+
+spec:
+   type: Nodeport
+   ports:
+    - targetPort : 80
+      ports: 80
+      nodeport: 30008
+  selector:
+       app: myapp
+       type: frond-port
+
+
+*************************
+Multi-tenancy:
+
+in multi-tenancy 
+i have a  server in which any application is run just like  the mx-exel or browser or etc. 
+then we create a virtual instance of this software. this software used by many users . the users does not interface to each other. or
+multiple user use the same application at the same time. and they are not knowing to each othet.
+and when we login this application. with the help of id. and we know understand this application is working only for me.
+
+
+* The term multitenany refer to a software architecture in which  a single instance of software runs on a server and serve multiple tenants.
+* A tenant is a group of users who share a common access with specific id to the software instance
+* in multi-tenany one or more logical software instance are created and executed on top of primary software.
+* multi-tenancy allows multiple users to work a software environment at the same tome.each with their own separate user interface resource and the service.
+* with the help of virtulization and remote access we use the multi-tenancy.
+* in multi-tenany software provide as a service . there are advantage of user and cloud.
+* the advantage of user is that user donot require the hardware. and advantage of cloud is that he provide the one software in multiple place.
+
+
+
+*************** Serret:
+Credential ,configuration api key or other piece of information needed by an application at build time or run time.
+
+
+
+What is multi-tenancy:
+providing the isolation b/w tenants with in the cluster.
+
+
+Multi-tenancy use cases:
+
+control plane(api server) isolation
+container isolation
+
+
+*****************************
+what is service : how many types of service in kubernets. and explain each.
+ans: the service is the logical connection of the pods.
+   there are three types of service.
+ In Kubernetes, a Service is an abstraction which defines a logical set of Pods and a policy by which to access them 
+(sometimes this pattern is called a micro-service). The set of Pods targeted by a Service is usually determined by a selector 
+
+
+* imp: An abstract way to expose an application running on a set of Pods as a network service.
+
+
+For example, suppose you have a set of Pods that each listen on TCP port 9376 and carry a label app=MyApp:
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
+
+
+The default protocol for Services is TCP;
+
+
+Multi-ports:
+For some Services, you need to expose more than one port. Kubernetes lets you configure multiple port definitions on a Service object. 
+When using multiple ports for a Service, you must give all of your ports 
+
+example:
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: MyApp
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 9376
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 9377
+
+
+
+                                                  Publishing Services (ServiceTypes)
+
+For some parts of your application (for example, frontends) you may want to expose a Service onto an external IP address, that’s outside of your cluster.
+Kubernetes ServiceTypes allow you to specify what kind of Service you want. The default is ClusterIP.
+ 
+                                                Type values and their behaviors are
+                                              ____________________________________________
+
+
+ClusterIP: Exposes the Service on a cluster-internal IP. Choosing this value makes the Service only reachable from within the cluster. 
+            This is the default ServiceType.
+
+
+
+NodePort:  Exposes the Service on each Node’s IP at a static port (the NodePort). A ClusterIP Service, to which the NodePort Service routes, 
+           is automatically created. You’ll be able to contact the NodePort Service, from outside the cluster, by requesting <NodeIP>:<NodePort>.
+
+
+
+LoadBalancer: Exposes the Service externally using a cloud provider’s load balancer. NodePort and ClusterIP Services, to which the external 
+              load balancer routes, are automatically created.
+
+example:
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
+  clusterIP: 10.0.171.239
+  loadBalancerIP: 78.11.24.19
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+      - ip: 146.148.47.155
+
+
+
+
+
+ExternalName: Maps the Service to the contents of the externalName field (e.g. foo.bar.example.com), by returning a CNAME record
+
+example:
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: MyApp
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 9376
+  externalIPs:
+    - 80.11.12.10
+
+
+
+
+
+********************************
+
+
+******************************
+
+How to manage the cluster in kubernetes:
+manage the cluster depends on where your cluster. such that in virtual machine or cloud or on-premise data center.
+if your cluster hosted on virtual machine it manage by it self . if cluster present on cloud just like aks it manage by azure.
+
+Upgrade the cluster.
+Azure Kubernetes Service enables easy self-service upgrades of the control plane and nodes in your cluster. 
+resize the cluster.
+gcloud compute instance-groups managed resize kubernetes-node-pool --size=42 --zone=$ZONE.
+
+resize the cluster:
+****************************
+
+Azure Kubernetes Service enables user-initiated resizing of the cluster from either the CLI or the Azure Portal and is described in the Azure AKS documentation.
+
+
+Maintenance on a Node:
+*************************
+If you need to reboot a node (such as for a kernel upgrade, libc upgrade, hardware repair, etc.), and the downtime is brief, 
+then when the Kubelet restarts, it will attempt to restart the pods scheduled to it. If the reboot takes longer (the default time is 5 )
+
+
+ then the node controller will terminate the pods that are bound to the unavailable node. If there is a corresponding replica set 
+(or replication controller), then a new copy of the pod will be started on a different node.
+
+more control of cluster:
+**************************
+kubectl drain $nodename.
+
+kubernetes version: v1.12
+
+
+
+
+What is control-plane node:
+***********************
+           The control-plane node is the machine where the control plane components run, including etcd (the cluster database) 
+           and the API server (which the kubectl CLI communicates with)
+
+Installing a pod network add-on:
+                 You must install a pod network add-on so that your pods can communicate with each other.
+                 The network must be deployed before any applications. Also, CoreDNS will not start up before a network is installed.
+                 kubeadm only supports Container Network Interface (CNI) based networks (and does not support kubenet).
+
+
+You can install only one pod network per cluster.
+* Flannel
+* Weave Net
+* AWS -VPC
+
+
+
+
+                                       what is taint nodes:
+
+Control plane node isolation:
+
+By default, your cluster will not schedule pods on the control-plane node for security reasons. If you want to be able to schedule pods on the 
+control-plane node, e.g. for a single-machine Kubernetes cluster for development, run:
+
+kubectl taint nodes --all node-role.kubernetes.io/master-
+With output looking something like:
+
+node "test-01" untainted
+taint "node-role.kubernetes.io/master:" not found
+taint "node-role.kubernetes.io/master:" not found
+
+This will remove the node-role.kubernetes.io/master taint from any nodes that have it, including the control-plane node, 
+meaning that the scheduler will then be able to schedule pods everywhere.
+
+
+first check the taint in the node:
+command: kubectl describe node kubead-node1
+kubectl taint nodes --all node-role.kubernetes.io/master-
+kubectl describe node kubead-node1
+kubectl get pods -o wide
+kubectl delete pod name 1 name 1
+
+
+
+
+Optional) Controlling your cluster from machines other than the control-plane node
+                In order to get a kubectl on some other computer (e.g. laptop) to talk to your cluster, you need to copy the administrator 
+                 kubeconfig file from your control-plane node to your workstation like this:
+
+            scp root@<master ip>:/etc/kubernetes/admin.conf .
+            kubectl --kubeconfig ./admin.conf get nodes
+
+
+
+
+
+
+kubectl
+kubespay
+kubeadm
+kubectx/kubens
+docker bench
+docker Notary
+kubebox
+kubetail
+kubewatch
+kubeless
+kobs
+bootkube
+kube-shell
+kube monkey
+k8s-testsuite
+minikube
+kel
+
+
+
+Kubectl: 
+      Kubectl is a command utility which speak with the cluster.
+
+
+kubeadm: 
+       kubeadmin is a tool . with the help of we can create or install cluster in  kubernetes. 
+
+Minikube:
+    Minikube is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster inside 
+    a Virtual Machine (VM) on your laptop .
+
+Minikube feature:
+Minikube supports the following Kubernetes features:
+DNS
+NodePorts
+ConfigMaps and Secrets
+Dashboards
+Container Runtime: Docker, rkt, CRI-O, and containerd
+Enabling CNI (Container Network Interface)
+
+Start Minikube and create a cluster:
+minikube start
+
+
+Kubespray:
+     Kubespray is a composition of Ansible playbooks, inventory, provisioning tools, and domain knowledge for generic OS/Kubernetes clusters 
+     configuration management tasks. Kubespray help to create the higher available cluster.  
+
+kubectx/kubens:
+           The kubectx command can be used to switch clusters just as easily.
+          kubectx command is used to switch one cluster to another cluster. with the config-context file. the config-context file have the 
+          information about the multiple cluster.
+
+
+Docker bench:
+      Docker Bench for Security. This is a tool that can be utilized to scan your Docker environments.
+      The Docker Bench is used for  for Security is a script that checks for dozens of common best-practices around deploying Docker containers 
+      in production.  the docker bench is script which check all the container automatically in production.
+
+
+docker Notary:
+
+
+
+Kubebox:
+      Terminal and Web console for Kubernetes.
+
+
+Kubetail:
+   Bash script that enables you to aggregate (tail/follow) logs from multiple pods into one stream. 
+   This is the same as running "kubectl logs -f " but for multiple pods.
+
+
+
+
+Kubeless:
+   Kubeless is a Kubernetes-native serverless framework that lets you deploy small bits of code (functions) without having to
+   worry about the underlying infrastructure.
+
+
+Kubeshell:
+       with the help of kubeshell we can find the shells inside running the containers. or multiple containers.
+      command: kubectl exec -it shell-demo -- /bin/bash
+     here: shell-demo is the name of the pod. 
+
+
+kubeMonkey:
+      
+
+
+kel:
+  Kerala Electrical & Allied Engineering Co. Ltd., also known as KEL, is one among the largest productive public sector 
+  undertaking, fully owned company by the.
+
+k8s-testsuite:
+       This test suite consists of two Helm charts for network bandwith testing and load testing a Kuberntes cluster. 
+       The structure of the included charts looks a follows:
+
+k8s-testsuite/
+- load-test/
+|____Chart.yaml
+|____values.yaml
+|____.helmignore
+|____templates/
+- network-test/
+|____Chart.yaml
+|____values.yaml
+|____.helmignore
+|____templates/
+
+
+
+BootKube:
+____________
+
+    * Bootkube is a helper tool for launching self-hosted Kubernetes clusters.
+    * When launched, bootkube will act as a temporary Kubernetes control-plane (api-server, scheduler, controller-manager).
+
+
+KubeWatch:
+__________
+
+     Kubewatch is a Kubernetes watcher that currently publishes notification to Slack. Run it in your k8s cluster, 
+     and you will get event notifications in a slack channel.
+
+Note: Flannel uses UDP port 8285 and 8472
+
+
+Qns: pods in different node communicate to each other or not.
+     ex: i have a 3 pods . and two pod in one pod and one pod to another node it communicate to each other or not. if communicate to each other. the how.
+
+ex: apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: nginx-deployment
+      labels:
+        app: nginx
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app: nginx
+      template:
+        metadata:
+          labels:
+            app: nginx
+        spec:
+          containers:
+          - name: nginx
+            image: nginx
+            ports:
+            - containerPort: 80
+    ---
+    kind: Service
+    apiVersion: v1
+    metadata:
+      name: nginx-svc
+    spec:
+      selector:
+        app: nginx
+      ports:
+      - protocol: TCP
+        port: 80
+
+    $ kubectl get nodes
+      kubectl get svc
+
+
+
+
+example: of replica set:
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: frontend
+  labels:
+    app: guestbook
+    tier: frontend
+spec:
+  # modify replicas according to your case
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: php-redis
+        image: nginx
+
+
+
+Example: Deployments and service:
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: shankar1
+  labels:
+    app: shankar
+    run: jen
+spec:
+ replicas: 2
+ selector:
+   matchLabels:
+     app: shankar
+ template:
+   metadata:
+     labels:
+       app: shankar
+   spec:
+     containers:
+     - name: canty
+       image: nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+ selector:
+   matchLabels:
+     apps: shankar
+
+******************88
+
+
+Helm:
+* each package in the helm is called the chart
+* helm is nothing but package manager for k8s and chart is the package format
+* There are two component is helm chart.
+* first component is called the helm and second componet is called the tiller. the tiller componet is responsible for store the packages.
+for example: when we install the helm install then it go to the tiller . where search the package for install the helm.
+* the default registert is called the stable in helm
+
+Note:
+   * the helm is a package manager . and charts is a format of package manager.
+   * the helms use a packaging format is called the charts. A charts is a collection of files that describe a related set of kubernets resources.
+   * the singe charts might be used to deploy something like a pod ,or something complex a full web app stack with http server,tatabase,caches,and so on.
+   * helm is tool for kubernetes that help you to install and and manage the application.
+
+
+The helm have two parts
+  * client(helm) on your laptop or ci/cd system
+  * Server(tiller) in your kubernetes cluster
+
+* the helm is equivalent of apt or yum in os packaging world
+google: helm for aks
+
+google: helm wordpress
+
+
+
+
+
+## Service Account:
+        the service account provide the identify for processes that run in a pod. When a process is authenticated through a service account, 
+        it can contact the API server and access cluster resources.
+
+
+
+
+https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+
+
+
+## Namespace:
+        The Namespace think just like the partition into the harddisk. with the namespace we create the partition of the cluster.
+        with in the namespace you can create the two deployments with the same name or two pods with the same name or create the resource with
+        the same name.
+    
+
+
+Kubernetes context:
+          A context is a group of access parameters. Each context contains a Kubernetes cluster, a user, and a namespace
+
+
+  Command: kubectl get ns
+ kubectl --namespace kube-system get pods 
+
+here kube-system is a system related namespace
+
+Create the namespace:
+kubectl create namespace demo
+kubectl get ns
+
+
+Kubectl config view to see the 
+kubectl config get-contexts
+
+create the new context
+kubectl config set-context kubesys --namespace=kube-system --user=kubernetes-admin --cluster=kubernetes
+
+kubectl config get-contest
+
+kubectl config current-contest
+
+how to swicth the context
+kubectl config use-context kubesys
+kubectl get pods
+
+Now again create the contexts
+
+kubectl config set-context demo --namespace=demo --user=kubernetes-admin --cluster=kubernetes
+kubectl config get-contest
+
+how to define the alias
+alias kcc='kubectl config current-contest'
+alias kuc= 'kubectl config use-context'
+
+There are two namespace. and i want to switch into demo namespace
+first check what is the current context
+kcc
+
+then use the demo namespace. first switch into demo namespace.
+kuc demo
+
+here create the pods
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: my-first-pod
+spec:
+ # hostNetwork: true
+ containers:
+  - name : my-first-container
+    image: nginx
+    ports:
+     - containerPort: 80
+
+kubectl apply -f <yaml file name>
+kubectl get pod
+
+now switch into another namespace. first check kcc
+kuc <namespace >
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: my-first-pod
+spec:
+ # hostNetwork: true
+ containers:
+  - name : my-first-container
+    image: nginx
+    ports:
+     - containerPort: 80
+
+kubectl apply -f <yaml file name>
+kubectl get pod.
+
+
+
+## Secret:
+------------------
+Qns: What do want to secret:
+an: example: your application container want to connect to the mysql database the hardcode of the database such as user name and password 
+into the application
+             container which are  visible for  everyone which checkout by docker image or container image.
+
+the best way to create the secret resource here but the user name and password and create the application conatiner and pull the secret from secret resource.
+there are two ways for create the secret file.
+1. create by the command line
+2. create with the help of ymal file.
+here take the simple yaml file.
+
+apiVersion: v1
+kind: secret
+metadata: 
+  name: secret-demo
+type: Opaque
+data:
+  username: a3viZWFkWlu
+  password: jhgjgjg
+
+Now Create the secret resource:
+kubect get secret
+
+kubect create -f <yaml file name>
+kubectl get secret secret-demo -o yaml
+
+kubectl describe secret secret-demo
+kubectl delete secret secret-demo
+
+now:
+   kubectl create secret --help
+  kubectl create secret generic --help | less
+
+
+
+create the secret from commandline.
+kubectl create secret generic secret-demo --from-literal=username=kubeadmin --from-literal=password=mypassword
+kubectl get secret
+kubectl describe secret secret-demo
+
+
+another way to create the secret from command line.
+
+vi username
+radhe
+
+wq
+
+vi password
+
+krishna
+wq
+
+kubectl create secret generic secret-demo --from-file=username --from-file=password=password
+kubectl get secret
+
+## Now How do use the secret in pod conatiner.
+There are two way to use the secret in pod
+1. 
+secret mount in one variable and then use with in your container.
+
+2. the mounte into the one file and then get reference from volume.
+
+1.option example:
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: busybox
+spec
+ containers:
+ - image: busybox
+   name: busybox
+   command: ["/bin/sh"]
+   args: ["-c", "sleep 600"]
+   env:
+   - name: myusername
+     valuefrom:
+       secretKeyRef
+         name: secret-demo
+         key: username
+
+kubectl create -f <ymal file>
+kubecl get pods
+kubectl exec -it busybox --sh
+env | musuername=kubeadmin
+echo $myusername
+
+
+Now delete the pod
+kubectl delete pod busy-box
+kubectl get pod
+
+## Now use the second option:
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: busybox
+spec:
+  volumes:
+  - name: secret-volume
+    secret:
+      secretName: secret-demo
+  containers:
+  - image: busybox
+    name: busybox
+    command: ["/bin/sh"]
+    args: ["-c", "sleep 600"]
+    volumeMounts:
+    - name: secret-demo
+      mountPath /mydata
+
+kubectl create -f <yaml file name>
+kubectl get pods -o wide
+
+kubectl exec -it busybox --sh
+env | gerp muusername
+ls /mydata
+cat /mydata/username; echo
+cat /mydata/password; echo
+
+
+Note: You can change secret into the secret file when your container is run.
+practice:
+
+   
+
+here take the simple yaml file.
+
+apiVersion: v1
+kind: secret
+metadata: 
+  name: secret-demo
+type: Opaque
+data:
+  username: a3viZWFkWlu
+  password: jhgjgjg
+  name: radhe
+wq:
+
+kubectl exec -it busybox --sh
+env | musuername=kubeadmin
+echo $myusername
+
+
+
+
+## ConfigMap:
+  you can create the configmap inside the cluster and map the configmap inside the pod. you can dynamically chnage the configmap . you can update the pods.withe the help of config map
+  
+practice:
+
+## How to create the configmap:
+----------------------------------
+
+kubectl get configmap or kubectl get cm
+
+vi <yaml file>
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-configmap
+data:
+  channel.name: "justmeanopensource"
+  channel.owner: "Venkat Nagappen"
+
+kubectl create -f <yaml file>
+kubectl get cm
+
+kubectl describe config <name of the config map>
+kubectl get cm <nameof the cm> -o yaml
+
+Another way to create the config map:
+kubectl create configmap <name of the config map> --from-literal=namemeanopensourve --from-literal=channel.owner
+kubectl get cm
+kubectl decribe cm name of the config map
+
+## How to use this configmap in pod
+
+vi <pod.yaml>
+apiVersion: v1
+kind: pod
+metadata:
+  name: busybox
+spec:
+ containers:
+ - image: busybox
+   name: busybox
+   command: ["/bin/sh"]
+   args: ["-c", "sleep 600"]
+   env:
+   - name: CHANNELNAME
+     valuefrom:
+       configMapRef
+         name: demo-configmap
+         key: channel.name
+   - name: CHANNELOWNER
+     valuefrom:
+       configMapRef:
+         name: demo-configmap
+         key: channel.owner
+
+kubectl get pods
+kubectl create -f <pod-configmap-env.yml>
+kubectl get pod
+kubectl exec -it busybox sh
+echo $CHANNELNAME
+echo $ CHANNELOWNER
+env | grep -i channel
+
+kubectl delete pod busybox
+kubectl get pods
+
+## Another way to use the configmap in pod. here we mount the config map into the volume.
+vi <yaml.file>
+apiVersion: v1
+kind: pod
+metadata: 
+  name: busybox
+spec:
+ volume:
+ - name: demo
+   configMap:   type of the config map
+     name: demo-donfigmao
+ containers:
+ - image: busybox
+   name: busybox
+   command: ["/bin/sh"]
+   args: ["-c", "sleep 600"]
+   volumemounts:
+   - name: demo
+     mountPath: /mydata
+
+kubectl get pods
+kubectl create -f <configmap file>
+kubectl get pods
+
+kubectl exec -it sh
+env | grep -i channel
+ls /mydata
+cat/mydata/channel.name;echo
+cat/mydata/channel.owner; echo
+
+kubectl get cm
+kubectl delete cm <name of the config map>
+kubectl get cm
+kubectl edit cm <name of the config file>
+
+kubectl get cm <nameof the config map> -o yaml
+kubectl exec -it  busybox sh
+kubectl get pods
+cat /mydata/channel.name
+
+
+kubectl delete pod name of the pod
+kubectl get pods
+
+
+
+## CronJobs and jobs in kubernetes.
+------------------------------------
+
+kubectl cluster-info
+kubectl version --short
+
+## Jobs:
+
+apiVersion: batch/v1
+kind: job
+metadata:
+  name: helloworld
+spec:
+  template:
+    spec:
+      containers:
+       - name: busybox
+         image: busybox
+         command: ["echo", "hello kubernetes"]
+      restartPolicy Never
+kubectl get all
+kubectl create -f <yaml file name>
+
+kubectl logs <name of the pod>
+kubectl descrice job <name of the job> | less
+kubectl delete job <name of the jobs>
+
+
+apiVersion: batch/v1
+kind: job
+metadata:
+  name: helloworld
+spec:
+  template:
+    spec:
+      containers:
+       - name: busybox
+         image: busybox
+         command: ["sleep", "60"]
+      restartPolicy Never
+
+kubectl create -f <yaml file name>
+
+kubectl delete job <name of the job>
+------
+
+apiVersion: batch/v1
+kind: job
+metadata:
+  name: helloworld
+spec:
+  completion: 2
+  template:
+    spec:
+      containers:
+       - name: busybox
+         image: busybox
+         command: ["echo", "hello kubernetes"]
+      restartPolicy Never
+
+
+## note: here completion mean hera the pod and run the container .then agin create the pod and run the conatiners sequence.
+kubectl create -f <yaml file name>
+
+kubectl descrice job <name of the job> | less
+kubectl delete job <name of the jobs>
+
+----
+
+## Run the jobs in parallely:
+
+apiVersion: batch/v1
+kind: job
+metadata:
+  name: helloworld
+spec:
+  completion: 2
+  parallelism: 2
+  template:
+    spec:
+      containers:
+       - name: busybox
+         image: busybox
+         command: ["echo", "hello kubernetes"]
+      restartPolicy Never
+
+## Maximum two run in paralley
+
+kubectl create -f <yaml file name>
+
+kubectl descrice job <name of the job> | less
+kubectl delete job <name of the jobs>
+
+
+## backofflimit:
+without backofflimit:
+
+apiVersion: batch/v1
+kind: job
+metadata:
+  name: helloworld
+spec:
+  template:
+    spec:
+      containers:
+       - name: busybox
+         image: busybox
+         command: ["ls", "/radhe"]
+      restartPolicy Never
+
+
+kubectl create -f <yaml file name>
+
+kubectl descrice job <name of the job> | less
+kubectl delete job <name of the jobs>
+
+
+
+
+
+
+
+Note: in backofflimit container is create until reached the backofflimit. 
+withbackofflimit
+
+apiVersion: batch/v1
+kind: job
+metadata:
+  name: helloworld
+spec:
+  backofflimit: 2
+   template:
+   
+    spec:
+      containers:
+       - name: busybox
+         image: busybox
+         command: ["ls", "/radhe"]
+      restartPolicy Never
+
+
+kubectl create -f <yaml file name>
+kubectl get all
+kubectl descrice job <name of the job> | less
+kubectl delete job <name of the jobs>
+
+
+## activeDeadlineSecond:
+                       means conatiner(jons is running define the time in activedeadlineseconds) after this time jobs will terminating:
+
+apiVersion: batch/v1
+kind: job
+metadata:
+  name: helloworld
+spec:
+  activeDeadlineSecond: 10
+  template:
+    spec:
+      containers:
+       - name: busybox
+         image: busybox
+         command: ["sleep", "60"]
+      restartPolicy Never
+
+kubectl create -f <yaml file name>
+kubectl get all
+kubectl descrice job <name of the job> | less
+kubectl delete job <name of the jobs>
+
+
+## CronJob:
+the cronjob is job scheduler .
+
+apiVersion: batch/v1
+kind: Cronjob
+metadata:
+  name: hello-world-cron
+spec:
+  scheduler "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: busybox
+            image: busybox
+            command: ["echo", "kubernetes"]
+         restartpolicy: Never
+
+kubectl create -f <yaml file name>
+kubectl get all
+
+kubectl describe cronJob <name of the job> | less
+kubectl delete cronjob <name of the job>
+watch kubetcl get all
+   
+## successfulJobHistoryLimit and failedJobsHistoryLimit
+
+apiVersion: batch/v1
+kind: Cronjob
+metadata:
+  name: hello-world-cron
+spec:
+  scheduler "* * * * *"
+  successfulJobHistoryLimit: 0
+  failedJobsHistoryLimit: 0
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: busybox
+            image: busybox
+            command: ["echo", "kubernetes"]
+         restartpolicy: Never
+
+kubectl create -f <yaml file name>
+kubectl get all
+
+kubectl describe cronJob <name of the job> | less
+kubectl delete cronjob <name of the job>
+watch kubetcl get all
+kubectl delete pod name of the pod.
+
+
+## Suspend the cronjob:
+                   if you want to run the jobs in future then you  can suspend the job.
+
+apiVersion: batch/v1
+kind: Cronjob
+metadata:
+  name: hello-world-cron
+spec:
+  scheduler "* * * * *"
+  suspend: true  or you can use the resume use for false
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: busybox
+            image: busybox
+            command: ["echo", "kubernetes"]
+         restartpolicy: Never
+
+kubectl create -f <yaml file name>
+kubectl apply -f <ymal file name>
+kubectl get all
+
+kubectl describe cronJob <name of the job> | less
+kubectl delete cronjob <name of the job>
+watch kubetcl get all
+
+## patch the resource:
+kubectl patch cronjob <name of cronjob> -p '{"spec":{"suspend": false}}'
+## 
+
+
+
+apiVersion: batch/v1
+kind: Cronjob
+metadata:
+  name: hello-world-cron
+spec:
+  scheduler "* * * * *"
+  concurrencyPolicy: 
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: busybox
+            image: busybox
+            command: ["echo", "kubernetes"]
+         restartpolicy: Never
+
+kubectl create -f <yaml file name>
+kubectl get all
+
+kubectl describe cronJob <name of the job> | less
+kubectl delete cronjob <name of the job>
+watch kubetcl get all
+
+
+realUseof cronjob:
+database:
+git:
+
+
+
+
+
+## Kubernetes Volume:
+
+what do want persistent volume:
+                          we keep the data is persistent when pod is died with the help of persistent volume.
+ 
+## How To use the Persistent Volume:
+there are three step:
+1. create a persistent volume
+2. create a pvc(it means make a request for persistent volume)
+3. create the pod that use the pvc -.> pv
+
+There are two type of provisioning:
+static: 
+      in static provisioners i tell you cluster administer i want to deploy the database application or web application  which required the 5GB storage.
+      create the persistent volume.
+
+dynamic provisioners:
+  the cluster going to  create storage class . the based on storage classes the persistent volume can automatically create.
+  the dynamic provisioners is supported by few provider such an in aws ebs. in azure the azure disk. this is the responsibility of cluster administrator to create the storage. we refer the storage 
+  class for create the persistent volume.
+
+There are two types of request for persistent volume.
+1. Create the single request for persistent volume
+2. create the multiple request for persistet volume
+
+Lifecycle of persistent volume:
+RaclaimPolicy:
+1. Ratain: in this policy the pod and data is persistent but we can not use the this data for another pod.
+2.Recycle for dynamic provisioners
+3. Delete
+
+
+Access mode:
+1. RWO
+2. RWM
+3. RO 
+
+
+## How to create the persistent volume
+
+apiVersion: v1
+kind: PersistentVolume
+metadata: 
+  name: pv-hostpath
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capasity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostpath:
+   path: "/kube"
+
+login into the node
+ssh root@worker1
+mkdir /kube
+chmod 777 /kube
+ls /kune
+
+kubectl get pv
+kubectl create -f <ymal file>
+
+kubectl get pv
+
+
+## Now create the persistent volume claim:
+
+apiVersion: v1
+kind: PersistentVolumeclaim
+metadata:
+  name: pvc-hostpath
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage:100Mi
+
+wq:
+kubectl create -f <file name>
+kubectl get pvc
+kubectl describe host-path
+
+
+## How to use the persistent volume in pod
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: busybox
+spec: 
+  volume:
+  - name: host-path
+    persistentVolumeClaim:
+      claimName: pvc-hostpath
+  containers:
+  - image: buxybox
+    name: busybox
+    commands: "[/bin/sh"]
+    args: ["-c", "sleep 600"]
+    volumemounts:
+    - name: host-path
+      mountPath /mydata
+wq:
+kubectl create -f <yaml file name>
+kubectl get pod
+watch get all -o wide
+
+kubectl describe pod <pod name>
+kubectl exec busybox ls
+kubectl exec busybox  ls /mydata
+kubectl exec busybox touch  /mydata/hello
+
+kubectl delete pod <pod name>
+
+kubectl get pv, pvc
+
+kubectl delete pvc <name of the pvc>
+
+ssh root@worker1
+ls /kube
+
+
+Now Check in RetainPolicy we cannot attach the pvc again.
+
+kubectl create -f <pvc file>
+kubectl get pvc
+kubectl describe pod <name of the pod>
+
+
+kubectl delete pv <name of the pv>
+kubectl delete pvc <name of the pvc>
+kubectl delete pod name of the pod
+
+Ex: 2
+
+Again create the persistent volume
+Again create the pvc
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: busybox
+spec:
+  volumes:
+  - name: host-path
+    persistentVolumeClaim:
+    claimPolicy: pvc-hostpath
+  containers:
+  - image: busybox
+    name: busybox
+    commmnds: ["/bin/sh"]
+    args: ["-c","sleep 600"]
+    volumeMounts:
+     - name: host-path
+       path: /metadata
+  nodeselecto:
+    demoserver: "true"
+
+wq:
+
+kubectl get nodes -l demoserver=true
+result: no resource
+
+Now Attach the label:
+kubectl label node worker2.example.com demoserver=true
+kubectl get nodes -l demoserver=true
+
+kubectl create -f <file name>
+kubectl get all -o wide
+
+kubectl exec busybox ls /mydata
+kubectl exec busybox touch /mydata/hello
+kubectl exec busybox touch /mydata/hello1
+
+kubectl exec busybox touch /mydata
+
+goto the worker2
+
+
+
+
+
+## Resource Quota And Limit:
+----------------------------------
+
+The Resource Quata and limit applied to the namespace not the entire cluster.
+
+kubectl create namespace quota-demo-ns
+kubectl cluster-info
+kubectl get nodes
+kubectl get ns
+
+There are two thing
+1. Resource quota 2. Resource limit
+
+1. Resource quota:
+  Example: for this particular namespace i do not want to create the more than 100 pods.
+            or more then two jobs to be created or more then five cron jobs to be created.
+
+      restricted the resource deploy into the namespace.
+
+Example:
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota-demo1
+  namespace: quota-demo-ns
+spec:
+  hard:
+    pods: "2"
+    configmap: "1"
+
+wq
+kubectl create -f 
+kubectl -n quota-demo-ns describe quota quota-demo1
+
+now create the configmap
+kubectl -n quota-demo-ns create configmap cm1 --from-literal=name=venkat
+kubectl -n quota-demo-ns get cm
+kubectl -n quota-demo-ns describe quota quota-demo1
+
+kubectl -n quota-demo-ns create configmap cm2 --from-literal=name=venkat
+kubectl-n quota-demo-ns delete cm cm1
+
+## Now Create the pod
+kubectl -n quota-demo-ns run nginx --image=nginx --replica=1
+kubectl -n quota-demo-ns describe quota quota-demo1
+
+kubectl -n quota-demo-ns get all
+
+kubectl -n quota-demo-ns scale deploy nginx --replica=2
+kubectl -n quota-demo-ns scale deploy nginx --replica=2
+
+kubectl -n quota-demo-ns get all
+kubectl -n quota-demo-ns replicaset <id of the replicas>
+
+kubectl -n quota-demo-ns delete deploy nginx
+kubectl -n quota-demo-ns get all
+
+
+
+## ResourceLimit:
+Resource limit is applied on memeory cpu etc
+
+Example:
+you create the namespace in testing environment and create the namespace in production environment.
+in testing environment need limited memory and production environment need more memory.
+
+it desided the memoey for the namespace
+
+Practice:
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota-demo-mem
+  namespace: quota-demo-ns
+spec:
+  hard:
+    limit.memory: "500Mi"
+wq: 
+
+it means quota-demo-ns namespace have 500 M memory it means you can create the pods or replica with only 500 M size Resource.
+
+kubectl create -f <file name>
+kubectl -n quota-demo-ns describe quota quota-demo-mem
+
+create the pod.
+apiversion: v1
+kind: pod
+metadata:
+  name: nginx
+  namespace: quota-demo-ns
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+
+wq:
+
+kubectl create -f <yaml file name>
+
+it gives error because it not use the resource limit.
+
+
+apiversion: v1
+kind: pod
+metadata:
+  name: nginx
+  namespace: quota-demo-ns
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resource:
+      limit:
+        memory: "100Mi"
+
+wq:
+
+kubectl create -f <yaml file>
+kubectl -n quota-demo-ns describe quota quota-demo-mem
+
+kubectl delete -f quota-demo.mem.yml
+
+## Now Change the Resource limit
+
+apiversion: v1
+kind: pod
+metadata:
+  name: nginx
+  namespace: quota-demo-ns
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resource:
+      limit:
+        memory: "800Mi"
+
+kubectl create -f <yaml file>
+kubectl -n quota-demo-ns describe quota quota-demo-mem
+
+
+## Define the resourcelimit in range:
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: mem-limitrange
+  namespace: quota-demo-ns
+spec:
+  limits:
+   -default:
+      memory: 300Mi
+    defaultrequest:
+      memory: 50Mi
+    type: Container
+:wq
+kubectl create -f <yaml file>
+kubectl -n quota-demo-ns describe quota quota-demo-mem
+

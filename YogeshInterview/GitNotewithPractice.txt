@@ -1,0 +1,1283 @@
+Git Note 19/04/2019 No Practice: only Theory
+
+# version control system.
+what is the role of devops engineer:
+ans: to insure the application deploy faster to the market.
+
+
+Non Technical discuss:
+
+i open a one start up:
+1 person work on project :
+ 
+he write the code on desktop or laptop (server)
+ there are one challenge .the challenge is if our server xyz fail.
+ in this case we need Backup.
+
+Monday:
+      code+
+
+Tuesday:
+       code+
+
+Wednesday:
+       code+
+
+in three days i addedd the new code in our project but i relize that 
+ i do work Tuesday and wednesday was worng or not good accroding to the project.
+there are challenge to back to the monday. there are only possibe in case i rember every day work
+but this is not possible.
+
+in this case we use the versioning.
+
+Monday:
+      code+1
+
+Tuesday:
+       code+2
+
+Wednesday:
+       code+3
+
+then there is no need to rember the work here rember the version and the date.
+*********************************************************************************************
+what is Version control system:
+ans:
+  Version control system  nothing but it a simply Folder. its have only two extra feature.
+  1.provising the backup and restore.
+  2.you should be able to go back down the history.
+
+There are many tools of VCS:
+1. CVS
+2. VSS
+3.ClearCase
+
+
+The version control system should be able to store the any format of file.
+
+******************************************************************************
+ex: 50 people do the work on one project.
+   here merging concept are arised:
+
+
+Create a folder in C:
+ Folder name: VCS
+                Yogesh (work using the command line)
+open the gitbash
+        mkdir lms(learning managenet stystem)
+        cd lms
+          mkdir src
+            
+          mkdir test
+             vi main.py
+              # comment every.
+    touch test/main.py
+
+here i put the this code in google drive and  here i donot have a backup feature.
+
+but problem is there is no one engg. there are more engg. how do the work that.
+
+lets: Ram work on same project: (ram use the editor)
+  VCS
+    Ram
+     lms
+      src
+       main.py
+          # I am going to something
+
+here kis people ka code first submitted  hoga. who decide that.
+
+merging Concept:
+            Combind the work done by multiple people on one project . this process is know as the merging.
+
+              
+
+
+****************************************************************************************************************************
+
+ex: 25 employee do the work on project in hyderabad.
+    25  employee do the work on same project in usa. see the paint documentaion.
+
+note:
+  sub-version : some time the employee do the work on home on project and they always do not able to connect the server for submitted the code. 
+                in this case they do the work off line and after do work they submitted the code .this process is knows is the sub-version.
+
+
+**********************************************************************************************************
+
+Git:
+    The Git is a version control system . the advantage of git is  the git is not a client sever stystem.
+    the git is a distributed system. in distributed system we donot have client we donot have server .only have the nodes.
+    any acts as a server.
+   
+
+
+
+
+Git Practice 19/04/2019 No Practice: only TheoryS
+
+Create a folder in C:
+ Folder name: VCS
+                Yogesh (work using the command line)
+open the gitbash
+        mkdir lms(learning managenet stystem)
+        cd lms
+          mkdir src
+            
+          mkdir test
+             vi main.py
+              # comment every.
+    touch test/main.py
+
+
+lets: Ram work on same project: (ram use the editor)
+  VCS
+    Ram
+     lms
+      src
+       main.py
+          # I am going to something
+
+
+
+              
+
+ Git Note 20/04/2019
+
+There are three important phase in git.
+1. working directory/tree directory
+        : where we create or generate some task or in technical term. write the code is called the working directory.
+
+2. Staging area: the staging area and git is a git representation its a logical conteiner of git.
+
+
+3. Local Repo:
+            where we store the data or code is called the local repo. local repo means the local repo present in your system.
+            the data have the local repo is called the git. the git just like a folder but any folder have the . it means this is a git repo.
+
+note: git change from file not the folder specially empty folder.
+
+note: you do not directly add the any file(code from working directory) to local repo.
+      first move to working directory to staging area.
+
+
+note: in git version control have the commit id . in other version 
+control system have the increamental number like 1,2,3....
+  
+* git log show the commit id and username and emaid.
+
+
+
+  Credential:
+          the credential is not required the same system it required the remote system.
+           it means as work on local repository no credential required.
+
+What is diff. b/w tracked and untracked file.
+ans: untracked file are those file which are not part of local repo.
+     tracked file are those are already part of local repo.
+
+ex: here i do the change the docs folder which are not part of local repo.
+    but i new change in src folder which are part of local repo.
+
+Header:
+     header is useful for what are looking right now.
+
+Delection concept:
+
+ex: i delete the docs folder.
+note: in git not adding files .in git only adding changes.
+
+
+Note: Devops is help you deploy the appliacation faster to the market.
+
+
+
+
+Git Practice 20/04/2019
+
+Step: Today using the git.
+
+Create a Temp folder in C
+Create a another folder inside temp folder just like starting_git
+open the gitbash here
+make the our folder as git repo use the following command:
+git init       note: init means initialize the git.
+
+making the folder here
+
+mkdir src
+       text
+       docs
+ 
+now create some file in this folders
+Command:
+     touch src/main.py
+     touch test/main.py
+
+* to know what is status of git.
+Command:
+      git status
+
+
+note: you do not directly add the any file(code from working directory) to local repo.
+      first move to working directory to staging area.
+
+Command:
+       git add .
+
+now check the status of git.
+Command:
+       git status
+
+now move form staging area to loacl repo is called the commit.
+while commiting there are need certain thing:
+
+date: but date is automatically created.
+message
+username & emailid
+
+Configure email & username
+Command:
+      git config -- gloabl user.name 'yogesh'
+      git config -- global user.email 'kshankar10252@gamil.com'
+
+   
+note:
+  Global: means system level
+  local: means repo level
+
+
+* now move from staging area to local repo there are simple command.
+Command:
+     git commit -m "First commit"
+
+now check the status of git.
+Command:
+      git status     
+
+now how can find what is in local repository. to find out the history of local repositoty.
+
+Command:
+       git log
+
+note: git log show the commitid , username and emailid.
+
+now some change in some file. like. src (change in working directory)
+                                     # todo : write some yogesh
+
+now check the status 
+
+Command: 
+  git status
+
+now change in staging area
+ Command:
+   git add .
+ 
+now change in local repo
+  Command:
+   git commit -m "second commit"
+   git status
+   git log
+
+now new change in docs folder(changeing in worksing directory)
+  create new documents in dosc folder. (readme.txt)
+
+now go the scr:
+     write some like # my name is radhe.
+
+now check the status
+command:
+       git status
+
+now specially add the docs folder. move from working directory to staging area.
+
+git add docs/
+git status
+
+
+now move staging area to local repo.
+ git commit -m "third commit"
+ git status (check the status)
+ 
+
+now add the src/main.py (means moving from working directoty to staging area)
+Command:
+       git add src/main.py
+
+now move from staging area to local repo
+Commmand:
+    git commit -m"commit fourth"
+    git status
+    git logs
+
+
+********************************************
+
+now you want to see any commit. this can be done with the help of header. the header is a pointer which point any commit.
+ex: you want to see the commit first you put the header at commit first.
+
+
+Command:
+      git log
+
+copy the first commit id
+Command:
+      git checkout <paste first commit id>
+    
+
+ex: now i want to see the second commit.
+Command:
+      git log  (copy the second commit id)
+      git checkout <paste second commit id>
+
+
+and see the what was the in second commit.
+
+****************************************************
+Delection:
+ex:   delete the docs folder
+
+git add .
+git status
+git commit -m "fifth commit"
+
+
+  GIt Note 21/04/2019
+
+new Concept:
+
+note: now identified that no need to change in working tree in this case your 
+      modification back staging area to working directory.
+
+Command:  git reset ..hard (move all)
+          git reset src/main.py  (move specific folder)
+          
+
+google: git cheat sheet
+******************************************************************************************************************************************Note: now find out how git is working.
+* now find out how git is work:
+   git work with hashing concept:
+
+
+
+
+
+checksum:
+ex: you send a message your friend how can you insure that you send the message the exacly (same message)
+   will reach to your friend.
+ans: this can be done with the help of checksum. when you send the message the message id and checksum id are same,
+     if any change in message this can be identified with the help of checksum.
+
+
+
+
+Hashing:
+google: sha calculator:
+note: in git every commit id based on hashing algorithm. it means every word ,or every sentence,or every test have the diffrent id.
+ex: hello : commitid: 12298jgutuytu2
+    hellop : 9797097hfhdgdrsd2
+it means every commit id have different word or different.
+
+ex:
+sentense:
+
+ i am going to agra: commitid: 089rgdghgjhghf
+ i am going to kiraoli: commitid: ggfdgd6546646
+
+
+ex: 
+test:
+a my name is yogesh kumar
+i am belong to agra
+my father name is mr suresh chand 
+
+commit id: yr654ookjhutu7t68
+
+ex: 
+test:
+a my name is yogesh kumar
+i am belong to agra
+my father name is mr suresh chand 
+ and my mother name is stri. boodevi
+
+commitid:3424yuuuj8978979
+
+
+note: 
+   every commit id have the message, auther, emaiid and time.
+Advantage:
+    if you store the same file 100 time it store 100 time.
+  ans: it store only one time.
+
+ex: if two file have the same content it store only one time . it not store the twice.
+    thats is advantage of going with hashing.
+
+********************************************************
+note:
+    * every commit is called the tree and parent following the tree.
+
+ 
+******************************************************************
+
+
+Branch:
+
+
+
+Merging:
+
+login fix app or login one branch to another branch is called the merging:
+
+Need of merage:
+           the work done by one branch is need by another branch is called the marging .
+
+
+note: merge see the specail commit because it have the two parent.
+
+note: sometimes merging fail or sometimes right.
+
+fail: the contents of all branch are same in this case merging conflict fail.
+      if merge fail remove the conflict the error.
+
+
+note: git store every thing but you store the large binary file the git is slow.
+
+
+gitgitloGIT Practice 21/04/2019
+
+step:
+   some modified in src/main.py
+
+git status      note: it show that some modified in working directory
+
+git add .      now adding change form working tree to staging area
+
+git status      it show your modified are in staging area.
+
+note: now identified that no need to change in working tree in this case your 
+      modification back staging area to working directory.
+
+git  git reset --hard
+git status
+******************************
+now one change in src/main.py
+and one file created in src
+
+now i want to adding change tracked file in staging area.
+ git add -u
+ git status
+
+now i want to add tacked and untracked file in staging area
+git add .
+git status
+
+now i want to remove from staging area a particular folder and comes in working tree.
+git reset src/main.py
+git status
+
+git add --help
+
+
+**********************************************************
+
+Note: now find out how git is work.
+Command:
+   git cat-file -p <copy the last commit id ex. >
+   
+note: it show something called tree
+                               parent
+                               auther
+                               committer
+
+copy the this and paste at notepad.
+ git log
+
+you see parent commit id are same the fourth commit.
+
+
+what is tree:
+
+git cat-file -p <paste the tree commit id>
+
+* it show  the folder structure.
+
+Note: i want to see what is content of src and test.
+
+copy the src and test commit id and paste at notepad.
+
+git cat-file -p <paste the commit id of src>
+ it show tha file <main.py> the file is called the blob(binary large object)
+
+note: git contain two thing :
+1. tree
+2. blob
+  
+
+now copy the blob(main.py) commit id.
+git cat-file -p <paste the commid id>
+  it show the content of main.py
+
+
+git cat-file -p <paste the commit id of text>
+
+   
+note: the git is a open source structure and in git every folder is tree and every file is blob.
+
+note:
+  go to the git folder and open the config file. this file have the information about the git.
+  open the object and all commit id store in this folder.
+
+***************************************************************
+
+Branch:
+ create a new branch.
+command:
+     git branch infy_trail
+     git branch  (show how many branch)
+
+move one branch to another branch
+     git checkout info_trail
+     git branch * show the current working branch
+some change in src/main.py
+  radh radhe
+
+git status
+
+git add .
+git commit -m "labled for info"
+git log
+
+now my header looking the new branch info_trail. 
+now released the info_trail and move to the same project.
+
+git checkout master
+
+some modification in main.py
+  sita sita
+  git status
+  git add .
+  git commit -m "sap integration"
+  git log
+
+
+now git checkout info_trail
+some modified in src/main.py
+git status
+git add .
+git commit -m "login fix applied"
+ i relead to the infosis.
+
+Merging:
+
+login fix app or login one branch to another branch is called the merging:
+
+where you want to merge the branch.
+
+note: i want to merge in master.
+
+ git status
+ git checkout master
+ git merge info_trail
+
+open the src/main.py note: this resolve done by developer.
+git status
+git add .
+git commit -m  note: if not give the message the message automatically generated.
+
+git log
+git cat-file -p <paste the labbled for info> : this commit are diff. commit because it have two parent.
+
+
+ GIT Notes 22/04/2019
+
+Fast Forward Concept:
+in fast forward concept
+what is branch: 
+             branch is nothing but looking a particular point. r
+
+Fast-Forward:
+            * here one branch do not work and want the work of another branch
+            * move the branch and  looking  in the working branch whenever this
+              happend is called the Fast-Forward.
+            * git like the fast-forward concept because there no the extra commit.
+
+
+Remote Repo:
+         * why need of remote repo:
+            region: in local repo only single people can do the work.
+         
+           * but  in remote repo multiple people can do the work at the same time.
+
+what is remote repo:
+                   the remote repo something like the .git repo but there are some slightly difference.
+                   the diff. is it use the some protocol like http, ssh etc.
+                    for pull the code ,push the code and get the code.
+
+note: any software which is capable of hosted the server over the http and ssh is called the git server or git repository.
+      or any software which having the capicity of romote server use the http amd ssh is called the remote server.
+
+
+User management:
+               remote repo have the user management.
+               in local repo we cannot stopped the work but in remote repo we can stoped the work with the help the user management.
+
+
+Git server:
+          Git server having the cabilities of hosting the remote repo over the standard protocol. the protcol such that http and ssh.
+          the git server hosted on the internet.
+
+
+There are two way to hosted the git server.
+1. self-hosted
+2 . Third party solutuin.
+
+self-hosted:
+           Gitolite ,Gitlab
+
+Third party solution:
+                 Github.
+
+Create a accout and create a remote repository:
+ this step givin in practical notes.
+
+
+************************************************
+
+Clone:
+     another person want to work on your remote repository he can push and pull the code in remote server.
+Definition: person get the repository from the server into your machine for push and pull the code this process is know us the clone.
+
+Definition:2
+           you want a repository which donot have a your machine . trying pull the repositoty and push the repository in your system is called the clone.
+note: getting update or change is called the pull and getting update in whole repository is called the clone.
+
+
+
+note:
+    you can never work on remote master or server .only which person work on remote server which alreay present in remote server or master.
+    work on local .
+
+git push origin master
+
+note: powershell is front work
+
+imp:
+  where are front change
+  front change in remote server. this operation is called the pull
+  
+pull have the two option.
+1.Fetching:
+         what is fetchinh:
+                         getting the remote brach 
+2. merge those branches.
+
+note:
+    remote
+   origin/master  fetching
+
+master
+interview
+pull => fetching + merge
+
+  *************************************************************
+
+Restriction:
+note: before push you have the latest copy(clone of repository) otherwise
+     push and pull operation are rejected.
+
+ex: C: User1
+clone your repo
+ make some chanhes +push
+
+D: user 2
+clone your repo
+make some change +push
+its give the error.
+ 
+step:
+ex: C: User1
+clone your repo
+ make some chanhes +push
+
+D: user 2
+clone your repo
+git pull
+make some change +push
+
+step: 3
+
+step:
+ex: C: User1
+clone your repo
+ make some chanhes +push
+
+D: user 2
+clone your repo
+make some change+ pull +push
+
+********************************************
+you can work with multiple server:
+
+ex: remote => origin => url(hyd)
+    remote => bangalore_origin  => url (bangalore)
+    git push bangalore _origein master
+
+***********************************
+
+git local config => .git\config
+
+git global config => ~\.gitconfig.
+
+**************************************
+
+
+
+
+  
+
+
+
+ 
+
+  GIT PRACTICE 22/04/2019
+Fast-forward:
+
+step:
+create a one folder (name understanding_merge)
+open the gitbash here inside this folder.
+git init (make this folder repositiry)
+touch test.txt
+git status
+git add .
+git status
+git commit -m " initial add"
+
+now create a new branch.
+There are two option to create and move in branch.
+1. first create a branch
+Command:
+    git branch dev
+now move in dev branch
+
+Command:
+      git chechout dev
+
+check the current working branch
+Command:
+      git branch
+
+2: Another option to create and move in one branch.
+Command:
+      git checkout -b dev
+      git branch
+
+now some changes in branch.
+open the test.txt at notepad
+     change1
+     change2
+     change3
+save.
+
+git status
+git add .
+git status
+git commit -m "added dev change"
+git log
+
+
+what is branch: 
+             branch is nothing but which looking a particular commit.
+
+proof:
+    git checkout master
+    open the test.txt   note: there are no content.
+
+now move in dev branch
+git checkout dev
+git branch
+note: now open the test.txt and its show the change 1 change2 and change3.
+
+note : open the .git  folder
+and open the haed and ref folders.
+
+git checkout master
+git branch
+git merge dev
+it show the fast-forward 
+if no need of fast-merge
+Command:
+    git merge dev --no-ff
+
+note: git like the fast-forward because there is no extra commit.
+
+*****************************************************************************
+password : github@123
+user name: yogeshkumar10252
+Remote repo:
+GIT server:
+ google: Github.com
+ create a account
+  then create a repository
+                  name: learning_git
+private no
+public no
+
+create the empty repository.
+go to the gitbash and 
+ git remote add origin https:://github.com/username/localrepository name
+
+push the master branch into origin server. 
+git push origin master
+
+now push the info_trial branch into origin.
+git branch
+git checkout info_trail
+git push origin info_trail
+git branch : its show only local repo branch
+git branch -r : its show remote server branch
+note: its have server name/branch name.
+
+cd ..
+
+
+**************************************************************
+clone Concept:
+ ex: ex:
+   open the powershell
+    cd C:/temp
+   goto the gitgub and click on create or download the clone copy the url
+    git clone <paste> press enter
+  this person have the permission to access the this repository.
+cd learning_git
+New-Item readme.md
+git status
+git config --local user.name ""
+ git config  --local user.email ""
+  git status
+ git add .
+ git commit -m ""
+
+open the gitbash  where learning_git
+ git pull : no work
+ git checkout master
+ git pull 'origin' master  origin does not required every time.
+ git pull 
+ 
+***************************************************************
+
+Restriction:
+note: before push you have the latest copy(clone of repository) otherwise
+     push and pull operation are rejected.
+
+
+
+
+ GIT Notes 23/04/2019 Rebase and cherry-pic
+
+note: if two or more person working at same time in same repository winner whose person which commit first.
+      it means take the latest versoin of repository before the push  in remote repository.
+
+note: merge conflict release the extra commit.
+
+diff b/w fetching and merge.
+fetching getting the remote branch from remote repository where merge is used for merge the local branch in local machine.
+
+
+note: git push <remote name> <branch name>
+      
+ assume: branch  is master
+      git push
+      git push origin master 
+
+note: git push work in enery condition.
+
+   git do not work in some situation.
+
+    assume: branch  is master
+      git push   ( => push new branches
+                    => local repo first => remote )
+      git push origin master 
+
+
+what is upstream:
+
+
+**************************************************************
+
+Cherry-pic:
+           how to bring specific commit from one branch to another branch .this concept is called as the cherry-pic.
+           in git cherry-pic is help you pulling specific commit from one branch to another branch.
+
+
+note: in initially in cherry-pic bring the only one commit.but now you can bring the ex:100 commit but you bring in sequence order.
+cherry-pic range:
+                if bringing more than commit is called the cherry-pick
+
+
+qns: i want to bring more than one commid id .
+     command: git cherrt-pick a..b its note include a
+             git cherry-pick a^..b
+
+
+Merge:
+    the merge will take all commit from one branch to another branch.
+
+************************************************************************
+
+Rebase: 
+     changing the parent of one commit to another 
+
+ in rebase moves the initial commit of branch(hotfix) to the latest
+
+ commit of master and it might have merge conflict
+
+
+**********************************************
+
+Remove or delete the any commit:
+  delete or remove any commit .its possibe at local repo not in remote repo.
+  and delete the commit with the rebase only
+
+
+********************************************************************
+
+what is Bare git repository:
+                     the clone is only way where do not get the content jabki get only .git folder is called the bare repository.
+   google: bare repository.
+
+where is used.
+             it used in remote server. because remote server do not have the content it only have the .folder
+
+note: bare repository used in remote server and normal repository used in local server.
+                 
+
+
+ GIT Practice 23 April Cherry-pic and Rebase:
+
+step:
+    open the gitbash in learning_git
+    git pull
+    open the src/main.py   note: working directory
+    make some changes.
+save.
+
+Second user:
+ open the powershell in learning_git
+  notepad ./src/main.py
+  write some changes
+  save
+  git status
+  git add .
+  git status
+  git commit -m "new added in src by yogesh user"
+  git status
+  git push origin master.
+
+
+now again go to the gitbash.
+git status
+git add .
+git commit -m "new added by shankar in src/main.py"
+git status
+git push origin master
+result: rejected
+
+beacuse you do not have the latest versoin .because another person push code from you.
+then first take the lastest versoin.
+
+git pull origin master
+result: there are some chance of conflict because both working on same folder .first remove the conflict then.
+open the src/main.py on notepad and remove the conflict and save.
+git status
+git add .
+git commit -m
+note: there are automatically message are generate.
+git push origin master
+
+*******************************************************************
+
+Git Cherry-pic :
+
+open the gitbash in learning_git
+git branch -b dev
+open the src/main.py at notepad or visualstdiocode.
+  wrire something ex: version 1 feature
+save:
+ git status
+ git add .
+ git commit -m "added version 1"
+ git status
+
+
+
+open the src/main.py at notepad or visualstdiocode.
+  wrire something ex: version 1 feature
+save:
+ git status
+ git add .
+ git commit -m "added version 2"
+ git status
+
+
+now git log
+copy the commit id added version 1
+git checkout master
+git cherry-pick <paste the commitd id>
+git log
+open the src/main.py at notepad and see. 
+
+
+qns: i want to bring more than one commid id .
+     command: git cherrt-pick a..b its note include a
+             git cherry-pick a^..b
+
+Command: git cherry-pick <commit id 1> .. <commit id 2>
+
+
+*********************************************************
+
+Rebase:
+    git checkout -v hostfix
+    src/main.py
+    # fix1
+   save
+  git status
+  git add .
+  git commit -m "added fix 1"
+  git status
+
+
+src/main.py
+    # fix2
+   save
+  git status
+  git add .
+  git commit -m "added fix 2"
+  git status
+
+  
+
+
+src/main.py
+    # fix3
+   save
+  git status
+  git add .
+  git commit -m "added fix 3"
+  git status
+now 
+ move in  master branch
+ 
+git checkout master
+ 
+src/main.py
+    # added important fix
+   save
+  git status
+  git add .
+  git commit -m "added important fix"
+  git status
+
+git log --online --graph
+ git checkout hotfix
+git log --online --graph
+
+git checkout hosfix
+git rebase master
+
+opem the src/main.py
+remove the merge conflict
+save
+git status
+git add .
+git commit
+
+git rebase --continue
+opem the src/main.py
+remove the merge conflict
+save
+git status
+git add .
+git commit 
+
+ 
+git rebase --continue
+opem the src/main.py
+remove the merge conflict
+save
+git status
+git add .
+git commit 
+
+git rebase --continue
+git log
+
+google: git rebase
+**********************************************************************
+Delete the any commit:
+do work on hostfix branch:
+  src/main.py
+   # A
+  save
+  git status
+  git add .
+  git commit -m "Add A"
+  git status
+
+
+do work on hostfix branch:
+  src/main.py
+   # B
+  save
+  git status
+  git add .
+  git commit -m "Add B"
+  git status
+
+
+do work on hostfix branch:
+  src/main.py
+   # C
+  save
+  git status
+  git add .
+  git commit -m "Add C"
+  git status
+
+git log
+
+delete the Commit B
+
+command:
+   git checkout hosfix
+   git rebase -i Head~3
+     remove the pick and paste the drop
+  save
+
+open the src there are conflict
+remove the B
+save:
+
+git status
+git add .
+git commit
+
+git rebase --continue
+git log
+
+result: there are no B commit.
+
+*********************************************************************
+
+Bare repository:
+
+C:/temp/yogesh
+git clone --bare <copy the clone of any repositiry>
+result:
+    it show the only . folder not the content.
+
+it used in remote server. 
+
+
+ 
+
+
+
+
+  
+  
+    24/04/2019 Git Note 
+
+some changes in working directory and manager said that customer want to this impotant code before the changes
+in this case you save the latest work in stash.
+
+step:
+   open the gitbash  at repository
+   open the working directort add some changes. ex: src/main.py
+  save.
+ git status
+ git stash
+ git stash  : stash present in local repo. all the local changes saved in stash.
+ git stash list
+git stash apply
+git staus
+git stash list
+
+note: git stash apply: 
+                 means apply the changes in working tree but list items or changes does not remove from item list from stash is called the git stash apply.
+      
+
+git stash pop:
+         means remove item from stash list and apply on the working tree.
+
+note: when you want to preserve change locally there is no need to create the clone . you can use the stash
+
+*************************************************************
+
+mirror:
+ 1 server in hyderabad
+ 1.        in bangalore
+ 1 . server in usa
+
+every server have the bare repository
+ 
+every server executed one side to another side.
+
+git clone --mirror
+
+how the server are sink:
+    mirror is indirectly of clone of it . the clone is a bare repository . mirror is a duplicate copy of the clone.
+
+********************************************************
+
+Git visual tools
+
+software :
+    tortoise git
+    source tree
+
+
+gitk for linux.
+
+google: git merge example
+        git fast-forward.
+        example of mirror
+                 of cherry-pic
+                    rebase
+                    stash
+                    clone
+ what is diff. b/w revert and reset
+   
+what is normal and bare repository:
+  bare repository present in remote server and it contain the .git folder the content.
+  normal repository present in local repo and its contain the .git folser and the content.
+
+
+configuration:
+            local
+            remote
+             system
+
+remote repository have:
+                      git +user management +daemon.
+
+*****************************************************************************
+Remaining: 
+
+Tacking
+Git flow
+hooks
+
+
+
+  
+  
+  
+
+
+
+
+ 
+
+

@@ -1,0 +1,270 @@
+                                                             System Manager:
+
+
+Withoutsystemmanager:
+               we have  one machine in public subnet and another machine in private subnet.and i want to maintinance in both machine. how.
+
+             * we can  login into public subnet and maintain the machine. but  we do not login directly in to privare subnet machine
+               in that case we use the bastion host concept.
+
+
+with system Manager:
+                There is no need the concept of bastion host because system manager installing the agent in to ec2 machine. 
+                there in no need to login the machine for the mainenance.
+
+                                         what is system manager:
+    
+
+    the respondibility of system manager upgrede the system and do the activity of administractor. without opening the uncessary port. 
+    and donot need the bastion hosts.this is the first use case of system manager.
+
+      
+
+
+   System manager do the activity of administractor . there is no need to open the unnecessary port and bastion host concept for upgrade the machine.   
+   and system manaher identfied only those machine which have the system manager agent.  AWS Systems Manager gives you visibility and control of your 
+   infrastructure on AWS.the agent generate the logs. into the same machine. if you want to forward the logs you can forword the logs into cloud watch.
+
+
+
+
+  in Aws System manager is service which are used to view and control all the infrastructure in aws. with the help of
+ system manager we can manage and configure the ec2 instance and windows operating system , on-primise server, virtual machine, 
+ and  apply the os patches. the system manager do the activity of administractor and system manager identified only those machine where  
+ ssm agent is installed.  
+
+
+
+
+Benifits:
+* manage hybrid cloud system
+* easy to use automation
+* maintain security 
+* reduce cost.
+* shorten time to detect the problem.
+
+
+
+
+How do the work system manager agent:
+                       System manager agent(ssm) installed in ec2 machine.and processes the request  from system manager to aws cloud and perfrom
+                       or executed the commands and back to the result the system manager through the system message service.
+
+
+
+04/04/2019
+
+practice.
+
+* aws console:
+      emaidid:
+      password
+* service:
+     ec2
+* click on launch machine.
+   select 2012 ok
+   instance type t2.micro
+   configure instance type no change next
+   add storege no change ckick on next option
+   add tag (write the name as window) click at next
+   security group name: (as you wish let i give the rdb)
+
+Note; in linux use ssh 22 port in window you rdp(remote desktop protocol)
+and port no 3389. click on next.
+ 
+lauch click 
+pem.file 
+       launch instance:
+            click on connect.
+                click on get password
+                                   close.
+getpassword
+choose the pem.file 
+              decrypted the password
+                       copy the password
+                          and download the password.
+
+                              click on open
+                              and paste the password into administractor and click on ok button.      
+
+after some time window is installed.
+
+google: aws system manager
+                what is system manager click.
+                   read  the documentaion and see the image.
+
+
+google: aws ec2 system manager.
+             setting up system manager.
+               click on ssm install manually
+
+          click on system manager prerequest.
+             read the documentation.
+
+* installing and configuring ssm agent on windows instance.(2012)
+
+
+
+
+
+
+
+
+
+05/04/2019
+System Manager:
+   * authorization to your ec2 machines to speak with system manager.
+   * installation
+        = agent
+*system manager can used for On premise machine also .they machine are in office are used the system manager.
+
+* authorization
+* installation
+* activation
+note: activate the machine this is valif for me and its speak with the system manger.
+
+note: what is the administractor activity we will do.
+    * Commands
+    * patching
+     
+
+what is system manger:
+system manager is interface where without login into the machine. you can patch your system and you execute the commands.
+
+how to create the authorization. go to the practce page.
+
+note: generally we create a normal user we create a policy. of administractor
+     but in case of ssm we do not need to create the policy.there is we create the policy of ssm .the access ,screat key.
+
+Roles: i give the role of ec2 machine because ec2 machine as a system manager.
+
+system instance: in system instance any machine speak with system manager.
+
+qns: i have a private machine how its configure that.
+and: activate the machine and run the above command.
+
+
+compliant: security group open or not all kind of problem see here.
+patching: the administractor patching os each other. is called the patching
+
+state manager: state manager manage the state when we create the multiple thing.
+
+
+
+
+
+
+
+install the ssm agent in ubuntu 18.04 or 16.04.
+https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-manual-agent-install.html#agent-install-ubuntu-snap
+05/04/2019
+pracice.
+ * create the authorization.
+
+goto the aws console.
+ goto the IAM
+     user
+       create the user.
+          usrename: ssm
+              progremtic accres
+           attach the existing poclicy
+          and administracor do work any where but do click on AmazonSSMF access 
+             click on tag
+               click on next.
+                create the user.
+
+
+Role:
+click on role 
+   create the role.
+        select ec2
+            click on permision
+click on AmazonEc2RoleForSSM           note: this role predefined  defined by amazon for ssm .
+              next
+                  click on review
+                 
+                     role name: myssm
+                       create role
+
+again goto the service
+          now create the ec2 machine.      note: click on ec2 machine.
+
+select the ami
+      choose instance type
+            configure instance type
+              in configre instance type select IAM role: <myssm>
+                       add storage next
+                          add tag next
+                          security group : in security group select existing security group or create sg.
+                           click on review.
+                                 click on instance id.  
+                                   select or create new file   
+                                         click on  launch.                       
+
+
+
+
+note: create another machine but in this machine not add the role.
+
+elect the ami
+      choose instance type
+            configure instance type
+                    add storage next
+                          add tag next
+                          security group : in security group select existing security group or create sg.
+                           click on review.
+                                 click on instance id.  
+                                   select or create new file   
+                                         click on launch
+
+note: click on service and select ec2 machine and select ec2 machine with role.
+        click on connect
+         copy the pem.file and open the gitbashhere where store our keypair 
+          and paste the ssh -i command.
+
+   google: manaually install the ssm agent for ec2 machine.
+           copy the command and paste the gitbash.
+            copy the status service.
+            copy the enabled service.
+
+
+goto run command. 
+           click at create run command 
+                select Aws-RunShellScripts.
+                 select instance. 
+
+note: you see withrole ec2 machine is allready select because we have a agent. and agent connection to that.
+what is command executed.
+
+Commands: pwd
+           ls -la
+
+            click on run
+             click on review.
+      clcik on output.
+ result: it see the file present in the current working directory.
+
+again click on run command.
+give the command in command option.
+
+sudo yum install httpd -y
+   clicl on run
+   view review
+  click on output.
+
+note: outbond internet connection is  required.
+
+
+resume:
+using the system manager to maintain the ec2 machine in aws.
+
+
+
+
+
+
+
+Note: window not understand key value pair. window generally understand user name and password.and other kervorse.this is a internal authentication.
+Note: generally we have the private key and amazon have the public key and we give the key for amazon .and amazon generate the password which are use for login into window machine.
+
+

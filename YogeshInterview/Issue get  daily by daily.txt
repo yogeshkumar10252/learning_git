@@ -1,0 +1,150 @@
+Q) How you are taking Backup of your RDS
+  
+   Automated backup is configured which is taking snapshot everyday at 8:30 AM.
+   Rentention period: How many days backup you keep.
+   Here we are having retention period 1 Month.
+
+  
+Q) How you are restoring Backup.
+   If any DB got corrupt just restore it from snapshot by specifying the instance Type and keep the DB instance name same as it was, so that it will create 
+   same end point.
+
+   
+Q) What kind of issue you are facing.
+
+   Previously we used to take backup in every 6 hrs. Wehen we increased the frequency of taking backup to 4 hr then we staing getting an error "Snapshot quota exceeded". After googling we come to know that by default AWS allow 100 snapshot per instance. So we reduce retention period from 30 to 15.
+
+
+Q) In all of our production server we have enable cloud watch to monitor memory available, disk space use and memory use.   
+ 
+ 
+Q) What major issue you have faced till now.
+
+    Issue: Recenetly we faced an issue with our SSL certificate. PROD Application websites were showing security message while opening through Google 
+	       Chrome 70.
+	
+	Reason: Google Chrome version 70 was not trusting Symentec SSL/TLS certificate and don't allow the Appllication site to open unless the new certificate is 
+	        installed. We were using Symentec SSL Certificate.
+	        
+			Then we created new CSR and passed it to Network team. Then they contacted Symented support and regenerated the certificate. They retruned 
+			"Root certificate, Intermidiate, Certificate chain"
+			
+			Then we updated the certificate in Listner of ELB.
+			
+			Certificate Body
+			Certificate Private 
+			keyCertificate chain
+			
+Q) How you are deploying the application build.
+   
+   Blue/Green Deployment
+
+   
+Q) If any deployment is getting failed, then how you are reverting back.
+  
+
+  Q)There is a common problem which we face in the day to day activity, that instance will go out of service all of sudden. In this case we have to do the 3 checks. That is 
+
+	1.	Check whether your instance is UP and Running or not.
+	2.	Check on which port Health is happening. Suppose if it is 80 then go and check if the port 80 is open in security group or not.
+	3.	Check within the server services are running or not.
+
+
+Day to Day responsibility
+-------------------------
+
+Q) We get a request that a website is down.
+	- First we check the certificate validity in certificate manager. If all are good then
+	- We go to the target group of the respective loadbalancer of te URL and reset the stickiness to 1 day.
+
+	
+Q) Getting request to assign IAM Roles in instance in Bucket policy
+	- Go to the Bucket --> Policy --> Edit the the json file with  IAM roles and instance id "iam::S3access::instanceid" 
+
+	
+Q) Getting request to provide access of one Account Bucket to another account Bucket.
+	
+	- S3 --> Permission --> ACL --> mention the canonocal ID and provide the specific access permission (List, write, read)
+	
+	Note: There is an 12 digit AWS account ID which we call canonical ID
+
+	
+Q) Checking Logs in cloudwatch
+
+   cloudwatch --> Logs --> log group --> create log gorup
+
+   Note: Mention the log group name in "Log Configuration" section of ECS to log
+   Note: In Log gorup there is a log sream which keep the logs minute wise
+
+Q) We get a request from Director to create SNS topic.
+
+
+Q) Getting request to create SQS. We create SQS with below details and give the URL to requester.
+
+   - Queue Type: FIFO / standard
+   - Message Retention period: 4 days
+   - Max message size: 256 KB
+   
+   
+Q) Sometimes we get request in change of SQS like retention period and message.
+
+
+Q) some time we get a request to purge(empty) a Queue.
+
+	- We get Queue name from the requester
+	- Go to SQS --> Queue --> ation --> purge Queue
+	
+	
+Q) Create user in prod DB for readonly access.
+
+Q) create IAM roles for a user.
+
+   We get a request to create a IAM user and mirror the roles from existing user.
+   
+   So we check the exiting user and confirm which role has assigned to it. 
+  
+   Create a user and assign same role to him.
+  
+  
+  
+   
+
+   
+   
+   
+   
+   
+   
+   
+
+	
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,395 @@
+ Monitoring Toos Note 22 May 2019
+
+
+System Monitoring: the server is up or not and check application running or not this type of 
+monitoring comes into the system monitoring.
+
+
+There are many Monitoring tool:
+ * spulnk
+ * datadog
+ * app dynamics
+
+these tool read the logs from the server where continuous generate the logs by the application.
+
+how can pull the logs from the machine and store into the common place.
+
+
+## Log Monitoring using Elastic Stack:
+********************************************
+
+* Elastic Search
+            * you can pull the logs from server and store into the elastic stack. the elastck stack is centerlized storage. 
+            
+            * Elastic search is the central database which store all the logs.
+
+
+ 
+* LogStash:
+* Kibana
+* Beats
+
+The logs are generate by the different application and they will have the different format.
+for example:
+         the logs is generate by the ansible server have diff. format
+         the logs are generate bt the terrafrom have different format.
+
+
+
+
+
+7:49 AM 5/22/2019 notepad.exe ERROR Application crashed
+format: datetime appname LogLevel  message
+
+notepad.ex 7.50 5/22/2019 presentation.layer ERROR Application Crashed
+format: appname datetime  component loglevel message
+
+Logstash:
+        Basically used for conversion of the logs. or parse of the logs
+logstash basically have two things:
+  * input: means take the logs. input can be database.
+  * output: forwerd the logs into the elastic search
+  * log stash take the logs from log server and send to the elastic search.
+
+Kibana:
+    the kibana is nothing but front end means visualize way to see the logs.
+    or kibana is dashboard.
+
+Beats:
+  The beats the software which installed in machine where the logs is generated.
+
+The elastic search is very good in search  the text.
+
+What are using the elastci stack:
+we are using the different type of operating system. just like some server are window server and some server are linux server.
+onther problem is some server present into the india and some server present in us.
+
+There are very cost saving majority because here take the charge for software not for storage the log.
+and it is very large scale.
+* Beat is sending the specific log for specific need to elastic search or log stash.
+
+
+
+25 May 2019  no notes only installation of elastic search log stash and kibana.
+*****************************************************************************************
+
+
+
+25 May 2019 install the log stash , elastic search and kabina. and some implement.
+
+step: create the three machine.
+1. Elastic Serach
+2. Log stash
+3. kibana
+
+first create the Elastic Search
+1. Elastic Search and login into this machine
+2. google : elastic search install and read the docs fisrt.
+   https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html
+   install the 6.2 or 6.3 version
+   install elastic search form debian package. 
+3. sudo apt-get update
+4.wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+5. sudo apt-get install apt-transport-https
+6.echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+  sudo apt-get update
+  sudo apt-get install elasticsearch -y
+  sudo update-rc.d elasticsearch defaults 95 10
+  sudo sercice elasticsearch status 
+  sudo  service elasticsearch restart -y
+  sudo sercice elasticsearch status 
+  copy the public ip and 9200 port;
+  http://<ip:9200>
+  curl -X GET "localhost:9200/"
+exit
+
+******************
+Now install the log stash 
+
+step: login into logstash machine and install the log stash.
+google: log stash install
+https://www.elastic.co/guide/en/logstash/current/installing-logstash.html
+sudo apt-get update 
+install the java first.
+sudo apt-get openjdk-8-jdk -y
+java --version
+
+install the logstash from APT:
+APTedit
+Download and install the Public Signing Key:
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+
+You may need to install the apt-transport-https package on Debian before proceeding:
+sudo apt-get install apt-transport-https
+
+Save the repository definition to /etc/apt/sources.list.d/elastic-7.x.list:
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+
+Run sudo apt-get update and the repository is ready for use. You can install it with:
+sudo apt-get update 
+sudo apt-get install logstash -y
+
+
+whereis logstash
+cd /etc
+ls
+ls -lart . | grep logstash
+cd logstash this is place where we can change the configuration of logstash.
+
+another place of logstash
+cd /usr/share/logstash
+cd bin
+ls -lart .
+cd ~
+sudo -i
+cd /usr/share/logstash
+
+google: running logstash by command line
+
+vi trail.conf
+    
+
+
+google: logstash
+        stdin plugin
+
+google: logstash output
+         stdout             
+   
+then copy into vi trail.conf
+vi trail.conf
+    input {
+  stdin{
+}}
+output {
+  stdout {
+}
+}
+wq
+
+ bin/logstash -f trail.conf
+type : hello
+
+***************
+
+google: logstash output
+         stdout
+default value of logstash is codec
+vi trail.conf
+  stdin{
+}}
+output {
+  stdout {
+   codec => json
+}
+}
+wq
+
+logstash -f trail.conf
+
+
+  stdin{
+}}
+output {
+  stdout {
+}
+}
+wq
+type:hello
+************************
+for multiple output 
+take another plugins.
+ file:
+vi conf.trail
+  stdin{
+}}
+output {
+  stdout {
+}
+file {
+  path => '/var/log/test.log'
+}
+wq
+
+logstash -f trail.conf
+type:
+hello
+
+just test
+
+
+how are you
+
+
+cat /var/log/test.log
+
+
+********************
+
+vi conf.trail
+  input {
+   file {
+      path => /home/ubuntu/test.tst
+}
+}
+output {
+  stdout {
+}
+file {
+  path => '/var/log/test.log'
+}
+wq
+
+vi /home/ubuntu/test.tst
+hello
+hi
+how are you
+wq
+
+logstash -f trail.conf
+cat /var/log/test.log
+
+**********************************
+Install the kabina
+step: login into machine:
+https://new.internet-start.net/?utm_source=beatle&utm_medium=browser&utm_campaign=bookmark
+
+Download and install the public signing key:
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+
+Installing from the APT repositoryedit
+
+You may need to install the apt-transport-https package on Debian before proceeding:
+sudo apt-get install apt-transport-https
+
+Save the repository definition to /etc/apt/sources.list.d/elastic-7.x.list:
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+
+ou can install the Kibana Debian package with:
+
+sudo apt-get update 
+sudo apt-get install kibana -y
+sudo vi /etc/kibana/kibana.yml
+
+Note: By default elastic found in local machine. but elastci search donot have a local machine  we have the elastic serach in diff. machine.
+     https:// <elastic serach private ip add.>
+wq:
+
+
+Running Kibana with SysV initedit
+
+Use the update-rc.d command to configure Kibana to start automatically when the system boots up:
+sudo update-rc.d kibana defaults 95 10
+sudo service kibana start
+sudo service kibana status
+copy the kibana ip address
+http://ip address/5601
+sudo vi /etc/kibana/kibana.yml
+server host <paste the private ip of elastic search>
+wq
+sudo service kibana restart
+
+*********************************
+Actual generator which generate the logs.
+
+step:
+1 create a ec2 machine (log machine)
+2. install the java
+   Command: sudo apt-get update
+            sudo apt-get install openjdk-8-jdk -y
+            java --version
+3. install the tomcat
+Command:
+       sudo apt-get install tomcat8 -y
+       sudo service tomcat8 start
+
+copy the public ip
+http://<public ip>/8080
+cd /var/lib/tomcat8/
+ls
+cd logs
+	
+
+4. install the gameof life application.
+wget <copy the gameoflife app. form azurezone from issue 45 >
+cd ~
+sudo wget <url>
+sudo wget https://github.com/asquarezone/game-of-life.git
+sudo apt-get install unzip -y
+unzip gameoflife.zip
+sudo cp gameoflife.war /var/lib/tomcat8/webapps
+sudo service tomcat8 restart
+
+http://ip/gameoflife.
+sudo cat /var/log/tomcat8/catline. press tab
+sudo cat /var/log/tomcat8/localhost_access_log press tab
+result it show the logs
+
+**************************
+google: elastic beat
+install the beat from shifted the log from applicaton server to logstash or elastic serch.
+we install the filebeat , Metrics beat and packet beat.
+
+
+
+
+
+
+
+
+
+
+
+
+What is Difference b/w nagios and ELK.
+Nagios is a powerful monitoring system that enables organizations to identify and resolve IT infrastructure problems before 
+they affect critical business processes.
+
+Nagios monitor IT Infrastructure like system ,application , service and business process. if 
+In the event of a failure, Nagios can alert technical staff of the problem,
+
+port no of nagios 5666
+
+
+Matrix:
+The status of the service or host (i.e. OK, WARNING, UP, DOWN, etc.)
+
+There are two types of state:
+soft state:
+Soft states occur in the following situations:
+  
+hard state:
+
+Hard States
+Hard states occur for hosts and services in the following situations:
+
+  When a host or service check results in a non-UP or non-OK state and it has been (re)checked the number of times specified by 
+  the max_check_attempts option in the host or service definition. This is a hard error state.
+
+  When a service check results in a non-OK state and its corresponding host is either DOWN or UNREACHABLE.
+
+
+
+Example
+Here's an example of how state types are determined, when state changes occur, and when event handlers and notifications are sent out. The table below shows consecutive checks of a service over time. The service has a max_check_attempts value of 3.
+
+Time	Check #	State	State Type	State Change	Notes
+0	1	OK	HARD	No	Initial state of the service
+1	1	CRITICAL	SOFT	Yes	First detection of a non-OK state. Event handlers execute.
+2	2	WARNING	SOFT	Yes	Service continues to be in a non-OK state. Event handlers execute.
+3	3	CRITICAL	HARD	Yes	Max check attempts has been reached, so service goes into a HARD state. Event handlers execute and a problem notification is sent out. Check # is reset to 1 immediately after this happens.
+4	3	WARNING	HARD	Yes	Service changes to a HARD WARNING state. Event handlers execute and a problem notification is sent out.
+5	3	WARNING	HARD	No	Service stabilizes in a HARD problem state. Depending on what the notification interval for the service is, another notification might be sent out.
+6	1	OK	HARD	Yes	Service experiences a HARD recovery. Event handlers execute and a recovery notification is sent out.
+7	1	OK	HARD	No	Service is still OK.
+8	1	UNKNOWN	SOFT	Yes	Service is detected as changing to a SOFT non-OK state. Event handlers execute.
+9	2	OK	SOFT	Yes	Service experiences a SOFT recovery. Event handlers execute, but notification are not sent, as this wasn't a "real" problem. State type is set HARD and check # is reset to 1 immediately after this happens.
+10	1	OK	HARD	No	Service stabilizes in an OK state.
+
+
+
+
+
+
+
+

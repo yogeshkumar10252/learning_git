@@ -1,0 +1,379 @@
+# Managing & Maintaining AWS Solutions
+
+### Monitoring
+* CloudWatch
+* CloudTrail
+* Metrics
+* SNS (Simple Notification Services)
+
+### Log Aggregations
+* Cloud Watch logs
+
+
+
+## Monitoring with Cloud Watch
+
+ 
+Amazon CloudWatch is a component of Amazon Web Services (AWS) that provides monitoring for AWS resources and the customer applications
+ running on the Amazon infrastructure. ... The app can also detect and shut down unused or underused EC2 instances.
+
+
+
+
+What is cloud watch:
+               * The cloud watch is monitorining and logining service of aws.
+
+Whats is metrics:
+               * Metrics is information about the cpu utilization, network, storage and other thing.
+
+### Setup
+setup:
+* atleast two ec2 machines with detailed monitorning enebled.
+Activites:
+* look at metrics:
+  what is metrics:
+                metrics is information about the virtual machine.as like cpu details ,network details, storage details.
+
+### Step:
+     select any machine see into bottum and click on monitorining and see 
+     metrics .metrics are individual instance and group of instance.
+
+### To See the load in graphical way into screen.
+Step:
+ * login into aws accout and click on service: and type cloudwatch
+  *create deshboard and put the name of deshboard. deshboard see the graph.
+  click on line graph : enter and want to see metrics about the cpu metrics.
+  
+### Now i want to see metrics about per-instance. 
+   * click on per-instance  goto instace console and copy the instance id and metcrics page and see metrics about the this ec2 instance information.
+
+### This is not a good way to see the load. thay why i am using the alarm schem in cloud watch monotoring service.
+
+
+
+
+###  or Another step:
+
+
+## monitoring with cloud watch
+
+## Setup
+* create a two ec2 machine .
+* right click on ec2 machine and enabled the cloud watch.
+
+*click on monitoring and see the metrics .
+* click on another machine and see the metrics.
+
+note: see the individual metrice is not a good way. see the metrics in the group.
+go to the service:
+ search the cloudwatch
+  create the deshboard
+  name of deshboard: learning
+   create the deshboard.
+  select the line graph
+   configure
+name of my name: cpu utilization.
+   here . you can choose you want about the metrics.
+    i choose the ec2 service.
+  click on all instance 
+ select the cpu utilization :: its show the metcics (information about the how much cpu is utilize.) in the graph format.
+  click on widget
+note: here you can see any type of metrics.
+
+here i want to add another widget and select the another graph 
+  and till i want to metrics only per-instance.
+ select cpu utilization and create the widget. and see the metrics only one machine.
+ again you can check metrics about the another machine.
+
+ 
+note. here i want to see the performance about the network of per-instance or all instance.
+   add widget
+   select setch graph
+     select the ec2 machine (select which machine you want the metrics about the machine.)
+      click configure
+       select per-instance
+        select network packet
+          configure.
+
+
+
+note: if you want to show the live graph.
+goto service
+ connect 
+copy the ssh file and paste the gitbashhere. 
+#then login into machine.
+#sudo yum install stress. (this command is used for)create the artifical load  you will see change in network graph.
+
+
+note: increae the  artifical load use the below given the command.
+
+run the stress command
+run the stress --cpu 8 --io 4 --vm 2 --vm 2 --vm-bytes 10 --timeout 100s -v this command increase the cpu utilization.
+
+
+Note: search the task manager.
+      click on performance
+        and see the  live utilization of cpu
+
+
+
+
+### Note: As a aws Engineer. you do not see the graph always . ki cpu utilation increase or not.
+   thay is why we you the alarm concept.
+   in aws case we learn the Alarm concept for solving the more utilazation power. 
+
+what is alarm:
+alarm is just like the state.
+ex: if cpu utilization is more accroding to the condition you get the alarm
+    if network packets more ou get the alarm.
+
+State of alarm:
+* ok (in ok state the alarm is not ringing.)
+* alarm 
+* insufficient()
+
+
+
+### Practice:
+
+* Log in into ubuntu machine & Execute following
+```
+sudo apt-get update 
+sudo apt-get install stress -y
+stress --cpu 1 --io 4 --vm 2 --vm-bytes 128M --timeout 15m -v
+`
+### Note:  you crate the alarm to get the alert the cpu utilization is more than 70% then cpu utilization is crack.
+
+step: to create alarm.
+ goto the cloud watch service
+ click on alarm
+ create the alarm
+  select the metrics
+  click on ec2 
+  per-instance
+  select the metrice(i select the cpu utilization.)
+  select the machine.
+   select the metrics.
+  name of alarm:
+  Description:
+  cpu utilization: 70
+   notification:
+       state in Alarm
+   send the notification list
+   i click on new list
+  email id:
+ create Alarm.
+  i will  do configure.
+          open the gmail and confirm the notifaction.
+
+
+
+two kind of metrics
+1. metrics difine by aws
+2. metrics defined bt self.
+
+google. create custom metrics. and see the documentation.
+
+                 Troubleshooting:
+
+VPC flow logs: 
+               VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to 
+               and from network interfaces in your VPC. the flowlogs data can be published into cloudwatch log or amazon s3.
+
+Flow Logs Basics
+             You can create a flow log for a VPC, a subnet, or a network interface. If you create a flow log for a subnet or VPC, 
+             each network interface in the VPC or subnet is monitored.
+
+
+
+Flow Log Records
+A flow log record represents a network flow in your flow log. Each record captures the network flow for a specific 5-tuple,
+
+Flow Log Record Syntax:
+     <version> <account-id> <interface-id> <srcaddr> <dstaddr> <srcport> <dstport> <protocol> <packets> <bytes> <start> <end> <action> <log-status>
+
+### Practice: 1.
+
+service 
+cloudwatch
+click on log section 
+create key group
+name of loggroup ok
+go back for vpc
+your vpc
+flow log
+cretae flow log
+select all
+select log group 
+iam role; flowrolelog
+ok....
+
+
+ec2 
+  security group
+    remove ssh
+
+once done your activity
+go to in cloud watch  
+log 
+flowlogs
+
+
+
+### Practice: 2
+
+vvvimp.
+flowlogs showing where is the packet coming in where is the packet out 
+what is the source port and what is the destination port.
+service
+check the machine and copy the pem file and paste ino gitbashhere and see the what is the respond
+
+
+
+
+main Step:
+create a vpc
+create a two subnet
+create a network nacl 
+attach nacl to the first subnet
+create a ec2 machine into fisrst subnet
+create a log group into cloudwatch
+attach the flow log 
+goto vpc and attach the flow log.
+copy the pem file and paste into gitbash here
+and try to login into machine 
+but result is connection timeout
+goto cloudwatch and click on log and attch the flow log
+check the result.
+
+flow logs tells incoming packet and outgoing packet source port and destination port.
+
+
+
+
+
+
+
+
+google: aws ephemeral port
+
+
+Note: ephemeral port are port which are open with the vpc
+      these ephemeral port are used for different purpose.such that 
+      for window open these port to be open ,for load balancer these port to be open.
+
+
+
+note: you create a nacl and associated to the subnet and open 
+the 22 port and other ports are off these 22 ports are called the 
+ephemeral port
+ex: 22
+ 0.0.0.0/22 allow
+
+note: read the documentation
+     ephemeral ports
+
+
+
+Note: executed the scripts at the time of startup .this scripts will run when
+      machine is created. scripts may be install some software ,creating file.
+      useradata is the scripts which executed only once.
+
+google: shebang
+
+userdata:
+            #!/bin/bash
+              sudo apt-get install apache2 -y
+       copy the public key and check httpd server page found or not
+result: no
+because: 80 port is not open.
+
+open the 80 port from security group and check httpd page found or not
+result: no
+
+* copy the pem file and paste gitbash here and restart the httpd service
+and copy the publib key and paste in url and check the httpd found or not
+
+result: found
+  
+
+troubeshooting
+  userdata
+  systemstartup
+where to find logs of ec2
+upload logs of ec2 to cloudwatch
+
+
+
+                             go to ec2 machine 
+                              and check the status check
+                               and monitorning
+
+
+
+
+
+  
+#### Practical:
+
+*create a ec2 machine and enable the cloudmonitorning
+* click on status check
+ status check are two types
+1. instance status
+2. system status:
+when status check fail and the alarm with the help of email 
+solution: when status check fail terminate the unnecessary machine.
+
+
+
+practical:
+
+click on machine 
+right clik 
+        instance setting
+                     instance screenshot
+
+
+
+instance setting
+             system log
+
+
+
+instance setting
+              right click
+                    change user data
+
+
+instance setting
+             right click
+                chage the behavour
+                             there are two behaviour
+                                stop the machine      start the machine.
+
+
+
+
+right click on ec2 machine
+                 create Template from instance
+something called the launch the template.
+advantage of template:
+             do not configure the instance type, configure instance security group ,add tag and other
+              thing again and again.
+
+here you can the value .
+
+note: practical:
+  write some your data
+     yum install apache2
+       #/bin/bash
+       apt-get install httpd
+               check in to logs                                          
+
+
+
+
+
+
+
+

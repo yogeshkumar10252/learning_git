@@ -1,0 +1,1565 @@
+Docker Note 28 May 2019
+https://github.com/QT-DevOps/DevOpsIssues/issues/
+Qns: How to check the version of docker.
+Ans: docker --version
+
+
+Docker version 18.09.7, build 2d0083d
+
+* monolith application are those application which deploy whole application in one server.
+
+Ecommerce
+ => authenticate
+ => cart service
+ => inventory
+ => admin service
+ => registration service
+
+Break the application in small executable service is called the microservice.
+
+Advantage of Docker:
+               if any application run in docker i can move this application any where. for example i can move azure .aws etc.
+
+* Application portability become easier.
+* simple
+
+
+*************************************************************************************
+
+
+
+Create the accout:
+google:
+ Docker hub.com
+ create the accout
+ 
+Docker playgroud => login with docker hub account
+add new instance
+docker run -d -p 8000:8000 tomcat
+qns: you can two tomcat in one server
+ans: yes but is painable
+
+docker run -p 80:80 nginx
+
+
+
+
+****************************************************
+
+29 May 2019 Note:
+
+docker run -d -p 8080:8080 tomcat
+means of this command:
+
+Note:
+    i am trying to create isolated space and with in isolated space running the tomcat and that isolated space is called the container.
+    in other words i am trying to create tomcat container. in container tomcat running inside.
+
+Note:
+   docker -d(deamon) is a server component which run always in background.
+  * your application are stored in the format of image.
+  * all the docker image are stored public is called the registry. the registry is called the dockerhub
+  * if your image are stored in locally and this image are convert into the form of container.container is called the isolated space.
+  * inside the container if login into the container looks as linux machine. 
+  * with in one system we create multiple isolated space which are basically container.
+  * whatever running inside the docker if its using the local storage is called the steteful . donot using the local storage is called the stateless
+  ex: using the webserver is called the stateless.
+      using the database is called the stateful
+ * any application inside the container get the ip address , process and storages.
+
+
+******************
+
+Play with Docker
+
+1.Execute the following command
+ docker run -d -p 8080:8080 tomcat
+
+What can we run inside containers
+ * Services
+
+  *  Non Desktop
+
+   * Stateless/Stateful
+
+   * Observation:
+
+      * docker container gets ip address
+      * docker container gets filesystem
+      * docker container gets process tree
+
+Images
+
+ * Creating Images of your appplications
+
+Docker Installation
+  * Create a linux machine
+  * Execute following commands
+
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+    sudo -i
+  
+
+
+
+
+
+*********************************************
+
+practice 29 May 2019
+Docker Installation
+  * Create a linux machine
+  * Execute following commands
+
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+    sudo -i
+  docker run -d -p 8080:8080 tomcat
+  docker pull tomcat
+  java --version
+docker run -d -p 8081:80 nginx
+docker run hellp-word
+docker image
+docker ps
+docker exec -it compassionate_chatelet /bin/
+ip addr
+ps
+df -h
+
+****************************************************************
+30 May 2019 Note.
+* when we run docker isolation space is created inside the linux machine.
+* how to create the isolation.
+* linux have namespace concept which help to create the isolation inside the linux machine.
+* how to work Namespaces.
+* google: direcrtdevops: => docker internal
+* limits are set container into the linuux machine with the help of CGROUPS
+* limit rae set container into the windows machine we use the JOB OBJECTS.
+* Namespace help to create the isolation and isolation looks like a linux machine.
+* Open container iniciative (OCI). the oci is specific. its just like a documents.
+* docker client speak with docker engine. the docker engine speak with container d with the help of GPRS. Containerd call to SHIM and SHIM call to 
+  RUNC . when runc create the container. when container is created runc is died and docker will updated.
+* SHIM just like the adapter. SHIM have the all information about the container.
+* Containerd is useful for creating parallel SHIM.
+* GPRC is remote procedure call.
+* livnetwork. is used for connect one container to another container.
+* you can work docker with online.
+  yes but you cannot download the images form registry. you have images in localrepo you can work with docker with offline.
+
+
+Docker Installation
+
+Windows
+ * Windows 10 Non Home Editions and Windows Server 2016 and above:
+   * Create native windows containers
+   * Windows Containers as well as Linux Containers
+   * Refer
+
+ * Other Windows:
+   * Virtual Box
+   * Docker ToolBox
+   * Dont install
+Linux
+ google: docker intsall shell script.
+ https://get.docker.com/
+ * simple Installation:
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+
+No Practice.
+*****************************************
+Docker Note 31 May 2019
+
+* Elaborate example
+  
+   * create a linux machine in any cloud. In this example i would be using ubuntu  18
+   * login into linux & execute
+
+  ----
+    url -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+   -----
+
+   * Install docker lead to creation of a group (linux group) _ docker_
+   * Member of _docker_ group will be able to speak to docker engine.
+   * _docker client_ will be accessible to all
+   * add your user to docker group and the logout
+
+  -----
+  sudo usermod -aG docker <username> 
+----- 
+***********************************************
+
+Docker 31 May 2019  practice.
+step:
+ before run sudo usermod -aG docker <username> this command .
+ docker info and see the result: the result is user donot have permission
+
+  when run sudo usermod -aG docker <username> this command .
+  docker info and see the result
+  ex: sudo usermod -aG docker ubuntu
+
+google: docker cheat sheet
+
+Docker Command:
+docker ps (older command)
+docker container ps (new command)
+docker image --help
+docker image ls : its show the how many image is local repository
+docker images (odd commands) its show the same result
+
+
+To run a container
+docker image --help
+docker image pull --help
+docker hub 
+          => explorer see the image
+docker image pull mango
+docker image pull alpine 
+docker image ls
+docker image pull hello-world
+docker image ls
+docker image pull nginx
+
+Note: image run is not possible because run the container.
+
+docker container --help
+docker container create --help | less
+docker container create nginx
+
+note: i want to see how many container run 
+docker container --help
+docker container ls -a
+docker ps
+docker container run nginx press ctrl+c
+docker run nginx
+docker container ls -a
+
+docker container run -d nginx
+docker container ls
+
+docker container run -d -p 80:80 nginx
+
+note: every container have the name and id which give by the docker.
+copy the ip address and paste into the url.
+
+note: its see the result nginx is running. nginx running inside the container. how can its possibe nginx access by linux machine network .
+    this possibe with the help of port forward concept comes into the play. vvvimp.
+
+
+docker container --help
+
+
+ex:
+docker image pull tomcat
+docker container run -d --name 'mynginx2' -p 8088:80 nginx
+copy the ip address and paste the url 8080
+
+IMP: you can map host port to container port . this concept is called the port forwaring.
+    docker container run -p hostport:guest/conatiner port <image>
+
+****************************************************************************************************
+1 june 2019
+Concept : public the port:
+
+in public port concept docker see which port are free assign to it.
+
+diff b/w capital P and small p:
+in small p we assign the port but in capital P docker automatically assign the port no.
+
+
+
+docker note 1 june 2019
+install the docker from command line.
+step.
+1.create the ec2 machine
+2. google. install the docker on ubuntu
+3. docker --version (for interview purpose)
+   docker info
+   sudo usermod -aG docker <username>
+how can findout your docker doing the work or not
+ans: we can find out with the help of docker info.
+
+google: to learn shell scripting
+         get docker.sh
+
+
+
+docker container run -P -d tomcat
+docker container ls
+goto to the machine. and copy the ip address and paste into the url with port 32768
+
+ex: docker container run -d -P nginx
+docker container ls
+goto to the machine. and copy the ip address and paste into the url with port 32769
+
+
+docker container run --help | more
+docker container ls --help
+
+**********
+
+New Concept in Docker.
+    -------
+
+What is Image:
+            the image have no memory , and image have no cpu , image have ony size because its is set of files.
+             when you give memory to this image ,when give cpu to this image then this become a  container.
+             form one image i  can  create multiple containers.
+
+
+
+
+
+docker --help
+docker images --help
+here more option. and read it
+
+docker image ls:
+here show the repositorty , tag imageid created
+and repositort show the size ,
+
+docker image pull alpine
+docker image ls
+
+what is the size of image...
+show image getting the size. so image have some size .size is nothing but some set of files.
+
+imp: inspect: display detailed information one or more images.
+
+docker image inspect --help
+docker image inspect nginx 
+docker image inspect alpine    : it show the many information.
+sudo -i
+cd /var/lib/docker/overlay2
+ls -lart .
+cd f : this strucrure understand by only docker not me.
+
+Note:  create the container from image and layer concept
+
+docker container ls
+docker container inspect <paste the id of any image> | more or less
+
+ex: docker pull jenkins : it show many layer and they run in union file system in read and write from
+    many layer run in one union form with the help of Overley file system
+    and each layer understand the concept of hashing.
+
+
+google: sha256 online.com
+    wirte some message and show some code
+
+docker image ls
+each image have multiple layer each layer is reconized by sha256.
+
+docker pull openjdk
+docker pull ubuntu
+docker pull tomcat:8
+docker pull tomcat:7
+
+result: it show messeage it means some layer all ready present in my system so do not create the new space for it layer.for this resuability the images are broken down into layers.
+docker run -it tomcat:7 /bin/bash
+cd ~
+ls
+df -h
+
+once the image inside the container they become a file system
+
+container = image+RW layer
+
+for ex: touch one.txt
+    this file are not stored in  images this file are stored in thin read write layer. once container is lost this file are lost. 
+    that why you cannot delete the image when container are running.
+
+  
+Docker image ls
+TAG: the tag is simple way to userstand the version.
+ex: tomcat 7
+     tomcat 8
+
+<Imagename>:<TAG>
+
+when 
+docker pull image
+in this case docker take the latest tag automatically.
+docker pull image:<latest>
+
+ex: google: togo the docker hub
+   explore=> tag read this
+
+docker pull tomcat:9-jdk-8
+docker image pull tomcat:9 : i am pulling the same image but pulling the diffrent tag.
+
+
+**********************
+Create the docker image:
+
+image: reference:
+         => scratch
+           official images 
+           published images
+note:
+    i want to develop a web application which apps based on java so take the image which hava java already.
+      jave $ spring
+     
+     python & djanjo
+    
+1* so create a docker image fisrt take the base image.
+2. do you app deployment(copy the file and configuration file)
+3. how to start my app when container is starting
+
+
+
+docker container run hello-world
+docker conatiner ls
+
+here image is donot show because thing are do not correctly.
+
+*******
+practice.
+step. 
+1. open a vscode. and make a one file which start from Dockerfile
+## what is the my base image
+    * docker follow some instructions. which are given as follow.
+    * any thing do deployment use the instruction RUN
+    * CMD : whatever you write it executed when container is statred.
+
+FROM alpine :  (base image)
+RUN apk update && apk add python
+CMD ["echo","hello"]
+
+2:goto the docker machine
+3. make a directory 
+                 inside the directory make a file vi <file name> and inside this file paste the docker file
+4.
+
+Note: Container is alive till CMD Running. 
+      * convert the docker file into image is called the Build the image.
+
+docker image build --help |less
+docker image build -t '<name of image >' <path of docker file>
+docker image ls
+
+
+remove the container
+docker container ls -q
+imp: docker container rm -f $(docker container ls -a -q)
+docker conatiner ls -a
+
+remove the image.
+docker image --help
+docker image rm  -f $(docker image ls -q -a)
+
+Build the image 
+docker image build -t < name of the image> <path>
+docker image ls
+
+docker container run <hello-alpine>
+docket container ls -a
+
+docker container run -d hello-alpine echo testing
+docker container run -d hello-alpine echo testing ps -a
+
+FROM alpine(base image)
+RUN apk update && apk add python
+ENTRYPOINT ["Echo"]
+CMD ["hello"]
+
+mkdir hellp-alpine
+cd hello-alpine
+vi Dockerfile
+paste the file
+wq
+
+docker image build -t hello:1.0
+docker container run hello:1.0
+testing
+ps -a
+
+docker container ls -a
+see execuetd 0  sign is good
+see the executed 1 sign is not good
+**********
+
+FROM alpine(base image)
+RUN apk update && apk add python
+RUN apk add openjdk-8-jdk
+RUN apk add git
+CMD ["echo","hello"]
+
+mkdir yogesh
+cd yogesh
+vi dockerfile and paste the file which are given above
+:wq
+
+docker image build -t hello:2.0
+docker image ls
+
+every run statement lead to create a new layer
+
+Note:
+    Do not want to new layer we use following concept. 
+
+FROM alpine(base image)
+RUN apk update && apk add python && apk add openjdk8 && apk add git
+ENTRYTPOINT ["echo"]
+CMD ["hello"]
+
+google:  Docker file instruction.
+
+FROM alpine:3.9
+RUN apk update && apk add python
+ENTRTPOINT ["echo"]
+CMD ["hello"]
+
+Note: do want to running the starting of container use the CMD 
+      do  not want to running the starting of container use the CMD.
+
+Entrypoint & CMD
+
+         * in entrypoint whatever want to run when container is run is fixed.
+         * in CMD whatever want to run when conatiner is start is changed.
+ 
+*************************************************************
+3 June 2019 
+
+Today work.
+           write a docker file do deploy a application.
+           But first deploy a application  manaually.
+
+ex: 1.game of file
+    2. spring petclinic.
+
+Note: deploy a gameoffile application manaually.
+step.
+* login into docker server
+* sudo apt-get update
+* install the tomcat*
+  Command: sudo apt-get install tomcat8 -y
+           sudo service tomcat restart
+copy the ip address and paste into the url ex: http://<ip>>8080
+Note. tomcat just like a container where we host the application or run the our application.
+* copy the gameoflife application from s3 or any where you have stored the application. 
+* sudo apt-get install unzip -y
+* unzip gameoflife.zip
+* path of tomcat
+* sudo cp gameoflife.war /var/lib/tomcat/webapps
+* ls  /var/lib/tomcat/webapps
+* Now check gameoflife application host or not inside the tomcat
+* copy the ip address of machine. 
+* http://<public ip address>:8080/gameoflife
+
+Now i want to write 
+
+*******************
+note. manaually deploy a gameoflife application from docker.
+cddocker run -P -d tomcat:8 : running the docker container
+docker container ls
+copy the ip address and http://<public ip address>:<port>
+docker container --help
+docker container ls
+docker container exec <id of container> ps -a
+docker container exec <id of container> pwd
+
+i want to  login inside the tomcat container
+
+docker container exec -it <id of tomcat container> /bin/bash
+here i: interctive and t means some terminal press enter
+copy the gameoflife application. .war file from s3 or other place.
+wget <url>
+ls
+mv gameoflife.war webapps/
+cd webapps
+
+Note: donot use the ctrl c for comeout the container if use ctrl c conatiner will die. so comeout the container use the following command.
+command: read escape sequence
+ls
+docker container ls
+copy the ip adderss and paste into the url
+http:<public ip address>:32768/gameoflife
+
+************************
+
+write docker file to deploy a gameoflife application.
+google: dockerfile instruction LABEL
+google: dockerfile instruction EXPOSE
+
+LABEL: LABEL instruction are used the add the some extra information.
+       ex: what is the auther name etc.
+
+FROM tomcat:8
+LABEL auther=qualitythought
+RUN wget <url of gamaoflife application> && mv gameoflife.war /webapps
+EXPOSE 8080 : EXPOSE instruction are used for defined that your application running this port.
+CMD ["catalina.sh","run"]
+
+login into docker server
+mkdir yogesh
+cd yogesh
+mkdir game
+cd game
+vi Dockerfile 
+paste the above docker file
+docker image build -t game:1.0
+docker container run -p -d 8080:8080 --name game game:1.0   
+
+note: here i am using the --name for giving the name of container.
+
+docker container ls
+http://<public ip>:8080/gameoflife
+docker image ls
+docker image inpect game1.0
+
+
+
+*******************
+
+ex :2 spring petclinic.
+step;
+* install the openjkk-8-jdk
+  sudo apt-get install openjdk-8-jdk -y
+* install the maven -y
+   sudo apt-get install maven -y
+* install the git -y
+  sudo apt-get install git -y
+
+now copy the spring-petclinic and paste into the terminal
+git clone <url>
+ls
+cd spring-petclinic
+maven package
+mv spring petclinc file 
+
+
+
+
+docker file of spring petclinic.
+FROM openjdk:8
+LABEL auther=yogesh
+RUN wget <url>
+EXPOSE 8080
+CMD ["java","-jar", "spring-petclinic.jar"]
+
+
+**********************
+
+4 june 2019 practice Note
+Use the ADD And Copy instruction.
+
+ADD: ADD instruction are used for copy the file from local machine into docker image & url into docker
+Copy : copy instruction are used for copy the file from loacl machine into docker image.
+
+google : docker file add instruction.
+
+
+
+FROM tomcat:8
+LABEL auther=qualitythought
+ADD  <url of gamaoflife application> &&   /webapps gameoflife.war
+EXPOSE 8080 : EXPOSE instruction are used for defined that your application running this port.
+CMD ["catalina.sh","run"]
+
+mkdir images
+cd images
+mkdir game
+cd game
+vi Docker file
+paste the above file here
+:wq
+
+echo "localfile" > test.txt
+ls
+vi Dockerfile
+
+FROM tomcat:8
+LABEL auther=qualitythought
+ADD test.txt /usr/local/tomcat
+ADD  <url of gamaoflife application> &&   /usr/local/tomcat/webapps gameoflife.war
+EXPOSE 8080 : EXPOSE instruction are used for defined that your application running this port.
+CMD ["catalina.sh","run"]
+wq
+
+Build the image.
+docker image build -t game:1.0
+docker image ls
+
+now run the this image:
+docker container --name game -d -80:8080 game1:0
+
+copy the ip address
+http://public ip address/gameoflife.
+
+
+*************
+ex: 2 spring petclinic.
+google: https://github.com/QT-Devops/DevOPsIssuses/issuses/481 download the spring petclinic
+open the powershell  and ckeck java install or not
+java --version
+java -jar .\spring... press tab 
+http://localhost:8080/
+
+Write the docker file for spring petclinic
+google: dockerhub.com and serch the open jdk click on open jdk and see the tags.
+ 
+experiment:
+docker container rm -f $(docker container ls -q)
+docker container ls
+docker image pull openjdk:8
+docker container run -d -p 80:8080 openjdk:8 /bin/bash
+copy the link of spring petclinlic and paster here
+run the application:
+java -jar spring-petclinic
+
+http://public ip address.
+
+
+FROM openjdk:8
+LABLE auther=yogesh
+ADD <url of spring petclinic> /spring-petclinic.jar
+EXPOSE 8080
+CMD ["java","-jar","spring-petclinic.jar"]
+
+mkdir image
+cd image
+mkdir spring
+cd spring
+vi Docker file
+paste the above file here
+wq
+
+ now build  the image :
+
+docker image build -t petclinic:1.0
+docker image ls
+
+now run the container 
+docker container run -d -p 80:8080 petclinic:1.0
+
+docker container exec -it <id of container> /bin/bash
+ps 
+ps -a
+***************
+
+Environmental variable:
+google: dockekfile instruction env
+
+FROM openjdk:8
+LABLE auther=yogesh
+ARG test= "hello"
+ENV LOCATION= "/spring-petclinic.jar"
+ADD <url of spring petclinic> /$LOCATION
+EXPOSE 8080
+CMD ["java","-jar","$LOCATION"]
+
+mkdir image
+cd image
+mkdir spring
+cd spring
+vi Docker file
+paste the above file here
+wq
+
+ now build  the image :
+
+docker image build -t petclinic:1.1
+docker image ls
+
+now run the container 
+docker container run --help |less
+
+echo $L
+echo $LOCATION
+
+Note: argument value change while building the image.
+      environment value change while building or running the container.
+
+note: .dockerfile
+
+***********
+STOPSIGNAL:
+
+
+
+USER : I want to run container as a jenkins user in this case jenkins user must be in the machien and switch on otherwise created the jenkins user.
+       * docker file executed in sequence way
+
+
+FROM openjdk:8
+LABLE auther=yogesh
+ARG test= "hello"
+USER jenkins
+ENV LOCATION= "/spring-petclinic.jar"
+ADD <url of spring petclinic> /$LOCATION
+
+EXPOSE 8080
+CMD ["java","-jar","$LOCATION"]
+
+***************
+
+WORKDIR INSTRUCTION :
+
+
+
+
+************************
+7 June 2019
+Note: life cycle of container.
+start
+stop 
+terminated the containers.
+
+* when we terminated the conatiner the read write  has terminated.
+* even if delete my container those block of data which trying to create are still  persistent. 
+* how can make my data is persistent(means even my data are present when container is died ).
+* our data is persistent even container is died with the help of volume concept this can be managed by mount namespace.
+* what is volume: the volume is docker persistent storage.
+
+
+****************************
+
+7 June 2019 practice.
+* login into docker server
+docker image pull hello-world
+docker image ls
+docker image hello-world inspect | less and see the volume.
+* image have volume.
+
+
+docker file
+FROM tomcat:8
+RUN ..............
+VOLUME /usr/local/tomcat
+CMD ["cataline.sh", "run"]
+
+Note: when we create the container out of this image one volume is created.
+mkdir images
+mkdir volumefromimage
+cd volumefromimage
+vi Dockerfile : paste any docker file which have volume.
+:wq
+docker imge build -t image1:1.0
+docker image ls
+docker image image1:1.0 inspect |less and see the volume section and what is the diff.b/w hello-world image and this image
+
+docker container run -d -P image1:1.0
+copy the id
+docker container inspect id and see the mount section. and copy the source 
+cd /var/lib/docker/volume/ ...
+sudo -i
+cd /var/lib/docker/volume/ ...
+ls
+docker container rm -f $(docker container ls -q)
+ 
+cd /var/lib/docker/volume/ ...
+ls
+
+Note: here showing that even if container is died our data is persistent 
+you put the volume instruction in the docker file.
+
+
+Note: when container is died how can findout the voule. given command help to findout the volume id
+
+
+docker --help | less
+docker volume --help
+docker volume ls : this is the volume which conatiner created.
+docker volume inspect <paste the id>
+***********************************
+
+
+
+How can mount this volume to the folder which are present into the local machine.
+***********
+******************
+not written the docker file and not written the volume instruction and only use the image.
+second scenrio:
+
+docker container run --help
+mkdir logs
+cd logs
+
+here mount the logs folder to the volume /usr/local/tomcat/logs
+docker container run -v /logs:/usr/local/tomcat/logs P -d tomcat:8
+ls /logs/
+echo "hello-yogesh > /logs/test.log"
+ls /logs
+
+docker container ls
+docker conatiner exec <id> ls /user/local/tomcat/logs
+
+see the content
+docker conatiner exec <id> ls /user/local/tomcat/logs/test.logs
+
+Note: we can use same mount volume for different container.
+
+
+docker container run --name tomcat3 -v /logs:/usr/local/tomcat/logs -P -d tomcat:8
+docker volume ls
+docker container inspect tomcat3 : here is no volume
+Note: you write the volume instruction in dockerfile create the new volume.
+      you write the volume at command line you can create the new volume or you can reuse the volume which create by another container.
+
+
+***************************
+google: docker volume driver
+blockstorage
+blobstorage
+filestorage
+   => volumes 
+
+here find the driver which mount the to the  ebs block storage.
+
+Two popular driver:
+
+container
+aufs =: debian /ubuntu
+overlay2 rhel/ubuntu
+***********************
+
+docker images
+docker image history <image name>
+
+***********************
+8 june 2019
+Network:
+
+open the playground
+create the one machine
+docker container run -d -P tomcat
+docker container ls
+docket container inspect id of the container
+see the network and see the ip address.
+
+
+docker container run --name c1 -d alpine sleep 1d
+docker container run --name c2 -d alpine sleep 1d
+docker container ls
+
+
+docker container exec c1 ping google.com
+docker container exec c1 ping c2
+
+docker container inspect c2 ; take the ip address
+docker container exec c1 ping ip address of c2 container.
+
+
+Sendbox is whole component which deals with all of the network.
+Endpoint as a network interface then go to connect to the network.
+in the container all the network handle by sendbox.
+endpoint just like the adapter in windows and in linux eth0 and eth1
+implementaion of this sendbox developed by driver.
+some driver are
+               bridge/nat
+               overlay for multimachine
+                none
+               macvlan
+ifconfig:
+
+* if you install the docker one docker network componet is installed.
+* bridge network enable the multiple conatiner which running in a single machine and speak with each other.
+* 
+
+
+
+docker --help
+docker network --help
+docker network ls : see all the network
+default neywork is bridge network.
+
+what is the bridge network
+docker network inspect bridge |less
+
+
+
+You can create our network.
+---------
+-------------
+docket network --help
+docker network create --help
+docker network create -d bridge --subnet "10.0.0.0/16" --gateway "10.0.0.1" --attachable mynetwork
+
+note: any container create inside this network gotted the ip address given range.
+
+docker network ls
+docker container run --help |less
+docker container run --name n1 --network mynetwork -d alpine sleep 1d
+docker container run --name n2 --network mynetwork -d alpine sleep 1d
+docker container ls
+docker conatiner exec n1 ping n2
+result: working
+
+service discovery:service discovery automatically enable by your sendbox.
+                  service discovery is used for enable the compoter name by its ip
+
+container network inpect mynetwork : you see two conatiner is running
+
+
+docker network --help
+docker network connect --help
+docker network connect mynetwork c1
+docker network inspect mynetwork
+docker network connect mynetwork c2
+
+docker network exec c1 ping c2
+
+Note: we can connect more then container with the help of bridge driver
+
+
+**************************
+docker container exec -it c1 /bin/bash
+ifconfig
+ 
+bridge network just like the cable.
+google: docker network plugins
+
+************
+
+Background and foreground:
+-----------------------------
+--------------------------------
+-Background:
+docker conatiner run -P jenkins
+in this case docker running in foreground.
+docker container ls
+
+Note: running the container in background is called the deattach
+     ex: docker conatiner run -d -P jenkins
+      running the conatiner in foreground is called the attach
+  * donot use attach any case.
+    donot use the ctrl +c when use the  attach user container is died.
+
+
+
+Logs Concept: 
+--------------
+-------------
+ 
+docker container --help
+docket container logs 
+docker container logs jenkins
+
+note: jenkins have the stdout . when jenkins start print the logs in stdout
+
+application
+=> /var/log/my.logs
+redirect file logs to stdout
+
+
+****************
+`
+Docker UI
+________________
+_________________
+google: portainer docker
+ docker volume create portainer_data
+$ docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+
+run the ipaddress and port no 9000
+whatever happend in docker you can see in visiually.
+step: installation:
+after installation click on port no.
+create the password.
+local
+refresh and continue
+click on local
+
+*********************
+can you give 2 GB ram and 3 Gm memory it is possible:
+ans: cgroup
+docker container run --help |less
+
+***********
+Concept Event:
+docker system --help
+docker system event --help
+docker system events 
+docker contsiner rm -f $(docker container ls -q -a)
+Note: how will react when container is fail you can see in events
+
+qns: when container is died how can know
+ans: we find container is died or not with the help of events.
+
+important activity you can see in events
+for ex: attach the network 
+        deattach the network.
+****************
+
+Docker Restart policy:
+---------------------
+---------------------------
+Note: your container is running and you do stop the machine and after restart the machine , your container restart automatically with the help of restart policy.
+
+
+docker container run -d --name c1 --restart always alpine sleep 1d
+docker container run -d --name c2 --restart always alpine sleep 1d
+docker container ls
+docker container stop c1
+
+
+qns: what is drawback of ui:
+and: you can use the automatic 
+
+
+*************************
+13 June 2019
+
+* if running anything in a one machine is a single point of failure.
+docker swarm work with multi machine.
+google: docker swarm
+
+
+
+
+
+docker compose.
+google:docker compose
+docker compose eliminate the docker command . and you the yml file .
+
+1.what and why -Docker compose
+2. how to install
+3. how to create docker compose file
+4. how to use docker compose file to create service
+5. basic command.
+
+step:1
+-----
+insta
+
+
+
+
+
+
+
+Docker compose:
+ tool for defining & running multi-container docker application.
+ : use ymal files to configure application  service (docker-compose.yml)
+ : can start all services with a single command: docker compose up
+ : can stop all service with a single command: docker compose down
+ : can scale up selected service when required. 
+
+
+install the docker compose:
+--------------------------
+using PIP if python install in the system.
+pip install -U docker-compose
+
+
+
+docker-compose -v
+docker-compose version
+
+
+
+step:2
+
+create docker compose file at any location on your system
+docker-compose.yml
+mkdir dockerComposefile
+cd DockerComposeFile
+docker-compose.yml
+ls
+vi docker-compose.yml
+ service:
+   web:
+     image: nginx
+   database:
+     image: redis
+:wq
+
+cat docker-compose.yml
+
+
+step:3
+Check the validity of file by command
+ docker-compose config
+
+result: it give the error
+
+Again:
+
+vi docker-compose.yml
+Version: 1 
+service:
+   web:
+     image: nginx
+   database:
+     image: redis
+:wq
+
+docker-compose config
+
+result: error because this version does not supported the docker compose.
+
+
+vi docker-compose.yml
+version: '3' 
+service:
+   web:
+     image: nginx
+   database:
+     image: redis
+:wq
+
+docker-compose config
+result: yes
+
+step: 4 Run docker-compose.yml file by command:
+  docker-compose up -d 
+docker ps
+docker container ls
+
+
+docker-compose down
+docker ps
+
+Again:
+
+
+vi docker-compose.yml
+version: '3' 
+services:
+   web:
+     image: nginx
+     ports:
+     - 9090:90/tcp
+   database:
+     image: redis
+:wq
+
+docker-compose config
+docker-compose up -d
+
+goto the url and paste localhost:9099
+result: show the home page of nginx
+
+docker-compose down
+
+
+step: Bring down the application by command
+
+docker-compose down
+
+
+
+step:6
+How to scale up the service:
+docker-compose up -d --scale database=4
+
+ex:
+docker-compose --help
+docker-compose up -d --scale database=4
+docker compose ps
+
+docker compose down
+docker ps
+ 
+
+
+Docker Swarm:
+-------------------
+1. what is Docker Swarm
+2. Why to use it
+3. How to create and manage Docker Swarm
+4. Create service on docker swarm
+5. Scaling service up and down
+6. Feature/helpful 
+
+Swarm is group of machine that are running Docker and joined into cluster.
+
+here multiple node and one node is docker swarm manager and other nodes do the work for manager
+multiple machine running in the docker and they connected to each other and manage by swarm manager.
+
+
+
+
+Docker swarm is a tool for Container Orchestration.
+
+let's take example:
+
+you have 100 containers:
+
+you need to do
+ - health check on every container
+ - Ensure all containers are up on every system
+ - Scaling the containers up or down depending on the load
+ - Adding updates/changes to all the containers.
+
+Orchestraction- managing and controlling multiple docker container as a single service tools available-
+Docker Swarm, kubernetes 
+
+
+
+Pre-requites:
+------------
+1. Docker 1.13 or higher
+2. Docker Machine 
+
+
+docker-machine -v
+
+step:1
+Create Docker machines(act as nodes for docker swarm)
+Create one machine as manager and all other as workers
+
+sudo snap install docker : install for docker machine
+docker machine --help
+
+
+how to connect docker client to docker engine.
+Command: docker-machine env manager1
+
+step:2 check docker machine install or not.
+docker-machine ls
+docker-machine ip manager1
+
+
+step:3 SSH (connect) to docker machine
+docker-machine ssh manager1
+
+just like this you can add multiple machine.
+
+Step:4 initialize docker Swarm.
+       docker swarm init --adversite-addr MANAGER_IP
+       docker swarm  init --adversite-addr <ip address of manager>
+
+
+copy the token and keep safe place. for join the nodes to the master.
+
+docker node ls
+
+
+
+step: join the worker to the swarm
+      docker swarm join-token <ip>
+copy the token and run
+
+docker swarm join-token 
+docker node ls
+
+step:6
+goto the manager
+docker info
+docker swarm
+
+
+step:7
+ Run containers on docker Swarm
+    docker service create --replica 2 -p 80:80 --name serviceName nginx
+
+   check the status
+   docker service ls   check in the master
+   docker service ps serviceName         : start the service in the docker
+   ex: docker service ps web1
+   docker service ps
+   
+
+    check all the service running on all the nodes
+    check on the browser by giving for all nodes.
+
+
+step:8 scale the service up/down
+     docker service scale web1=4
+     docker service ps web1
+
+     docker service scale web1=5
+     docker service ls
+     docker service ps web1
+
+
+    docker node inspect worker2
+    docker node inspect self(manager)
+
+
+step:9 shutdown nodes
+  docker node update --availability drain worker1
+ 
+Step:10 Update service or version.
+    docker service update --image <image name>:<version>web
+    docker service update --image nginx:1.14.0 web1
+    
+    docker service ls
+    docker service ps web1 
+
+step11: remove the service
+           docker service rm web1
+           docker nodes ls
+           docker service ps web1
+
+
+
+step:12
+leave the command:(down the service)
+ docker swarm leave  : 
+
+
+
+
+docker-machine stop worker1
+docker-machine rm worker1
+
+
+
+
+
+
+
+
+
+I have attended couple of interviews where they have asked below question.
+
+How do you protect your environment? Can you please let us know how security will be provided to servers in companies.
+
+How can you build the project in specific environment(Dev, QA,prod)
+i have told we use parameterised jobs ..could you please clarify on this sir.
+Lets consider i have entered Dev,qa,prod ..while build i have selected Dev..
+How does the jenkins match the key word of Dev and deploy to that particular server only? This question is haunting me sir.
+
+
+
+
+
+******************** 
+Network:
+
+Bridge Network: A bridge can be a hardware device or a software device running within a host machine’s kernel.
+       In terms of Docker, a bridge network uses a software bridge which allows containers connected to the same bridge network to communicate, 
+       while providing isolation from containers which are not connected to that bridge network. 
+
+hostNetwork:
+   For standalone containers, remove network isolation between the container and the Docker host, and use the host’s networking directly.
+   host is only available for swarm services on Docker 17.06 and higher. 
+
+
+Overlay Network:
+  Network are basically used in docker swarm . to communcate two or more machines. or between two standalone containers on different Docker daemons.
+  Or used for commuincate docker swarm service.
+ 
+
+
+
+
+None: For this container, disable all networking. Usually used in conjunction with a custom network driver. 
+      none is not available for swarm services.
+
+
+
+diff. b/w default bridge and user defined bridge.
+User-defined bridges provide better isolation and interoperability between containerized applications.
+User-defined bridges provide automatic DNS resolution between containers.
+Containers can be attached and detached from user-defined networks on the fly.
+Each user-defined network creates a configurable bridge.
+Linked containers on the default bridge network share environment variables.
+
+
+What is standalone containers:
+ans: standalone container is a single jVMs machine which monitor all the deploy. in the containers.
+
+
+
+
+Docker has a default entrypoint which is /bin/sh -c but does not have a default command.
+
+
+RUN executes the command(s) that you give in a new layer and creates a new image. This is mainly used for installing a new package
+
+
+ENTRYPOINT is used when yo want to run a container as an executable.
+
+
+
+CMD instruction allows you to set a default command and default parameters which will be executed when docker is run. 
+But these commands and parameters can be overwritten by passing the values over the command line.
+
+
+
+ENTRYPOINT is the program to run the given command. It is used when yo want to run a container as an executable.
+
+Copy : copy a file
+
+
+First, you can use a URL instead of a local file / directory. Secondly, you can extract a tar file from the source directly into the destination.
+In most cases if you’re using a URL, you’re downloading a zip file 
+
+
+A valid use case for ADD is when you want to extract a local tar file into a specific directory in your Docker image. 
+This is exactly what the Alpine image does with ADD rootfs.tar.gz /
+
+
+
+
+
+
+# Sample Dockerfile
+
+# Indicates that the windowsservercore image will be used as the base image.
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+
+# Metadata indicating an image maintainer.
+LABEL maintainer="jshelton@contoso.com"
+
+# Uses dism.exe to install the IIS role.
+RUN dism.exe /online /enable-feature /all /featurename:iis-webserver /NoRestart
+
+# Creates an HTML file and adds content to this file.
+RUN echo "Hello World - Dockerfile" > c:\inetpub\wwwroot\index.html
+
+# Sets a command or process that will run each time a container is run from the new image.
+CMD [ "cmd" ]
+
+
+
+ns: How to update the image into the docker or you have a image in docker. how you update it.
+Ans:step:
+     1. if you do not have a image then you pull the image from the repository.
+     2. then run the container from this image.
+     3. now login into container and add do you want.
+     4. then create a new image from this container.
+
+ex: # docker pull centos
+    # docker images
+    # docker run -it --name="centos_test" centos:latest /bin/bash
+      [root@e121d03b20dc /]# mkdir test_dir
+     [root@e121d03b20dc /]# cd test_dir
+     [root@e121d03b20dc test_dir]# echo "This is a sample text" > test_file         
+     [root@e121d03b20dc test_dir]# cat test_file
+     This is a sample text
+     [root@e121d03b20dc test_dir]# ls -lrt
+     total 4
+     -rw-r--r--. 1 root root 22 Nov 19 16:12 test_file
+   # docker commit -m="This a test image" centos_test new_centos_image
+   Here,
+     -m=”This a test image” : is a Commit message.
+      centos_test : Name of the container from which you are creating the image.
+      new_centos_image: Name of the new image created.
+  ## docker images
+     
+
+
+
+
+Let's say I have pulled the official mysql:5.6.21 image.
+
+I have deployed this image by creating several docker containers.
+
+These containers have been running for some time until MySQL 5.6.22 is released. The official image of mysql:5.6 gets updated with the new release, but my containers still run 5.6.21.
+
+How do I propagate the changes in the image (i.e. upgrade MySQL distro) to all my existing containers? What is the proper Docker way of doing this?
+
+
+Qns: How to upgrede the older container.
+Ans: There are two option for change the upgrade the older container.
+   1. first you can take the volume of the older container and attach the this volume to the new conatiner at the container creation time from new image.
+
+
+
+docker pull mysql
+docker create --volumes-from my_mysql_container [...] --name my_mysql_container_tmp mysql
+
+docker stop my_mysql_container
+docker start my_mysql_container_tmp
+
+docker rm my_mysql_container
+docker rename my_mysql_container_tmp my_mysql_container
+
+

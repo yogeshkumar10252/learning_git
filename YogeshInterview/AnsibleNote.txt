@@ -1,0 +1,2112 @@
+
+What is devops:
+development and operation:
+DevOps is a software developments apporach which involve continuous Devlopments,continuous testing continuous integration, continuous deployment
+and continuous managements of the software throughtout its developments lifecycle.
+
+* Devops are used to release the software(application) faster to the market.
+* Save the time
+* save the cost
+* increase the business value.
+
+
+What is the Automation:
+automation include the higher production rates and increse the productivity more efficient use of material better production quality ,improve the safety and safety is main reson for the automation.
+
+
+ansible version=2.8.2
+  Ansible:
+
+Ansible is in short an IT Automation ,configuration management and provisioning tool.
+its  use the playbook to deploy,manage ,test,build,and configure everything from full server environmenets to web site to custom applied
+source for application.
+
+
+Why ansible:
+No programming language required
+Not a markup lanaguage
+Structured
+Easy to read and use
+no agants
+no complex
+No database.
+
+
+
+Core Components of ansible:
+------------------------
+* inventories
+* modules
+* Variables
+* Facts
+* Playbook and play
+* configuration files
+* templates
+* Roles
+* Ansible Vaults
+
+
+
+
+Inventories:
+-------------------
+
+The Ansible inventory file defines the hosts and groups of hosts upon which commands, modules, and tasks in a playbook operate. 
+The file can be in one of many format. the inventory file have the full information about the nodes.
+
+there are two types of inventorys:
+1. static or local inventories.
+   name: /ete/ansible/hosts
+it can be called from a different file via -i option.
+
+2. dynamic:
+   Can be provide by an application:
+
+Modules:
+----------
+* Modules are the tools on the workshop
+* Ansible ships with a number of modules (called the 'module library') that can be executed directly on remote hosts or through Playbooks. 
+* Users can also write their own modules. 
+* These modules can control system resources, like services, packages, or files (anything really), or handle executing system commands.
+  Example: the yum module
+
+
+
+Variables:
+-----------------
+with the help of variable we can make the playbook in resuable format.
+variable is a value that can change any time.
+There are many place where we defined the variable.
+variable can be defined in the playbook
+variable can be defined in the inventory.
+variable van be referenced using the jinja template system. 
+ Example:
+      dest={{remote_path}}
+
+
+Facts:
+------------
+* Facts is the way to getting the data from system
+* you can use these facts in playbook variables.
+* gathering can be disbled in the playbook.
+  can speed up execution
+  ex: hosts: mainhosts:
+      gather_facts: no
+
+Note: when we executed the playbook one extra task is running . this extra task is known as the gathering facts.
+
+
+Playbook and play:
+-----------------
+
+* playbook are the your instruction manaual
+* a playbook is made of individual tasks.
+* a play is a tasks
+* playbooks are the ymal format
+
+
+Configuration Files:
+--------------------
+The Configuration is Nothing but a file where can configre any thing accroding to the condition.
+* The defaults is /etc/ansible/ansible.cfg
+* you can disbale or enable option in the config file.
+* The config is read when playbook is run
+* you can use config files other than the defaults. the order are.
+   1. ANSIBLE_CONFIG (an environmental variable)
+   2. ansible.cfg (in the current directory)
+   3. .ansible.cfg (in the home directory)
+   4. /etc/ansible/anibsle.cfg
+
+
+
+
+
+
+Templates:
+---------
+Templates are simple text files that we can use in Ansible. Most of the time you will use them to rep
+Templates are processed by the Jinja2 templating language
+A template in Ansible is a file which contains all your configuration parameters, but the dynamic values are given as variables.
+
+what are templates?
+There is an  Ansible module called template.
+A template is a definition and set of parameters for running Ansible job.
+job templates are useful to execute the same job many times.
+Variable can be used in templates to populate the content.
+
+
+
+
+Note: Templates is the simple text file we can use the template in ansible. the templates are written by using the jinja template language.
+      which are written as {{}}. with the help of template we can run same jobs many times.
+
+Handlers:
+---------
+Handlers are just like regular tasks in an Ansible playbook (see Tasks) but are only run if the Task contains a notify directive 
+and also indicates that it changed something for repitition a any task more then one time we use the handlers.
+called at the end of each play.
+
+
+
+
+
+Roles:
+--------
+Roles can be thought of as a playbook that splits into multiple files. 
+ex: one file for tasks, one for variables one for handlers
+* with the help of roles we can make the our playbook in resuable format.
+
+
+
+
+Ansible Vault:
+------------
+
+Ansinle vault is a secure store. it allows ansible to keep sensitive data.
+password
+encrypted files
+Command line tools ansible-vaults is used to edit files
+Commamd line flag is used -ask-vault-pass of vault-password-file.
+
+
+
+
+What is ymal:
+the ymal  is key-value pair file where we present the our think in key and value format.
+We use YAML because it is easier for humans to read and write than other common data formats like XML or JSON.
+
+
+Ansible setup:
+-------------------
+
+Software required:
+* For linux machine;
+  create the cloud free tier account(aws/azure/google)
+* for Connection:
+   * windows : Git for windows
+     choco install git -y
+
+* Writing scipts;
+   -Editor: Visual stdio code
+        choco install vscode -y
+
+Prereq:
+* install two ec2 machine both should be a linux one is ansible server and second is ansible nodes.
+
+=> Ansible server setup:
+make a root user
+ sudo -i
+Add user:
+adduser ansible
+
+make the ansible user as a sudo user . open the----
+visudo
+
+ansible ALL= (ALL:ALL)NOPASSWD:ALL
+:wq
+
+
+
+Configure the ssh configuration file:
+vi /etc/ssh/sshd_config
+remove the # and make a password authentication yes
+
+Restart the service:
+service sshd restart
+service sshd status
+
+##install the python
+
+##google: how to install the ansible in ubuntu18.4
+
+and install the four commands:
+
+## check ansible and python  install or not
+  ansible --version
+  python --version
+
+
+## enter into home directoty
+cd /etc/ansible
+ls
+sudo cp hosts hosts.orig
+ls
+
+sudo vi hosts  : local hosts
+  localhost
+
+check localhost connected to the local machine or not
+
+ansible -m ping
+result: ansible is not reachable the same machine.
+
+## create the ssh-keygen
+ssh-keygen
+
+## copy the public key into the local machine
+  ssh-copy-id ansible@localhost
+  password <jo bhi diya ho>
+
+
+## check localhost connected to the local machine or not
+  ansible -m ping all
+
+
+
+=> Ansible Node setup:
+make a root user
+ sudo -i
+Add user:
+adduser ansible
+
+make the ansible user as a sudo user . open the----
+visudo
+
+ansible ALL= (ALL:ALL)NOPASSWD:ALL
+:wq
+
+
+
+Configure the ssh configuration file:
+vi /etc/ssh/sshd_config
+remove the # and make a password authentication yes
+
+Restart the service:
+service sshd restart
+service sshd status
+
+##install the python
+ python --version
+
+
+## enter into home directoty
+vi /etc/ansible hosts
+  ip address of the node write here
+:wq
+
+## copy the public key into the node machine
+  ssh-copy-id ansible@<ip address of the node>
+  password <jo bhi diya ho>
+
+
+## check localhost connected to the local machine or not
+  ansible -m ping all
+
+
+
+
+Inventory Concept:
+----------------------
+inventory is the  text file which have the host_var and group_var and ip address of the nodes. it means inventory have the full information about the nodes
+
+How to create the inventory:
+step:
+  create a one text file in ansible server
+  vi inventory
+   [group name]
+   [host name]
+  ip address of the nodes
+wq
+
+## How to check node connected to the server or not with the help of inventory concept:
+ ansible -i <inventory name> -m ping all  
+
+
+## ansible server contain three thing:
+module
+parameter
+state.
+
+
+Variable:
+---------
+you can define the varible three place.
+1. with in the playbook
+2. with in the inventory
+3. with in the command line.
+
+
+
+
+
+
+Facts:
+---- facts are used to gather the information from the system.
+
+
+     date: 20/03/2019
+# Command: ansible -m setup -i inventory webserver.
+           ansible -i inventory -m setup -a 'filter*_os_*' all
+
+ansible_os_family=="Redhat" is called the fact
+
+que: how do you collect fact
+ans: we can collect fact with the help of setup module.
+
+
+que: disable fact
+ans: with the help of gather_facts=no.
+
+
+qns: what is lampstack
+ans: lampstack is nothing but linux machine apache and php module 
+after installing the php module we get the php page.
+ 
+
+        {LOOP}
+If you want to repeat any task again amd again we use the loop
+or if you want to install the more than one loop . in this case  we  used the loops.
+
+in ansible:
+   yum:
+     name: <var>
+     state: present
+google:
+
+qns: install yum install php php-mysql php-pdo php-gd php-mbstring 
+ google: https://www.tecmint.com/install-lamp-in-centos-7/
+
+loop:
+ - php
+ - php-mysql
+ ....etc
+
+fail module:
+ google:    
+https://docs.ansible.com/ansible/2.4/fail_module.html
+
+the fail module are used the  create the customized message when our process or execution.
+The customized message used for failing execution. 
+
+
+google:
+    ansible pre_tasks
+
+
+## Pre-tasks are exactly like tasks... they just run first.  and "pre task"  just putting the task at the top of the task section.
+
+
+Debug module:
+     Set a breakpoint in the module
+
+
+
+This module prints statements during execution and can be useful for debugging variables or expressions without necessarily halting the playbook. 
+Useful for debugging together with the ‘when:’ directive.
+This module is also supported for Windows targets.
+
+
+https://docs.ansible.com/ansible/latest/modules/debug_module.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+example lampstack:
+
+
+ - hosts: webserver
+    become: yes
+    tasks:
+     - name:
+       fail:
+          msg: "this playbook run only in redhat"
+       when: ansible_os_family == "Redhat"
+     - debug:
+          msg: "starting the installation"
+     - name: "install httpd"
+       yum:
+          name: httpd
+          state: present
+     - debug:
+         msg: "install httpd"
+     - name: "start and enabled the httpd service"
+       service:
+          name: httpd
+          enabled: yes
+          state: started
+     - debug:
+          msg: "restart and enabled the services"
+     - name: "install php module"
+       yum:
+          name: "{{item}}"
+          state: present
+       loop:
+       - php
+       - php-mysql
+       - php-pdo
+       - php-gd
+         #       - php-mbstring
+     - name: "copy the php page"
+       copy:
+          src: info.php
+          dest: /var/www/html/info.php
+     - name: restart apache again
+       service:
+          name: httpd
+          state: restarted
+~     
+
+
+~
+~
+
+
+             [HANDLER]
+
+     
+ qns: Handler will  not be executed for on  it will be executed only for some one ask to be executed.
+    ex: fan off.
+         trigger.
+
+Definition:
+        if you are writing any tasks multiple times in terms of handlers.
+Definition of Notify:
+                    if donot write the notify statement it (handler) will not the call
+
+
+
+  
+  google:
+    https://docs.ansible.com/ansible/2.4/sensu_handler_module.html
+ - hosts: webserver
+    become: yes
+    tasks:
+     - name:
+       fail:
+          msg: "this playbook run only in redhat"
+       when: ansible_os_family == "Redhat"
+     - debug:
+          msg: "starting the installation"
+     - name: "install httpd"
+       yum:
+          name: httpd
+          state: present
+       notify:                                                                            [notify]
+
+       - restart httpd
+     - debug:
+         msg: "install httpd"                                                         ye  handler ke notificatin ko dikhane ka karya karta h. 
+     - name: "start and enabled the httpd service"
+       
+     - debug:
+          msg: "restart and enabled the services"
+     - name: "install php module"
+       yum:
+          name: "{{item}}"
+          state: present
+       loop:
+       - php
+       - php-mysql
+       - php-pdo
+       - php-gd
+         #       - php-mbstring
+     - name: "copy the php page"
+       copy:
+          src: info.php
+          dest: /var/www/html/info.php
+       notify:
+        - restart httpd       
+       Handlers:
+          name: httpd
+          enabled: yes
+          state: restarted       
+   
+
+
+
+22 March 2019:
+
+         22/03/2019
+
+Role: role is also a playbook but it is a organization playbook
+making playbook is resuable for creating role
+
+google:
+    ansible role
+    ansible galaxy
+    ansible execute module
+    ansible shell module
+
+ansible shell:
+   The shell module takes the command name followed by a list of space-delimited arguments. 
+   It is almost exactly like the command module but runs the command through a shell (/bin/sh) on the remote node.
+         
+
+
+
+                             {Ansible Role}
+
+ansible role is used for resusing playbook. there are many way to resuing playbook but role is better way.
+
+   
+
+
+               Includes vs. Imports
+
+As noted in Creating Reusable Playbooks, include and import statements are very similar, however the Ansible executor engine treats them very differently.
+
+All import* statements are pre-processed at the time playbooks are parsed.All include* statements are processed as they encountered during the execution of the playbook.
+
+It is possible to include playbooks inside a master playbook. For example:
+
+---
+- import_playbook: webservers.yml
+- import_playbook: databases.yml
+
+note: when playbook import another playbook first check the playbook right or wrong
+but in case of include check the playbook at the time of execution.
+
+
+
+Role : role act like as a libraray for resuable playbook
+
+in playbook you write in one file but in role you write in multiple files.
+
+
+google:
+ansible galaxy
+https://galaxy.ansible.com/
+
+
+
+Galaxy Documentation
+About Galaxy
+   Galaxy is a hub for finding and sharing Ansible content. or ansible-galaxy is the place where we use the resuable playbook in to the form of role
+  or where we can store the our playbook into the role format.
+
+
+
+
+
+
+
+
+
+imporyant about roles
+Roles are ways of automatically loading certain vars_files, tasks, and handlers based on a known file structure. 
+
+
+Role Directory Structure
+Example project structure:
+
+site.yml
+webservers.yml
+fooservers.yml
+roles/
+   common/
+     tasks/
+     handlers/
+     files/
+     templates/
+     vars/
+     defaults/
+     meta/
+   webservers/
+     tasks/
+     defaults/
+     meta/
+Roles expect files to be in certain directory names. Roles must include at least one of these directories.
+tasks - contains the main list of tasks to be executed by the role.
+handlers - contains handlers, which may be used by this role or even anywhere outside this role.
+defaults - default variables for the role (see Using Variables for more information).
+vars - other variables for the role (see Using Variables for more information).
+files - contains files which can be deployed via this role.
+templates - contains templates which can be deployed via this role.
+meta - defines some meta data for this role. See below for more details.
+
+# roles/example/tasks/main.yml
+
+
+
+
+
+
+Using Roles
+The classic (original) way to use roles is via the roles: option for a given play:
+
+---
+- hosts: webservers
+  roles:
+     - common
+     - webservers
+
+
+
+
+
+
+
+                  23/03/2019
+  
+
+  
+ ## when we  download  the file from from internet: we use wget and curl command.
+
+wget  https://qt.in/readme.txt
+curl  https://qt.in/readme.txt
+
+Get_url:
+     src:  https://qt.in/readme.txt
+     dest: /home/ansible.readme.txt
+
+
+Note: 
+     src: where we created the file
+     dest: where we copyied the file
+
+
+
+* copy the file from system we used the copy module and we copy the file from internrt we used the the  Get_url module.
+ 
+File are static there are two ways:
+ 1) Get_url
+2) copy
+
+but file are dynamic we used the template
+
+qns: how application server connect the  database
+ans: in older days
+odbc
+
+java:
+ jdbc
+ 
+
+Dotnet
+  ADO.net
+
+google: jdbc connection string
+
+qns: you have a dynamic content in linux machine 
+ans use the template
+
+connection string is the best example of dynamic content
+because here ip add . dns name user name and passwd are dynamics
+
+note: any configuration tool use the template
+
+
+imp.note: jinja is very popular template technology used in python
+
+
+        Template:
+
+google: ansible templates:
+
+
+definition:  Templates are processed by the Jinja2 templating language (http://jinja.pocoo.org/docs/) - documentation on the template formatting can be found in the Template Designer Documentation (http://jinja.pocoo.org/docs/templates/).
+Six additional variables can be used in templates: ansible_managed (configurable via the defaults section of ansible.cfg) contains a string which can be used to describe the template name, host, modification time of the template file and the owner uid. template_host contains the node name of the template’s machine. template_uid is the numeric user id of the owner. template_path is the path of the template. template_fullpath is the absolute path of the template. template_run_date is the date that the template 
+
+
+Examples
+# Example from Ansible Playbooks
+- template:
+    src: /mytemplates/foo.j2
+    dest: /etc/file.conf
+    owner: bin
+    group: wheel
+    mode: 0644
+
+# The same example, but using symbolic modes equivalent to 0644
+- template:
+    src: /mytemplates/foo.j2
+    dest: /etc/file.conf
+    owner: bin
+    group: wheel
+    mode: "u=rw,g=r,o=r"   
+
+
+how to wrire jinja template
+ general syntax:
+         {{ expr }}
+
+example: 
+
+
+
+
+
+
+## How to write the jinja template:
+
+google jinja templatesa:
+       ansible jinja
+
+
+        [ansible behavior parameter]
+
+
+google: ansible user
+
+ansible_ is used for special purpose
+
+
+ex: if you want to login into localhost machine you go to in inventory 
+and write ansible_user=ubuntu ansible_passwd=ubuntu
+
+ex:2
+login into all nodes
+ user is ansible_user=ubuntu
+
+ex: 
+
+your nodes have python 2 version and your app. have python 3 version then 
+how to run it.
+
+solution: ansible_python_intepreter
+
+
+ansible_priviliges enter
+
+become:
+
+
+
+story of after how can change the ansible parameter
+ans: yes
+change the ansible parameter
+
+how: you see above change the username and password of ansible localhost
+
+for more details you go for google and serch ansible_user
+     
+
+
+
+
+       [ansible configuration]
+
+
+cd /etc/ansible this is a host file of ansible
+enter
+ 
+you see there are three or four folder
+ role: this role are the system level role
+
+vi ansible.cfg
+
+this is the configuration file:
+
+
+qns: gather fact: see in this file 
+
+ssh 10 you can change time for login
+
+imp qns: where is ansible log:  
+
+log_path = /var/log/ansible.cfg
+
+
+
+qns: why we use ansible
+ans: To deploy the application
+
+
+imp: default structure of role have dummy folder
+
+
+qns: imp:
+ansible executed five machine by default
+
+
+    *ansible currency
+
+
+
+concurrency is set by forking (-f)
+ansible -m ping all -f 100
+this commend executed 100 nodes at same time
+
+you can set forking accroding to the requirement
+
+by default forking value is five(5)
+but you can change the forking value in ansible.cfg configuration file 
+
+
+
+
+
+## ansible change the parameter.
+
+using the different user in ansible.
+in inventory
+
+we can login different user with the change the parameter concept.
+ansible_user=ubuntu 
+ansible_passwprd= ubuntu
+
+ansible_connection:
+Theare are many way to connection but mostly use the ssh winrm and kuctl
+
+
+## ansible forking 
+            with the help of forking we can run 5 machine by default. but you can change it.
+
+
+
+
+
+
+       24/03/2019
+
+
+google: ansible tower
+
+      The ansible Tower is visual deshboard of ansible. with the help of this we can scale the IT automation , manage the complex deployments 
+      and see the inventory in graphical way and and control the it infrastructure.
+      ansible tower is nothing but execute playbook in visual webpages
+
+## what is the requirement to install ansible tower
+* minimum 2 cpu
+* 8 gb ram 
+ 
+2 machine with above contidion 
+
+ansible tower is a paid service
+download ansible free  wget .......
+extart ansible tower
+instll ansible tower
+.....
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+                                   [ignore failure]
+
+--- 
+-hosts: webserver
+ become: yes
+ tasks:
+  - command: cat /home/ansible/readme.txt
+    ignore_failure: yes
+it means that if file is not found our tasks is not fail.
+if you put ignore_failure=no if comm.is not found tasks is fail
+
+
+               
+
+                [Environments]
+
+         Dev
+         QA
+           ST
+           AT
+           PT  
+         UAT/PRE-PRO/STAGIN
+         PROD /LIVE
+from environmenet to environment whats changes.
+
+if you want to execute same playbook in different environment only inventory change not the playbook change.
+
+
+ex: - hosts: webserver
+      become: yes
+      roles:
+       - ecommerce
+
+Dev environment;
+   ansible-playbook -i Dev/inventory filename:
+
+QA environment:
+ansible-playbook -i QA/inventory filename
+
+
+Stagin environment:
+ansible-playbook -i Stagin/inventory filename
+
+
+
+    [Dynamic inventory]
+
+ * generating item in inventory from some script item as hosts name and ip address.
+ * make the file executable.
+
+google: aws ansible dynamic inventory python example.
+ansible dynamic inventory:
+works: ansible-playbook -i <dynamicinv>
+dynamicinv is executed. it should return json format.
+autoscailing is the best example of dynamiv inventory because here automatically ipaddress and host created.
+
+
+           
+
+           [Vault]
+
+if you want to put any sensible information in playbook
+ansible something want vault.
+you want to encrypted any variable ,any file use vault.
+
+you can encrypted the vault by using password based encryption or ssh key based encryption.
+ google : ansible vault
+documentation enter
+
+conclusion of vault: vault is a place where encrypted and decrypted the password.
+
+
+
+               [use Case]
+
+Ansible is used for any deployment automation.
+deployment in ansible only on command base for the automation.
+
+
+
+
+
+
+
+
+
+[ansible tags]
+
+ex: ---
+- hosts: all
+  tasks:
+   - name:
+   - name: 
+   - name: 
+   - name:
+
+google: ansible tag
+you have four tasks and you wnat to executed only two tasks use the tags.
+
+
+
+  login into ansible there are two ways
+
+in inventory:
+[webserver]
+192.168.50.25 ansible_user=ubuntu
+
+another ways;
+  ansible-playbook -u ubuntu
+become_user
+
+
+
+
+
+
+
+Qns: how ansible nodes understand the ymal .
+ans: ymal are internally converted into python and our node have the python.so our
+     nodes understand the ymal .
+
+
+Qns: I want to install the any package in 10 nodes in parllel and sequence vise. 
+ ans: if you want to executed the any package in 10 server at sequence use the forks.and 
+      you install the pacakge im 10 nodes without sequence .just run the playbook.
+
+
+Qns: what is gathering_fact and how to customized the gethering facts.
+ans: gethering facts are nothing but. this is the extra tasks running and give the information about your system.
+    you can customized the gathering_fats using the zinja template.
+
+
+Qns: why are using the configuration server if you have a shell scripting for the automation.
+ans: the shell scripting are hard as compare to configuration server. main advantage of configuration is that. 
+
+ex: you install the apache server in nodes both(shell scripthing and and configuration server), if any people
+   uninstall the apache server from node. in case of shell scripting we need to running the shell scripting file again.
+  but in case of configuration server there is no need to executed the playbook again. because  CS autumatically install the apache2 server in node.
+
+
+
+
+Qns: How to generate the customize facts in ansible.
+ans: we can set the facts in playbook . when we executed the playbook then customized facts is create.
+
+ 
+
+
+
+
+
+
+Ansible-practice:
+-------------------------
+
+
+  ansible: practice:
+
+ex: ping:
+--- 
+  - hosts: all
+    tasks:
+     - name: " ping the all nodes"
+       ping:
+         data: pong
+
+command: ansible-playbook <filename>
+   ex:   ansible-playbook pingall
+****************************************************
+
+ex: create a file
+
+---
+- hosts: all # where want to execute
+  become: yes # who execute
+  tasks: # identify the tasks name
+   - name: create a file
+     file: # module
+       path: /home/ansible/radhe.txt
+       state: touch
+
+Command: ansible-playbooks <filename>
+    ex: ansible-playbooks createfile.yml
+*****************************************************************
+ex: install git
+
+- hosts: all
+  become: yes
+  tasks:
+   - name: install the git
+     apt:
+       name: git
+       state: present
+
+command:
+   ansible-playbook installgit.yml  note: ansible-playbook is the command to the playbook and here installgit.yml is the file name.
+
+**********************************************************************************************************************************************
+
+ex:4 install tree.
+
+---
+- hosts: all
+  become: yes
+  tasks:
+   - name: "install the tree"
+     apt:
+       name: tree
+       state: present
+
+Command: ansible-playbook <installgit.yml>
+
+************************************************************************************************
+
+note: inventoty have the full information about the nodes.
+
+webserver]
+172.31.22.58
+
+[dbserver]
+172.31.17.136
+
+
+ localhost
+
+note: to check all node communicate to the server or not.
+Command: 
+    ansible -i inventory -m ping all
+
+
+************************************************************************************************************
+ex: 5
+installing the apacheserver
+
+---
+  - hosts: webserver
+    become: yes
+    tasks:
+    - name: install the apache server
+      apt:
+         name: apache2
+         state: present
+    - name: start the service
+      service:
+         name: apache2
+         enabled: yes
+         state: restarted
+
+
+Command:
+  ansible-playbook -i inventory <filename>
+  ansible-playbook -i inventory apache.yml
+
+***********************************************************************************
+
+note: Here new concept used:
+google: General module in ansible.
+use the variable at four leble:
+first level:
+define the variable in playbook:
+
+---
+- hosts: webserver
+  become: yes
+  vars:
+     package_name: apache2
+  tasks:
+   - name: installing the apache2
+     package:
+        name: apache2
+        state: present
+   - name: restart the service.
+     service:
+       name: apache2
+       enabled: yes
+       state: restarted
+
+Command: ansible-playbook -i inventory <filename>
+
+*******************************************************************************************************************
+
+#level:2 at host lavel:
+
+[webserver]
+172.31.22.58 package_name=apache2
+
+[dbserver]
+172.31.17.136
+
+[local]
+ localhost
+
+ex:
+---
+- hosts: webserver
+  become: yes
+  tasks:
+   - name: installing the apache2
+     package:
+        name: "{{ package_name }}"
+        state: present
+   - name: restart the service
+     service:
+        name: "{{ package_name }}"
+        enabled: yes
+        state: restarted
+
+Command:
+ansible-playbook -i inventory <playbook name>
+**********************************************************************
+
+step:
+
+level:3 group
+
+[webserver]
+172.31.22.58 
+
+[dbserver:vars]
+172.31.17.136
+package_name=httpd
+
+[local]
+ localhost
+
+
+ex:
+
+ex:
+---
+- hosts: webserver
+  become: yes
+  tasks:
+   - name: installing the apache2
+     package:
+        name: "{{ package_name }}"
+        state: present
+   - name: restart the service
+     service:
+        name: "{{ package_name }}"
+        enabled: yes
+        state: restarted
+
+Command:
+ansible-playbook -i inventory <playbook name>
+
+********************************************************************************
+ Note: new concept:
+hosts_vars:(folder)
+its have ip address or host:
+192.168.50.250(file:)
+here defined the variable:
+package_name: httpd
+
+
+
+group_vars:(folder)
+its have server:
+ex:  file:webserver
+      package_name: apache2
+
+     file:dbserver
+
+ex:
+---
+- hosts: webserver
+  become: yes
+  tasks:
+  - name: install apache
+    package:
+      name: "{{ package_name}}"
+      state: present
+  - name: restart the service
+    service:
+      name: "{{ package_name}}"
+      enabled: yes
+      state: restarted
+
+Command:
+ansible-playbook -i inventory <filename>
+
+****************************************************************************************************
+
+Note: make a decision self which server install or not:
+
+with the help of when conditional statement:
+
+
+- hosts: webserver
+  become: yes
+  tasks:
+  - name: install the httpd
+    yum:
+      name: httpd
+      state: present
+    when: ansible_os_family == "RedHat"
+  - name: install the apache2
+    apt:
+      name: apache2
+      state: present
+    when: ansible_os_family == "Debian"
+  - name: restart the httpd service.
+    service:
+       name: httpd
+       enabled: yes
+       state: restarted
+    when: ansible_os_family == "RedHat"
+  - name: restart the apache server.
+    service:
+       name: apache2
+       enabled: yes
+       state: restarted
+    when: ansible_os_family == "Debian"
+
+
+Command:
+    ansible-playbook inventory -i filename.
+
+********************************************************************************************************************
+
+fail module:
+
+--- 
+- hosts: webserver
+  become: yes
+  tasks:
+  - name: fail for other platform.
+    fail:
+      msg: "this playbook developed only for Redhat."
+    when: ansible_os_family != "RedHat"
+  - name: install the apache2
+    apt:
+      name: httpd
+      state: present
+  - name: restart the service
+    service:
+      name: httpd
+      enabled: yes
+      state: restarted
+
+***************************************************************
+
+install the php package.
+
+- hosts: webserver
+  become: yes
+  tasks:
+   - name: install the httpd
+     yum:
+       name: httpd
+       state: present
+   - name: restart the service
+     service:
+       name: httpd
+       enabled: yes
+       state: restarted
+   - name: install the php package
+     yum:
+       name: "{{ item }}"
+       state: present
+     loop:
+     - php
+     - php-mysql
+     - php-pdo
+     - php-gd
+       #- php-mbstring
+~
+~
+**************************************************************************************
+use the debug module: to show the or add the custom message. during the playbooks execution.
+
+---
+- hosts: webserver
+  become: yes
+  tasks:
+   - name: install the httpd
+     yum:
+       name: httpd
+       state: present
+   - debug:
+       msg: installed httpd
+   - name: restart the service
+     service:
+       name: httpd
+       enabled: yes
+       state: restarted
+   - debug:
+       msg: restart httpd service
+   - name: install the php package
+     yum:
+       name: "{{ item }}"
+       state: present
+     loop:
+     - php
+     - php-mysql
+     - php-pdo
+     - php-gd
+      #- php-mbstring
+   - debug:
+       msg: installed the php package.
+
+Command: ansible-playbook inventory -i filename.
+
+************************************************************************************************
+
+ex: ---
+- hosts: webserver
+  become: yes
+  tasks:
+   - name: using the fail module.
+     fail:
+       msg: "this playbook develop only for redhat"
+     when:
+     - ansible_os_family != "RedHat"
+   - debug:
+       msg: "starting the installation"
+   - name: install the httpd
+     yum:
+       name: httpd
+       state: present
+   - debug:
+       msg: installed httpd
+   - name: restart the service
+     service:
+       name: httpd
+       enabled: yes
+       state: restarted
+   - debug:
+       msg: restart httpd service
+   - name: install the php package
+     yum:
+       name: "{{ item }}"
+       state: present
+     loop:
+     - php
+     - php-mysql
+     - php-pdo
+     - php-gd
+      #- php-mbstring
+   - debug:
+       msg: installed the php package.
+
+*************************************************************************************************
+
+lampstack:
+
+vi lampstack.yml
+
+---
+- hosts: webserver
+  become: yes
+  tasks:
+   - name: using the fail module.
+     fail:
+       msg: "this playbook develop only for redhat"
+     when:
+     - ansible_os_family != "RedHat"
+   - debug:
+       msg: "starting the installation"
+   - name: install the httpd
+     yum:
+       name: httpd
+       state: present
+   - debug:
+       msg: installed httpd
+   - name: restart the service
+     service:
+       name: httpd
+       enabled: yes
+       state: restarted
+   - debug:
+       msg: restart httpd service
+   - name: install the php package
+     yum:
+       name: "{{ item }}"
+       state: present
+     loop:
+     - php
+     - php-mysql
+     - php-pdo
+     - php-gd
+      #- php-mbstring
+   - debug:
+       msg: installed the php package.
+   - name: copy the content of php page.
+     copy:
+       src: info.php
+       dest: /var/www/html/info.php
+   - name: again restart the service.
+     service:
+       name: httpd
+       state: restarted
+
+vi info.php
+<?php phpinfo(); ?>
+
+
+ansible-playbook inventory -i <filename>
+                               lampstak.yml
+
+
+jay radha madhav jay kunj bihari
+****************************************************************************************************
+note: develop the php page using the handlers concept.
+
+---
+- hosts: webserver
+  become: yes
+  tasks:
+  - name: "use fail modules"
+    fail:
+       msg: "this playbook develop only for redhat"
+    when:
+    - ansible_os_family != "RedHat"
+  - debug:
+       msg: "installation start"
+  - name: "install the httpd"
+    yum:
+       name: httpd
+       state: present
+    notify:
+    - restart the httpd
+  - debug:
+       msg: "httpd installed"
+  - name: install the php package.
+    yum:
+       name: '{{ item }}'
+       state: present
+    loop:
+    - php
+    - php-mysql
+    - php-pdo
+    - php-gd
+      #- php-mbstrin
+  - debug:
+       msg: installed the php package
+  - name: copy the php page
+    copy:
+       src: info.php
+       dest: /var/www/html/info.php
+    notify:
+    - restart the httpd
+  handlers:
+  - name: restart the service
+    service:
+      name: httpd
+      state: restarted
+
+COmmand: ansible-playbook -i inventory <playbook name>
+
+***********************************************************************************************
+ex: 2 handlers:
+
+---
+- hosts: webserver
+  become: yes
+  tasks:
+  - name: "use fail modules"
+    fail:
+       msg: "this playbook develop only for redhat"
+    when:
+    - ansible_os_family != "RedHat"
+  - debug:
+       msg: "installation start"
+  - name: "install the httpd"
+    yum:
+       name: httpd
+       state: present
+    notify:
+    - restart the httpd
+  - debug:
+       msg: "httpd installed"
+  - name: install the php package.
+    yum:
+       name: '{{ item }}'
+       state: present
+    loop: "{{ php_name }}"
+  - debug:
+       msg: installed the php package
+  - name: copy the php page
+    copy:
+       src: info.php
+       dest: /var/www/html/info.php
+    notify:
+    - restart the httpd
+  handlers:
+  - name: restart the service
+    service:
+      name: httpd
+      state: restarted
+
+
+
+
+otherparts:
+playbook:
+   group_vars:
+       vi webserver
+       
+php_name:
+  - php
+  - php-mysql
+  - php-pdo
+isphprequired: yes
+wq:
+
+Command: ansible-playbook -i inventory <playbook name>
+
+********************************************************************************************
+
+
+
+application : game of life:
+
+ # tasks file for gameoflife
+  - fail:
+      msg: "try to perform this task on ubuntu"
+    when: 
+    - ansible_os_family != "Debian"
+  - debug:
+      msg: "initilizting the task"
+  - name: "installing software-properties"
+    apt:
+      name: software-properties-common
+      state: present
+  - debug:
+      msg: "installing java as a pre-requirement"
+  - name: "install java8"
+    apt: 
+      name: default-jdk
+      update_cache: yes
+      state: present
+  - name: "replacing environment file"
+    file:    
+      path: /etc/environment
+      state: absent
+  - name: "updating environment file"
+    copy: 
+      src: copy/environment
+      dest: /etc/environment
+  - name: "copying content to bashrc"
+    copy:
+      content: 'export JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre
+                export PATH=$JAVA_HOME/bin:$PATH'
+      dest: ~/.bashrc
+  - name: "refresh bashrc"
+    shell: source ~/.bashrc
+    args:
+      executable: /bin/bash
+  - debug: 
+      msg: "Downloading and installing tomcat"
+  - name: "adding tomcat group"
+    group:
+      name: tomcat
+      state: present
+  - name: "adding user tomcat"
+    user:
+      name: tomcat
+      shell: /bin/false
+      groups: tomcat
+      append: yes
+  - name: "downloading tomcat9"
+    get_url:
+      url: https://www-us.apache.org/dist/tomcat/tomcat-9/v9.0.17/bin/{{ package_name }}.tar.gz
+      dest: /opt/{{ package_name }}.tar.gz   
+  - name: "unzipping tar"
+    unarchive:
+      src: /opt/{{ package_name }}.tar.gz
+      dest: /opt/
+      remote_src: yes
+  - name: "moving files to tomcat folder"
+    command: mv /opt/{{ package_name }} /opt/tomcat
+  - name: "changing owner to tomcat"
+    file:
+      path: /opt/tomcat
+      owner: tomcat
+      group: tomcat
+      recurse: yes
+  - name: "giving excutable permission to tomcat files"
+    file:
+      path: /opt/tomcat/bin/
+      mode: 0755
+      recurse: yes
+  - name: "setting catalina file"
+    copy:
+      content: 'export CATALINA_HOME=/opt/tomcat'
+      dest: ~/.bashrc
+  - name: "refresh bashrc"
+    shell: source ~/.bashrc
+    args:
+      executable: /bin/bash
+  - name: "starting tomcat"
+    shell: ./startup.sh
+    args:
+      chdir: /opt/tomcat/bin
+  - name: "stoping tomcat"
+    shell: ./shutdown.sh
+    args:
+      chdir: /opt/tomcat/bin
+  - name: "changing owner for file"
+    shell: chown -hR tomcat:tomcat /opt/tomcat/
+  - name: "creating tomcat.server file"
+    copy:
+      src: copy/tomcat.service
+      dest: /etc/systemd/system/
+  - name: "reloading systemctl"
+    systemd:
+      name: tomcat
+      daemon-reload: yes
+      state: restarted
+  - name: "starting tomcat"
+    systemd:
+      name: tomcat
+      state: started
+  - name: "configuring tomcat-user file"
+    file:
+      path: /opt/tomcat/conf/tomcat-users.xml
+      state: absent
+  - name: "updating tomcat-user file"
+    copy:
+      src: copy/tomcat-users.xml
+      dest: /opt/tomcat/conf/
+  - name: "modifing manager context file"
+    file: 
+      path: /opt/tomcat/webapps/manager/META-INF/context.xml
+      state: absent
+  - name: "updating manager context file"
+    copy: 
+      src: copy/manager/context.xml
+      dest: /opt/tomcat/webapps/manager/META-INF/
+  - name: "modifing host-manager context file"
+    file: 
+      path: /opt/tomcat/webapps/host-manager/META-INF/context.xml
+      state: absent
+  - name: "updating host-manager context file"
+    copy: 
+      src: copy/host-manager/context.xml
+      dest: /opt/tomcat/webapps/host-manager/META-INF/ 
+    notify:
+    - restart tomcat
+  - debug:
+      msg: "deploying game of life"
+  - name: "downloading game of life"
+    get_url:
+      url: https://github.com/QT-DevOps/DevOpsIssues/files/2130588/gameoflife.zip 
+      dest: /opt/tomcat/webapps/
+  - name: "unzipiing gameoflige"
+    unarchive:
+      src: /opt/tomcat/webapps/gameoflife.zip
+      dest: /opt/tomcat/webapps/
+      remote_src: yes
+    notify:
+    - restart tomcat 
+
+********************************************************************
+
+
+install the java: 
+
+
+- hosts: webserver
+  become: yes
+  tasks:
+  - name: download the java from the internet
+    get_url:
+      src: http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jre-8u60-linux-x64.rpm
+      dest: /opt/jre-8u60-linux-x64.rpm
+   - name: install the java
+     yum:
+       name: /opt/jre-8u60-linux-x64.rpm
+       state: present
+
+
+
+
+
+For RHEL / CentOS:
+
+- hosts: server
+  roles:
+    - role: geerlingguy.java
+      when: "ansible_os_family == 'RedHat'"
+      java_packages:
+        - java-1.8.0-openjdk
+
+
+
+
+
+How To encrypted the file with ansible-vault:
+example: ansible-vault vi playbook name.yml
+  
+Edit the valut encrypted file
+     ansible-vault edit <playbook name.yml>
+
+How to encrypted the valut unencrypted file.
+   ansible-valut encrypted <playbook name.yml>
+
+Decrypted file.
+
+ansible-vault decrypt foo.yml bar.yml baz.yml
+
+
+Viewing Encrypted Files
+
+If you want to view the contents of an encrypted file without editing it, you can use the ansible-vault view command:
+
+ansible-vault view foo.yml bar.yml baz.yml
+
+
+Kube-advisor: the kube-advisor is a tools is used for create the single container in a cluster.
+It queries the Kubernetes API server for information about your deployments and returns a set of suggested improvements
+
+Cad-advisior:
+
+
+
+
+
+---
+- name: Get-URL Download the Protected File
+  hosts: appserver
+  tasks:
+
+    - name: Access the FTP URL and download the file
+      get_url:
+        url: ftp://mwiweb02/admin/secure.txt
+        dest: /tmp/secure.txt
+
+    - name: Display the File contents
+      shell: >
+         cat /tmp/secure.txt
+      register: shellout
+
+    - name: "INFO: Display the File Contents"
+      debug: var=shellout.stdout_lines
+
+
+
+
+
+
+
+---
+- name: Get-URL Download the Protected File
+  hosts: appserver
+  tasks:
+    - name: Access the WebSite and make sure the URL is live
+      uri:
+        url: http://mwiweb02/admin/secure.txt
+        status_code: 401
+      register: validateurl
+
+    - name: "INFO: HTTP Response for the URL"
+      debug: var=validateurl.msg
+
+    - name: Access the same URL with Basic Authentication and Download the file
+      get_url:
+        url: http://mwiweb02/admin/secure.txt
+        url_password: Sarav@123
+        url_username: sarav
+        dest: /tmp/secure.txt
+
+    - name: Display the File contents
+      shell: >
+         cat /tmp/secure.txt
+      register: shellout
+
+    - name: "INFO: Display the File Contents"
+      debug: var=shellout.stdout_lines
+
+
+
+---
+- name: Download Tomcat8 from tomcat.apache.org
+  hosts: webserver
+  tasks:
+   - name: Create a Directory /opt/tomcat8
+     become: yes
+     file:
+       path: /opt/tomcat8
+       state: directory
+       mode: 0755
+       owner: tomcat
+       group: tomcat
+
+   - name: Download Tomcat using get_url
+     become: yes
+     get_url:
+       url: https://www-us.apache.org/dist/tomcat/tomcat-8/v8.5.40/bin/apache-tomcat-8.5.40.tar.gz
+       dest: /opt/tomcat8
+       mode: 0755
+       group: tomcat
+       owner: tomcat
+
+
+
+Commmand: just like the ping
+  mtr
+ traceroute
+
+
+Okey i will  right there at 10.30
+
+
+
+
+
+# demo_setup.yml
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+
+    - name: Provision a set of instances
+      ec2:
+         key_name: my_key
+         group: test
+         instance_type: t2.micro
+         image: "{{ ami_id }}"
+         wait: true
+         exact_count: 5
+         count_tag:
+            Name: Demo
+         instance_tags:
+            Name: Demo
+      register: ec2
+
+
+What is difference b/w ansible and shell scripting.
+the ability to integrate with Ansible Tower, which is a paying system that seems to include monitoring abilities.
+
+
+
+
+Parallel execution across multiple machines. This is what attracted me to Ansible in the first place - 
+using the ad-hoc mode to run shell commands across many machines in parallel.
+
+Automatic step-by-step reporting: 
+Ansible encourages you to name each 'task' in your provisioning script, and then reports whether or not that task succeeded 
+with-or-without changes, or failed, and any error messages. All colour coded. This is nice.
+
+Composibility: if we are not able to solve the problem . then we can use the roles from ansible-galaxy, and we can store the our playbook into the form of roles for future.
+
+ 
+
+
+
+Ansible-tags:
+------------
+
+if you have a large playbook. and you want to run a specfic part of rather than running everything in the playbook.
+Ansible supports a “tags:” attribute for this reason.
+
+When you execute a playbook, you can filter tasks based on tags in two ways:
+
+On the command line, with the --tags or --skip-tags options
+In Ansible configuration settings, with the TAGS_RUN and TAGS_SKIP options
+
+ex:
+tasks:
+- yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+  - httpd
+  - memcached
+  tags:
+  - packages
+
+- template:
+    src: templates/src.j2
+    dest: /etc/foo.conf
+  tags:
+  - configuration
+
+
+If you wanted to just run the “configuration” and “packages” part of a very long playbook, you can use the --tags option on the command line:
+* ex: ansible-playbook example.yml --tags "configuration,packages"
+
+On the other hand, if you want to run a playbook without certain tagged tasks, you can use the --skip-tags command-line option:
+* ansible-playbook example.yml --skip-tags "packages"
+
+
+Resue Tag:
+ name: be sure ntp is installed
+  yum:
+    name: ntp
+    state: present
+  tags: ntp
+
+- name: be sure ntp is configured
+  template:
+    src: ntp.conf.j2
+    dest: /etc/ntp.conf
+  notify:
+  - restart ntpd
+  tags: ntp
+
+- name: be sure ntpd is running and enabled
+  service:
+    name: ntpd
+    state: started
+    enabled: yes
+  tags: ntp
+
+
+
+Special Tags
+There is a special always tag that will always run a task, unless specifically skipped (--skip-tags always)
+
+Example:
+
+tasks:
+- debug:
+    msg: "Always runs"
+  tags:
+  - always
+
+- debug:
+    msg: "runs when you use tag1"
+  tags:
+  - tag1
+
+
+
+
+
+
+
+
+Lenskart.com
+7th Floor, Vatika Mindscapes
+12/2, Mathura Road
+National Highway 2,Sector 27D
+Faridabad, Haryana
+
+Ph : 0129-6620528
+Mail : referral@valyoo.in
+talent.acquisition@lenskart.in
+techprofiles@lenskart.in
+
+
+
+
+
+*************************
+- hosts: all
+  become: yes
+  vars:
+   create_containers: 4
+   default_container_name: docker
+   default_container_image: ubuntu
+   default_container_command: sleep 1d
+. . .
+ansible-playbook docker_ubuntu.yml 
+sudo docker ps -a
+
+
+
+
+example: 2
+---
+- hosts: all
+  become: true
+  vars:
+    create_containers: 4
+    default_container_name: docker
+    default_container_image: ubuntu
+    default_container_command: sleep 1d
+
+  tasks:
+    - name: Install aptitude using apt
+      apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+
+    - name: Install required system packages
+      apt: name={{ item }} state=latest update_cache=yes
+      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt: update_cache=yes name=docker-ce state=latest
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+
+    # Pull image specified by variable default_image from the Docker Hub
+    - name: Pull default Docker image
+      docker_image:
+        name: "{{ default_container_image }}"
+        source: pull
+
+    # Creates the number of containers defined by the variable create_containers, using default values
+    - name: Create default containers
+      docker_container:
+        name: "{{ default_container_name }}{{ item }}"
+        image: "{{ default_container_image }}"
+        command: "{{ default_container_command }}"
+        state: present
+      with_sequence: count={{ create_containers }}
+
+
+

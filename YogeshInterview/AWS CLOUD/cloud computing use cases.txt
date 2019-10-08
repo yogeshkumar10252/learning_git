@@ -1,0 +1,559 @@
+Migration:
+
+
+Cloud Computing use cases:
+1. Baas: Back up as a service
+2. Disaster recovery as as service
+3. Email
+4. Test and Development
+5. Insfrastructure as a sercice.
+6. Software as  a service.
+7. Virtaul desktop 
+8. Private/public/hybrid cloud
+9. Big Data analytics
+10. Software defined Wide area network.
+
+Monolith mean application run in one server.
+ex: application and database run in single machine.
+
+
+microservice application:
+                break the application into smaller piece is called the microservice application.
+
+ex; authentication have a one server.
+    gmail have one server and google drive one server.    
+    database have a one server
+    
+
+Migration:
+Application migration.
+database migration
+
+
+6 R'S  is a Concept which have some strategy. migration worked based on these strategy.
+
+1. Rehost(lift and shift): in rehost strategy where not change the  application which running in office and move or migration 
+                           the application in the cloud without any change is called the rehost strategy.
+
+2. Replatform("lift tinker and shift")
+      before migration the application in the cloud some change in replatfrom strategy.
+for example: 
+your appliaction running the office use the database mysql 4 but cloud(aws and azure donot have the mysql 4 its have the mysql5 and 6) in this case
+fisrt migrate the data in office mysql four to five then move the application in the cloud. 
+
+
+3. Repurchase ("drop and shop"):
+
+4. Refactor/Re-architect:
+
+5.Retire: the identify the application is useless so best option is retire the application.
+
+6. Retain:
+
+
+
+aws migration:
+
+##AWS Migrations
+ ##R's in focus
+   ##Rehost
+     Example Scenarios
+      * VM with linux with some application
+         * will not be in aws
+         * possible sources:
+           1.Azure
+           2.VM (Hyper-V, Virtual Box , VMWare)
+  * Database
+     * mysql
+     * data : sample db
+     * possible sources
+        1.Azure
+        2.VM (Hyper-V, Virtual Box, VmWare)
+  * Multi VM Migration at one shot
+     * Hyper-V
+     * VmWare ESXI
+### Activities
+
+ * Windows7, Windows 8, Windows 10 Home Edition:
+
+   1. Install Virtual Box
+     choco install virtualbox -y
+     choco install vagrant -y
+
+   2. Follow the steps
+  
+   # create some directory
+     mkdir jenkins
+     cd jenkins
+     vagrant box add ubuntu/xenial64 # centos/7
+     vagrant init ubuntu/xenial64
+     Refer Vagrant file from here
+     Create vm
+  vagrant up --provider hyperv
+  vagrant box list
+## search the hyper 
+   hyper -v manager
+    click on virtual Switch manager
+
+
+there are three switch
+1. external:
+          in external switch  your virtual machine getting the same netwotk connection as your laptop network connection.
+     ex: your laptop connected to the router then your virtual machine also connectig to the router.
+
+2. Internal:
+    the cummunicate b/w your laptop and virtual machine try to create.
+
+3. private:
+         No network . the private network is a network create b/w virtual machine.
+
+
+
+create a external:
+select the ethernet
+
+
+goto the powershell
+select the option 6 as vagrant
+delete the linux default folder from Hyper v page.
+vagrant ssh 
+        this command is used to login into the machine
+
+otherway:
+open the gitbash copy the ip add. from hyper virtual machine
+ssh vagrant@<ip addres>
+sudo apt-get update
+
+sometimes it donot work there are another way
+goto the hyper virtual machine
+just double click on jenkins_default then terminal is created.
+username: vagrant
+password: 
+
+
+ region: why use vagrant:
+   the region of vagrant is it create the virtual machine easily. othewise you download the iso image of vitutal machine.
+
+
+install the jenkins in virtual machine.
+Create a Ubuntu linux vm
+install Openjdk 8
+Link
+sudo apt-get update
+sudo apt install openjdk-8-jdk -y
+java -version
+# ls /usr/lib/jvm/java-1.8.0-openjdk-amd64/bin
+# where is java
+# set JAVA_HOME Environment variable
+   why set the environments:
+     you programmer write the java applocation use the java and they look the path of the java. so define the environments variable:
+sudo nano /etc/environment
+JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/bin/"
+sudo vi /etc/environment
+# save the file
+Now reload this file to apply the changes to your current session:
+source /etc/environment
+
+Verify that the environment variable is set:
+echo $JAVA_HOME
+
+install jenkins: Refer here
+#wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+Before executing install of jenkins lets try to find the possible jenkins versions available
+
+sudo apt-cache madison jenkins
+Note: In this documentation 2.138.3 will be used
+
+Installing Specific Version of Jenkins
+sudo apt-get install jenkins=2.138.3 -y
+Note: Follow this steps to install any LTS version of jenki
+copy the public key and paste 
+public key:8080 enter
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+paste password
+continue
+install suggested plugins
+ 
+username: yogeshkumar
+password: yogeshkumar
+emaidid: kshankar10252@gmail.com
+fullname: yogeshkumar
+
+install configuration:
+   change the ip of jenkins url and paste the private ip
+ex:
+http://172.31.21.187:8080/
+save and finish
+stating using jenkins
+click on new item
+             project name: helloworld
+              freestyle
+ok
+click on build
+add build
+ execute shell
+    echo "helloworld"
+    pwd
+    whoami
+save 
+build now.
+
+
+
+
+
+
+
+
+Note:
+service jenkins restrat
+login into aws account and serch the aws migration hub. goto the aws discover agent 
+
+download the discovery agent
+copy the discovery agent.
+scp <discovery agent file > vagrant@ipaddress.
+run the three command for signature
+extart the discovey agent using the tar command.
+create the user and use the access key and secret key in given command.
+note. install the agent in vagrant vm machine 
+
+describe the discovey agnet for find the agent id:
+use the agnet id in following command.
+
+
+
+Note ; goto the vm box where crate the image.
+
+Amazon S3 Bucket
+VM Import requires an Amazon S3 bucket to store your disk images, in the region where you want to import your VMs. You can create a bucket as follows, or use an existing bucket if you prefer.
+
+(Optional) To create an S3 bucket
+
+Open the Amazon S3 console at https://console.aws.amazon.com/s3/.
+
+Choose Create Bucket.
+
+In the Create a Bucket dialog box, do the following:
+
+For Bucket Name, type a name for your bucket. This name must be unique across all existing bucket names in Amazon S3. In some regions, there might be additional restrictions on bucket names. For more information, see Bucket Restrictions and Limitations in the Amazon Simple Storage Service Developer Guide.
+
+For Region, select the region that you want for your AMI.
+
+Choose Create.
+
+VM Import Service Role
+VM Import requires a role to perform certain operations in your account, such as downloading disk images from an Amazon S3 bucket. 
+You must create a role named vmimport with a trust relationship policy document that allows VM Import to assume the role, 
+and you must attach an IAM policy to the role.
+
+To create the service role
+
+Create a file named trust-policy.json with the following policy:
+
+{
+   "Version": "2012-10-17",
+   "Statement": [
+      {
+         "Effect": "Allow",
+         "Principal": { "Service": "vmie.amazonaws.com" },
+         "Action": "sts:AssumeRole",
+         "Condition": {
+            "StringEquals":{
+               "sts:Externalid": "vmimport"
+            }
+         }
+      }
+   ]
+}
+You can save the file anywhere on your computer. Take note of the location of the file, because you'll specify the file in the next step.
+
+Use the create-role command to create a role named vmimport and give VM Import/Export access to it. Ensure that you specify the full path to the location of the trust-policy.json file, and that you prefix file:// to it:
+
+aws iam create-role --role-name vmimport --assume-role-policy-document "file://trust-policy.json"
+Note
+
+If you encounter an error stating that "This policy contains invalid Json," double-check that the path to the JSON file is provided correctly.
+
+Create a file named role-policy.json with the following policy, where disk-image-file-bucket is the bucket where the disk images are stored:
+
+{
+   "Version":"2012-10-17",
+   "Statement":[
+      {
+         "Effect":"Allow",
+         "Action":[
+            "s3:GetBucketLocation",
+            "s3:GetObject",
+            "s3:ListBucket" 
+         ],
+         "Resource":[
+            "arn:aws:s3:::disk-image-file-bucket",
+            "arn:aws:s3:::disk-image-file-bucket/*"
+         ]
+      },
+      {
+         "Effect":"Allow",
+         "Action":[
+            "ec2:ModifySnapshotAttribute",
+            "ec2:CopySnapshot",
+            "ec2:RegisterImage",
+            "ec2:Describe*"
+         ],
+         "Resource":"*"
+      }
+   ]
+}
+Use the following put-role-policy command to attach the policy to the role created above. Ensure that you specify the full path to the location of the role-policy.json file.
+
+aws iam put-role-policy --role-name vmimport --policy-name vmimport --policy-document "file://role-policy.json"
+For more information about IAM roles, see IAM Roles in the IAM User Guide.
+
+Upload the Image to Amazon S3
+Upload your VM image file to your Amazon S3 bucket using the upload tool of your choice. For information about uploading files through the S3 console, see Uploading Objects into Amazon S3. For information about the Enhanced Uploader Java applet, see Using the Enhanced Uploader.
+
+Import the VM
+After you upload your VM image file to Amazon S3, you can use the AWS CLI to import the image. These tools accept either the Amazon S3 bucket and path to the file or a URL for a public Amazon S3 file. Private Amazon S3 files require a signed GET URL.
+
+The following examples use the AWS CLI command import-image to create import tasks.
+
+Example 1: Import an OVA
+
+aws ec2 import-image --description "Windows 2008 OVA" --license-type <value> --disk-containers "file://containers.json"
+The following is an example containers.json file.
+
+[
+  {
+    "Description": "Windows 2008 OVA",
+    "Format": "ova",
+    "UserBucket": {
+        "S3Bucket": "my-import-bucket",
+        "S3Key": "vms/my-windows-2008-vm.ova"
+    }
+}]
+Example 2: Import Multiple Disks
+
+$ C:\> aws ec2 import-image --description "Windows 2008 VMDKs" --license-type <value> --disk-containers "file://containers.json"
+The following is an example containers.json file.
+
+[
+  {
+    "Description": "First disk",
+    "Format": "vmdk",
+    "UserBucket": {
+        "S3Bucket": "my-import-bucket",
+        "S3Key": "disks/my-windows-2008-vm-disk1.vmdk"
+    }
+  },          
+  {
+    "Description": "Second disk",
+    "Format": "vmdk",
+    "UserBucket": {
+        "S3Bucket": "my-import-bucket",
+        "S3Key": "disks/my-windows-2008-vm-disk2.vmdk"
+    }
+  }
+]
+Check the Status of the Import Task
+Use the describe-import-image-tasks command to return the status of an import task.
+
+Status values include the following:
+
+active — The import task is in progress.
+
+deleting — The import task is being canceled.
+
+deleted — The import task is canceled.
+
+updating — Import status is updating.
+
+validating — The imported image is being validated.
+
+validated — The imported image was validated.
+
+converting — The imported image is being converted into an AMI.
+
+completed — The import task is completed and the AMI is ready to use.
+
+
+********************************************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+***********************************************
+
+
+## DataBase migration:
+
+### Precess
+1. MySQL on Laptop:
+    * install mysql
+    * import test database
+
+2. MYSQL on other cloud:
+google: choco install mysql
+  command: choco install mysql --version 5.7.18 -y
+
+
+ AWS 30/04/2019 Note  DataBaseMigration
+
+## How To Migrate databases:?
+1. Migrate from same dbms to rds
+     * eg. mysql to mysql in rds
+     * tools might not be necessary for offline migration.
+      what is offline migration:
+                  in offline migration asked the user donot use the database for sometime till migrate the database in aws is finished.
+                  when migrate is complete then start the working. in offline migration downtime is required.
+     * online migration => replication
+     * sample
+           * Create rds for musql
+     * Export Db from on-premise
+     * Import Db from the exported file
+
+2. migrate from different dbms to rds.
+    * eg. sql server to aurora in rds
+    * we need to use tools from aws
+    * database Migration Service (AWS DMS) can help you out.
+    * Schema Conversion
+    * migrate
+
+
+Post database migration:
+                    in post database migration activity need some change in dns server do not want to change the name
+
+
+
+
+AWS Practice 30/04/2019 DataBase Migration
+
+step: 
+1. open or create the vm 
+2. service and search the rds
+3.  DataBase section
+      * create database
+      * select the free  egable
+      * mysql
+      * version of mysql: 5.7.18
+      * DB instance type: t2.micro
+      * DB instance name: learning
+      * master user: root
+      * password: ....
+         next
+      * public accessibility
+         yes
+      * choose security group
+      * database name: learning
+      * backup : 0
+      * Maintenance:
+          i disable everything
+      * Delete proction
+          enable delection protection: yes
+      * create database
+
+now goto our database which install on window
+      * search: mysql
+      * mysql connection:
+            host name: localhost
+              test connection press
+                    ok
+      * click on localhost
+
+google: mysql employee sample database
+          goto to the github
+             copy the clone and open the gitbash in any folder and paste
+               git clone <employee database clone>
+              ls
+now goto the database and import the employee database
+     click on file :
+            run sql script:
+                  import the employee.syl
+             shema:
+                   here ask the user name password.
+
+                       ok
+
+now again to aws mysql and copy the endpoint 
+and click at localhost:
+            connection name: awssamedb  ex.
+            connection method: TCP /IP
+            hostname: paste here the end point
+             Test connection :
+                 ask the password:
+                         username: root
+                         password: ....
+                 ok
+       
+
+create the awssamedb and click
+             goto the file:
+                       import/export
+
+                 import from self content file: employee.sql
+                   i am import employee.sql in learning database(aws)
+                              start import.
+                    
+            
+
+****************************
+Migrate the MultiVm 
+
+
+step:
+1. install the vagrant
+2. enable the hyper-v
+3. i have a image of image of any os ex. i have a image of centos7 in hyper folder.
+4. open the powershell here
+   Command:
+     vargrant init
+     vargarnt up --provider-hyper-v
+for for create a another VM
+open the powershell here
+   Command:
+     vargrant init
+     vargarnt up --provider-hyper-v
+
+5. download the Server migration connector and extract the this file.
+6. import the server migration connector into the hyper-v box.
+    see the documentation follows the step.
+7. copy the ip of first machine and paste into the url and result is AWS migration service page are open.
+    read the doc and follow the step.
+
+
+
+
+       
+     
+
+      
+
+            
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+

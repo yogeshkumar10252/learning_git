@@ -1,0 +1,182 @@
+- hosts: webserver
+  become: yes
+  tasks: 
+  - name: create a directory
+    file:
+      path: /opt/tomcat8
+      state: directory
+      mode: 0755
+      owner: tomcat
+      group: tomcat
+ - name: download the tomcat url into directoty
+   get_url:
+     url: url: https://www-us.apache.org/dist/tomcat/tomcat-8/v8.5.40/bin/apache-tomcat-8.5.40.tar.gz
+     dest: /opt/tomcat
+     mode: 0755
+     group: tomcat
+     owner: tomcat
+     
+- hosts: webserver
+  become: yes
+  tasks:
+  - name: "install java8"
+    apt: 
+      name: default-jdk
+      update_cache: yes
+      state: present
+ - name: removing the environment variable
+   file:
+     path: /etc/enviromment
+     state: absent
+ - name: now update the enviromment variable file
+   file:
+     path: /etc/environment
+     state: touch
+ - name: copy the content of java
+   copy:
+     content: 'export JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre 
+     dest: /etc/environment
+
+ - name: creating the group
+   group:
+     name: tomcat
+     state: present
+ - name: creating the user
+   user:
+     name: tomcat
+     group: tomcat
+     append: yes
+ - name: create the directoty
+   file:
+     path: /opt/tomcat8
+     state: present
+     mode: 0755
+     owner: tomcat
+     group: tomcat
+ 
+- name: now download the tomcat
+   get_url
+     url: https://www-us.apache.org/dist/tomcat/tomcat-8/v8.5.40/bin/apache-tomcat-8.5.40.tar.gz
+     dest: /opt/tomcat8
+     mode: 0755
+     owner: tomcat
+     group: tomcat
+     
+
+
+
+
+- name: "changing owner for file"
+    shell: chown -hR tomcat:tomcat /opt/tomcat/
+  - name: "creating tomcat.server file"
+    copy:
+      src: copy/tomcat.service
+      dest: /etc/systemd/system/
+  - name: "reloading systemctl"
+    systemd:
+      name: tomcat
+      daemon-reload: yes
+      state: restarted
+  - name: "starting tomcat"
+    systemd:
+      name: tomcat
+      state: started
+  - name: "configuring tomcat-user file"
+    file:
+      path: /opt/tomcat/conf/tomcat-users.xml
+      state: absent
+  - name: "updating tomcat-user file"
+    copy:
+      src: copy/tomcat-users.xml
+      dest: /opt/tomcat/conf/
+  - name: "modifing manager context file"
+    file: 
+      path: /opt/tomcat/webapps/manager/META-INF/context.xml
+      state: absent
+  - name: "updating manager context file"
+    copy: 
+      src: copy/manager/context.xml
+      dest: /opt/tomcat/webapps/manager/META-INF/
+  - name: "modifing host-manager context file"
+    file: 
+      path: /opt/tomcat/webapps/host-manager/META-INF/context.xml
+      state: absent
+  - name: "updating host-manager context file"
+    copy: 
+      src: copy/host-manager/context.xml
+      dest: /opt/tomcat/webapps/host-manager/META-INF/ 
+    notify:
+    - restart tomcat
+  - debug:
+      msg: "deploying game of life"
+  - name: "downloading game of life"
+    get_url:
+      url: https://github.com/QT-DevOps/DevOpsIssues/files/2130588/gameoflife.zip 
+      dest: /opt/tomcat/webapps/
+  - name: "unzipiing gameoflige"
+    unarchive:
+      src: /opt/tomcat/webapps/gameoflife.zip
+      dest: /opt/tomcat/webapps/
+      remote_src: yes
+    notify:
+    - restart tomcat
+
+
+
+
+
+
+
+
+**********************************
+Execution part:
+- hosts: webserver
+  become: yes
+  tasks:
+  - name: "install java8"
+    apt:
+      name: default-jdk
+      update_cache: yes
+      state: present
+  - name: removing the environment variable
+    file:
+      path: /etc/enviromment
+      state: absent
+  - name: now update the enviromment variable file
+    file:
+      path: /etc/environment
+      state: touch
+  - name: copy the content of java
+    copy:
+      content: 'export JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre'
+      dest: /etc/environment
+  - name: creating the group
+    group:
+      name: tomcat
+      state: present
+  - name: creating the user
+    user:
+      name: tomcat
+      group: tomcat
+      append: yes
+  - name: create the directoty
+    file:
+      path: /opt/tomcat8
+      state: directory
+      mode: 0755
+      owner: tomcat
+      group: tomcat
+  - name: "downloading game of life"
+    get_url:
+      url: https://github.com/QT-DevOps/DevOpsIssues/files/2130588/gameoflife.zip
+      dest: /opt/tomcat8/
+  - name: install the unarchive package
+    apt:
+      name: unzip
+      state: present
+  - name: archive the gameoflife application
+    unarchive:
+      src: /opt/tomcat8/gameoflife.zip
+      dest: /opt/tomcat8/
+      remote_src: yes
+ 

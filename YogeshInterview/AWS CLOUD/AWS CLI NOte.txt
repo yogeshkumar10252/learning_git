@@ -1,0 +1,148 @@
+# CLI
+
+## Why CLI for AWS?
+* Because we want to automate
+* For redundant activities we will write cli & execute
+    * Linux
+        * CRON Job
+    * Windows
+        * Scheduled Jobs
+    * Jenkins
+
+## How to use AWS CLI
+* Intro:
+  ![Preview](./images/AWSAPI.png)
+
+* Setup:
+    * Windows: [Click here](https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html)
+    * MAC [Click Here](https://docs.aws.amazon.com/cli/latest/userguide/install-macos.html)
+    * Linux: [Click here](https://docs.aws.amazon.com/cli/latest/userguide/install-linux.html)
+
+* Configuration:
+    * Credentials:
+        * AWS expects you to create a user
+        * Give this user permissions
+        * ACCESS Key & Secret Key info configure in CLI
+        ```
+        aws configure
+        # Enter accesskey, secret access key, region code & json
+        ```
+
+* Syntax:
+    * Generic Syntax
+    ```
+    aws <service> <action> <arguments/parameters>
+    ```
+    * Some examples:
+        * Show me all s3 buckets
+        ```
+        aws s3 ls
+        ```
+        * create ec2 instance
+        ```
+        aws ec2 run-instance --instance-type t2.micro --image-id 
+        ```
+
+    * Hack approach:
+        * google "aws <service> CLI"
+            * aws rds cli
+            * aws s3 cli
+            * aws dynamodb cli
+
+
+
+## create the vpc
+aws ec2 create-vpc --cidr-block 10.10.0.0/16
+ "VpcId": "vpc-0c0bf49da9a35a05a"
+
+## create a four subnet
+aws ec2 create-subnet --availability-zone us-west-2a  --cidr-block 10.10.0.0/24 --vpc-id 'vpc-0c0bf49da9a35a05a'
+"SubnetId": "subnet-012d3e193fd035076"
+
+aws ec2 create-subnet --availability-zone us-west-2c  --cidr-block 10.10.2.0/24 --vpc-id 'vpc-0c0bf49da9a35a05a'
+ "SubnetId": "subnet-05e5c2542a6cecbe2"
+
+ aws ec2 create-subnet --availability-zone us-west-2b  --cidr-block 10.10.1.0/24 --vpc-id 'vpc-0c0bf49da9a35a05a'
+"SubnetId": "subnet-01671bfc9061b12a8"
+
+aws ec2 create-subnet --availability-zone us-west-2c  --cidr-block 10.10.3.0/24 --vpc-id 'vpc-0c0bf49da9a35a05a'
+ "SubnetId": "subnet-09b9661308b8aadab"
+
+ ## create internet gateway
+ aws ec2 create-internet-gateway 
+ "InternetGatewayId": "igw-0520698aff3c5f306
+
+ ## attatch the internet gateway 
+ aws ec2 attach-internet-gateway --internet-gateway-id 'igw-0520698aff3c5f306' --vpc-id 'vpc-0c0bf49da9a35a05a'
+
+ ## create router table1
+ aws ec2 create-route-table --vpc-id 'vpc-0c0bf49da9a35a05a'
+  "RouteTableId": "rtb-0a76a74cae16815d1"
+
+
+## create router table2
+ aws ec2 create-route-table --vpc-id 'vpc-0c0bf49da9a35a05a'
+ "RouteTableId": "rtb-037bda9bad6a496de"
+
+  ## associate the route to the internet gateway
+  aws ec2 create-route --destination-cidr-block 0.0.0.0/0  --gateway-id 'igw-0520698aff3c5f306' --route-table-id 'rtb-0a76a74cae16815d1'
+
+  ## associate the route to the subnet1
+  aws ec2 associate-route-table --route-table-id 'rtb-0a76a74cae16815d1' --subnet-id  'subnet-012d3e193fd035076'
+   "AssociationId": "rtbassoc-0ff5900c6ef25c0a1"
+  
+  ## associate the router the subnet2
+  aws ec2 associate-route-table --route-table-id 'rtb-0a76a74cae16815d1' --subnet-id  'subnet-05e5c2542a6cecbe2'
+ "AssociationId": "rtbassoc-00fe33aec7284033d"
+
+ ## assocaite the another route the private subnet1
+ aws ec2 associate-route-table --route-table-id 'rtb-037bda9bad6a496de' --subnet-id  'subnet-01671bfc9061b12a8'
+ ##  "AssociationId": "rtbassoc-0583c101c418d6aec"
+
+
+ ## assocaite the another router the private subnet 2
+ aws ec2 associate-route-table --route-table-id 'rtb-037bda9bad6a496de' --subnet-id  'subnet-09b9661308b8aadab'
+ "AssociationId": "rtbassoc-0f02f33e8a09ad404"
+
+
+
+## create a   security group
+ aws ec2 create-security-group --group-name 'yogeshyogi' --description "My security group" --vpc-id 'vpc-0c0bf49da9a35a05a'
+ "GroupId": "sg-0ad151d209ce5450f"
+
+ ## authorize the inbound rules
+
+ aws ec2 authorize-security-group-ingress --group-id 'sg-0ad151d209ce5450f' --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+ aws ec2 authorize-security-group-ingress --group-id 'sg-0ad151d209ce5450f' --protocol tcp --port 80  --cidr 0.0.0.0/0
+
+
+## create the key-pair
+ aws ec2 create-key-pair --key-nam 'awsclass'
+
+
+ ## run the instance in first subnet1
+ aws ec2 run-instances --image-id 'ami-005bdb005fb00e791' --instance-type 't2.micro' --key-name 'awsclass'  --subnet-id 'subnet-012d3e193fd035076' --count 1 --security-group-ids 'sg-0ad151d209ce5450f' 
+ 
+
+
+
+ ## run the instance in first private subnet1
+ aws ec2 run-instances --image-id 'ami-0cb72367e98845d43' --instance-type 't2.micro' --key-name 'awsclass'  --subnet-id 'subnet-01671bfc9061b12a8' --count 1 --security-group-ids 'sg-0ad151d209ce5450f' 
+
+
+ ## create the database
+ step.
+ 1. fisrt create the database subnet group
+ aws rds create-db-subnet-group --db-subnet-group-name 'MySubnetGroup'  --db-subnet-group-description 'this database is a private' --subnet-ids 'subnet-012d3e193fd035076' 'subnet-05e5c2542a6cecbe2'
+
+ ##  create the database security
+ aws rds  create-db-security-group --db-security-group-name 'DataBaseSecurity' --db-security-group-description  'Security for database' 
+
+ aws rds create-db-security-group --db-security-group-name mysecgroup --db-security-group-description "My Test Security Group"
+
+ ## edit the db security group
+ aws ec2 authorize-security-group-ingress --group-id sg-903004f8 --protocol tcp --port 3306 --cidr 0.0.0.0/0
+
+ ## create the database
+ aws rds create-db-instance --db-name 'yogesh' --db-instance-identifier 'MyDataInstance' --allocated-storage 20 --db-instance-class db.t2.micro --engine MySQL --master-username root --master-user-password 'rootroot' --db-security-groups '    ' --db-subnet-group-name '  ' --backup-retention-period 0  --port 3306 

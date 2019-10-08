@@ -1,0 +1,4 @@
+jira:
+
+jira is tool are used to bug tracking, issuse tracking, and project management.
+the basic use of this tool is to track issue and bugs related to your software and mobile app.

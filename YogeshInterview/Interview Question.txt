@@ -1,0 +1,2604 @@
+jenkins interview
+what is pom.xml what is field of pom.xml
+Ans . 
+
+Qns: how to updgate the package  when my application use the java 5 and my system use the java version 7.
+Ans: open the pom.xml file and change the java version.
+
+Qns: my system have java 9 and the java 10 . i have a 10 project but i want to run one project in java 9 and remaining 9 project in java 10 how
+And: set the temporary path export java_path java 9 for one project. in execute shell.
+
+my jenkins run on port on 8080 and i want to run the jenkins to another port how to cahange the port.
+/etc/default/jenkin ans replace with
+HTTP_PORT=8080
+by
+
+HTTP_PORT=8081
+
+
+qns: how to exports the jobs/project in jenkins.
+ans: you can exports the jobs of jenkins you take the xml file and you import the same xml file into other system and start the working.
+
+
+interview qns:
+qns: how to take the backup of jenkins project/job:
+ans: take the config.xml file
+
+Qns: how to take the backup of whole jenkins:
+ans: Take the backup of jenkins home directory.
+
+qns: if jenkin server fail what do in this condition:
+     copy the jenkins home directory and paste to another server.
+
+
+diff b/w git and github:
+git: the git is the way of organizationing the code where is github is the server or repository which hold your code. 
+
+qns:what is difference b/w continuous integration and continuous deployment
+ans:you taken the code and building the code and deploy the code in the local environment. is called the continuous integration.
+     where is taken the code building the code and deploy the code in server and send to the production environment is called the continuous deployment. 
+  
+qns: what is Build promotion. 
+  when  the day build is successful then build is promoted to the nighet build .when night build is successful the night build is promoted in the deploy build is called the build promotion.
+
+
+
+what is diff.b/w jar and war
+the package is defined by applications such as tomcat is called the war file
+the package id defined by system is called the jar file
+
+
+
+Qns what is test executed in night build.
+Ans: salenium test executed in night
+
+Qns:what is test executed in day build:
+ans: unit test are executed in day build.
+
+
+Qns:day build and night build devops engg. work on one project or multiple project.
+Ans: they  work on multiple project.
+
+
+Qns: what is quality gate in sonarqube
+Ans: sonarqube is used to improve the quality of the code.
+     here are three thing.
+     symbol covrage
+     line coverage
+     branch covrage.
+ 
+Qns :code quality when we do before the build middile the build and after the build
+Ans: middile the build.
+
+
+Qns: How many jobs run in jenkins.
+Ans: i am run only two jobs. the first jobs is that  developer saying that i push the code in git in particular barch the we take the particular
+     branch or  hashcode of its branch and deploy the build in dev environments to create the ami when ami is created . the another jobs of the 
+     to deploy the ami in QA environments.       
+
+Qns: How to configure the sonarqube.
+Ans: we taken the token and go to the jenkoins master then goto the manage jenkins , => configure and then here we provide the token and name of the sonarqube node .
+
+
+port no of sonarqube:
+ans: 9000
+
+Qns: port no of artifactory:
+ans: 8081
+
+
+Qns: How to manage the user in jenkins:
+ans: we can manage the jenkins user in three ways.
+     Authentication:
+     jenkins database
+      ldap server(active directory): we manage the jenkins user with the help of active directory.
+      unix/linux users
+
+Authorization:
+ matrix
+  we use the project matrix: it means assign the special project the special user.
+  step: goto the jenkins=> manage the jenkins=> configure global security
+    here you can select the project based matrix and add the user to the group and the user this group and assign the access. 
+
+
+Qns: your jenkins machine use the jdk 8 and your project need jdk 9 how can do that,
+and: go to jenkins=> manage jenkins=> global tool configuration and you can install here jdk9.
+
+second way: the set the temporary . export Java_home=..
+
+Qns: What is plugins:
+ans: The plugins are used the add the additional bhaviour in jenkins application.
+
+
+Qns: what is format or extension of plugins in jenkins.
+and: .hpi and .jpi
+
+Qns: plugins where is installed.
+and: /var/lib/jenkins
+
+Some: plugins
+Backup: with the help of this plugin we can easily take the backup of home directory of jenkins
+import and export: with the help of this plugin we can export the same job into the other server
+Buildmonitor: buildMonitor plugin basically used to monitor the build and display the build on the screen.
+Powershell: this plugin allow to jenkins to invoke Windows Powershell .
+Parameter plugin: this plugin is used to build with parameter.
+
+Qns: Why do not use other plugin:
+ans: we can handle many way. such as linux.
+
+Qns: we can manage the jenkins from two way.
+ans: jenkin cli and jenkins ui
+
+Qns: what is pipeline:
+ans:  with the help of  pipeline we can the run the jenkins jobs automatically . and we can creating  a jenkins jobs using the groovy 
+      scripting language. the groovy is based on java. 
+     
+
+Qns: what is advantage of pipeline.
+ans: resualibility and there is no need to plugins.
+
+Qns: you can execute the two or more project at same time from jenkins.
+ans: yes 
+   ex: project A
+       "       B
+       "       C
+then
+   B project run after A in mvn node
+   C project run after A in ansible node.
+
+
+Qns: you have a one jenkins server and three slave/node. the machines is not specified with the jobs and user builds the trigger.
+    in this condition your jenkins where run.
+ans: when the machine is not specified then jobs by defaults run into the master.
+
+Qns: the developer develop the code and commit the code in git repository. in this condition the jenkins server speak with.
+ans: in this condition the jenkins server speak with githook.
+
+
+Qns: the jenkins user which type of format use for the storage.
+ans: the jenkins user use the xml format.
+
+
+Jenkins: 
+
+1. How to upload the .json file in jenkins
+
+
+2. How to send the mail when build is unstable or broken
+Ans: when there is a build failure or any changes in the build state(build is unstable or broken), we must get notified immediately through e-mail.
+     so that we can fix the issue at the earlist. 
+	there is emailer plugin available in jenkins that has be installed and configure it based on the requirement.
+
+3. How to store the jenkins server backup and restore
+  All the settings, build logs, artifact archives are stored under the JENKINS_HOME directory. therea are backup plugins in jenkins . with the help 
+ You can set it to run on a schedule using standard cron notation by using build periodically. back up plugin we can easily take the back of jenkins home directory.
+ Back ups can be taken without stopping the server, but when you restore, please do stop the server.
+
+Another way to take the backup of jenkins home directory.
+                    we can take jenkins-home directory backup to s3 bucket by using s3 plugin.
+
+
+4. How to take .xml files backup
+
+
+JENKINS_HOME has a fairly obvious directory structure that looks like the following:
+
+
+JENKINS_HOME
+ +- config.xml     (jenkins root configuration)
+ +- *.xml          (other site-wide configuration files)
+ +- userContent    (files in this directory will be served under your http://server/userContent/)
+ +- fingerprints   (stores fingerprint records)
+ +- plugins        (stores plugins)
+ +- workspace (working directory for the version control system)
+     +- [JOBNAME] (sub directory for each job)
+ +- jobs
+     +- [JOBNAME]      (sub directory for each job)
+         +- config.xml     (job configuration file)
+         +- latest         (symbolic link to the last successful build)
+         +- builds
+             +- [BUILD_ID]     (for each build)
+                 +- build.xml      (build result summary)
+                 +- log            (log file)
+                 +- changelog.xml  (change log)
+
+
+
+
+
+Qns:  How to set the jenkins job build numbers
+Ans: yes we can set the jenkins job build numbers with the via nextBuildnumber file. which are present in or Under the job workspace folder, like:
+ C:\Program Files (x86)\Jenkins\jobs\job_name. here you can Setting the build number in the file and you should reloading the configuration file.
+
+
+Qns: What we can do with jenkins
+Ans: Jenkins is an open source automation tool written in Java with plugins built for Continuous Integration and delivery purpose.
+    Jenkins is used to build and test your software projects continuously making it easier for developers to integrate changes to the project, 
+    and making it easier for users to obtain a fresh build.
+
+Qns. Why we are using jenkins
+Ans: Jenkins is an open source automation tool written in Java with plugins built for Continuous Integration and delivery purpose.
+    Jenkins is used to build and test your software projects continuously making it easier for developers to integrate changes to the project, 
+    and making it easier for users to obtain a fresh build.We can build the projects , autodeploy, test the projects, send the notification....
+
+
+Qns:. why we do not need to install jenkins in nodes?
+Ans:  Jenkins slave nodes can run on a variety operating systems like Windows and Linux, and there is no need to install full Jenkins packages on it. ... 
+      We will learn to set up the Jenkins master server, and then add other Ubuntu nodes as a Jenkins slaves.
+
+
+
+Qns.   How you can write and execute the shell script in jenkins
+Ans  These are the steps to execute a shell script in Jenkins: The step are as follow.
+
+    get the main page of Jenkins select New Item.
+    Enter an item name like "my shell script job" and choose Freestyle project. ...
+    On the configuration page, in the Build block click in the Add build step dropdown and select Execute shell.
+
+
+Qns. How to manage the nodes, how to manage the users, how we can create particular project based authentications in jenkins.
+
+Ans: Managing Jenkins master and slave nodes
+
+    On the Jenkins dashboard, go to Manage Jenkins. Click on Manage Nodes link. ...
+    To create a slave node, click on New Node.
+    Provide Name, Description, Labels and so on. Select Launch slave agents via Java Web Start as Launch method. ...
+    Click on Save. It will open a page that gives details on how to launch the slave node.
+
+To verify this, login to Jenkins as admin, go to “Manage Jenkins”, click on “Configure Global Security”, 
+and under the “Access Control” section, for the “Security Realm”, if you've selected “Jenkins' own user database”, then you can only create users, and not groups
+
+## How do I enable project based security in Jenkins?
+   
+    Login to Jenkins with your credentials.
+    Go to "Manage Jenkins".
+    Go to "Configure Global Security".
+    In the option "Authorization" select "Project-based Matrix Authorization Strategy" and put the privileges as appropriate.
+
+Qns. How I can integrate the LDAP using jenkins
+
+LDAP directories are standard technology for storaging user, group and permission information and serving that to applications in the enterprise. 
+
+Authenticating users with an LDAP directory is a two-step process.
+
+How to do it...
+
+    Go to the Configure Global Security screen and select Enable security.
+    Check the LDAP checkbox.
+    Add the Server value as 127.0.0.1.
+    Click on the Advance button and add the following details:
+        User Search Base: ou=people,ou=mycompany,dc=nodomain
+        User Search filter: uid={0}
+        Group Search base: ou=groups,ou=mycompany,dc=nodomain
+
+
+Qns. why we use nodes in jenkins
+Ans: Jenkins supports the master-slave architecture, i.e. many slaves work for a master. It is also known as Jenkins Distributed Builds. 
+     It also allows you to run jobs on different environments like Linux, Windows, MacOS, etc
+
+
+Qns. How to configure windows agents in jenkins
+
+Go to Manage Jenkins > Manage Nodes, Click on the newly created agent machine.
+...
+
+    In the agent program running on your agent machine,
+    click File --> Install as Windows Service. ...
+    Start, type Services and Select the Services program.
+    Find Jenkins Agent in the list, Double click to open.
+    Select Startup type --> Automatic.
+
+Qns. How to reduce the build time in jenkins
+Ans by increasing the cpu resource we can reduce the time
+
+
+Qns: I configured one project in jenkins I'm trying to configure another project but it's not getting added how you will trouble shoot.
+Ans:
+
+Qns: What is a Jenkins file?
+
+Jenkins Pipeline (or simply "Pipeline") is a suite of plugins which supports implementing and integrating continuous delivery pipelines into Jenkins. ... 
+The definition of a Jenkins Pipeline is typically written into a text file (called a Jenkinsfile ) which in turn is checked into a project's source control repository.
+
+
+  
+Qns: What are the artifacts in jenkins
+
+Ans:  Artifacts can be used to represent data created as a side-effect of running a Jenkins build. Artifacts are files which are 
+     associated with a single build. A build can have any number of artifacts associated with it.
+
+
+
+Qns: How you will send the notifications wether build is fail or success
+Ans: by sending email notification..
+
+Qns. what is the pipeline project in jenkins
+Ans: Pipeline project in Jenkins is used to create a Jenkins pipeline. A Jenkins pipeline is basically used for build the project in
+    continuous way without using the plugins.The definition of a Jenkins Pipeline is written into a text file, which is called as the Jenkinsfile.
+
+
+Qns. what is the system type of jenkins server like t2 micro t2 medium.
+Ans: t2 large
+
+Qns: what is the stages of your jenkins project like pipe line project
+Ans: The machine on which Jenkins runs is called a node. A node block is mainly used in scripted pipeline syntax. 
+     A stage block contains a series of steps in a pipeline. That is, the build, test, and deploy processes all come together in a stage.
+
+Qns: How will you give authentication permissions to the users in jenkins
+
+Ans: Jenkins' Own User Database
+
+    Select Manage Jenkins, then Configure Global Security.
+    Click Enable Security. The page will expand to offer a choice of access control.
+    Select Jenkins' own user database.
+    Place a check mark next to Allow users to sign up.
+    Continue with Authorization, below.
+
+
+Qns: I have upgraded from one version to another version in jenkins after upgrading some of my upgraded plugins are not supporting to new version of
+      Jenkins then what you will do.
+Ans:backup jenkins by using thinbackup plugin
+
+
+
+Qns: How you will decide no of executors in jenkins
+Ans: its depends how many jobs are running is your jenkins server or master. at least one jobs required a one executor. how to set the executor.
+
+ ##  For the master, this is set in Manage Jenkins > Configure System > # of executors
+ ##  For the slaves (nodes), it is set in Manage Jenkins > Nodes > (each node) > Configure > # of executors
+
+
+
+Qns:What is Maven life cycle?
+Ans: The Maven Life Cycle phase gives the order of goals and information about the packaging type in a project. 
+     The build Maven Life Cycle is divided into 3 types, they are: Default Lifecycle. Clean Lifecycle. Site Lifecycle.
+
+
+Qns:. How set maven deployment path
+Ans: 
+
+Qns: How do I start Jenkins agent?
+Ans:Go to Manage Jenkins > Manage Nodes, Click on the newly created agent machine.
+...
+
+    In the agent program running on your agent machine,
+    click File --> Install as Windows Service. ...
+    Start, type Services and Select the Services program.
+    Find Jenkins Agent in the list, Double click to open.
+    Select Startup type --> Automatic.
+
+Ans: .How do I manage Jenkins?
+Ans: Go to the Jenkins home page and click the 'Manage Jenkins' menu option. Then, select the 'Configure System' option
+
+Qns: .How do I start Jenkins?
+Ans: To start Jenkins from command line
+
+    Open command prompt.
+    Go to the directory where your war file is placed and run the following command: java -jar jenkins.war.
+
+Qns: .How do I give access to Jenkins?
+Essentially you do this:
+
+    Go to Jenkins -> Manage Jenkins -> Configure Global Security.
+    Check "Enable security".
+    Set "Jenkins own user database" as security realm.
+    Check "Allow users to sign up"
+    Choose "Matrix based security"
+    Check "Overall read" on Anonymous.
+    Add your admin account in the matrix, check every box
+
+Qns.How does Jenkins integrate with Git?
+Install GIT Plugin
+
+    Step 1: Click on the Manage Jenkins button on your Jenkins dashboard:
+    Step 2: Click on Manage Plugins:
+    Step 3: In the Plugins Page.
+    Step 4: Once the plugins have been installed, go to Manage Jenkins on your Jenkins dashboard. ...
+    Step 1) Create a new job in Jenkins, open the Jenkins dashboard with your Jenkins URL.
+
+34.How do I add a user to Jenkins?
+Jenkins' Own User Database
+
+    Select Manage Jenkins, then Configure Global Security.
+    Click Enable Security. The page will expand to offer a choice of access control.
+    Select Jenkins' own user database.
+    Place a check mark next to Allow users to sign up.
+    Continue with Authorization,
+
+35.How do I run Jenkins on Windows?
+Unzip the file to a folder and click on the Jenkins exe file.
+
+    Click "Next" to start the installation.
+    Click the "Change..." button if you want to install Jenkins in another folder. ...
+    Click the "Install" button to start the installation process.
+    The installation is processing.
+
+Qns: .What is number of executors in Jenkins?
+If you also have remote build slaves, you can set up multiple executors on those as well. 
+Your maximum number of concurrent jobs will be (executors on master) + (number of remote slaves) * (executors per slave).
+
+Qns: .How do I start Jenkins war?
+To download and run the WAR file version of Jenkins:
+
+    Download the latest stable Jenkins WAR file to an appropriate directory on your machine.
+    Open up a terminal/command prompt window to the download directory.
+    Run the command java -jar jenkins.war .
+    Continue on with the Post-installation setup wizard below.
+
+Qns:.How do I assign a role in Jenkins?
+Ans: Assign Users to the new Group (Role) After creating the roles (either global role, or project role) with appropriate permissions, the next step is to assign users to this role. 
+    For this, go to “Manage Jenkins” -> “Manage and Assign Roles” -> Click on “Assign Roles”
+
+
+Qns: How do I give admin rights to a user in Jenkins?
+Step 1. Go to Manage Jenkins -> Manage Users -> Create user -> Set Credentials (username, password etc).  
+Go to manage jenkin -> configure global security -> Make sure Enable Security is checked -> Check : role based strategy authorization (as admin).
+
+
+Qns.How does Jenkins integrate with Amazon s3?
+There is no need to run anything in addition to running a build.
+
+    Create a new bucket for Jenkins in AWS S3.
+    Install S3 Plugin in Jenkins. Now go to Dashboard -> Manage Jenkins -> Manage Plugins and select.
+    Configure in Jenkins Job. ...
+    Configure your S3 Profile and define the files to upload.
+
+
+Qns:.How can we secure Jenkins?
+Ans: Why to Secure Jenkins?
+
+    Deploy the Jenkins.war and start the server.
+    Open the Jenkins home page and click on Manage Jenkins.
+    In the Manage Jenkins page, click on Setup Security button.
+    In the next page, select the enable security check box.
+    Here, the very first thing to be done is to set the security realm.
+
+
+Qns:How do I start Jenkins after installing?
+Ans: Installing Jenkins
+
+    Open the command prompt window and browse to the directory where the jenkins.war file is present, through the command cd C:\Program Files (x86)\Jenkins.
+    Run the command java -jar jenkins.war.
+    Wait until the process is complete.
+
+
+Qns:.How do I create a Jenkins job?
+Creating a new build job in Jenkins with Git
+
+    On the Jenkins dashboard, click on Manage Jenkins and select Manage Plugins. ...
+    Click the checkbox and click on the button, Download now and install after restart.
+    Restart Jenkins.
+    Create a new Freestyle project. ...
+    Configure Git in the Source Code Management section.
+
+
+Qns: What is executors in Jenkins?
+Ans: Executor : A slot for execution of work defined by a Pipeline or Project on a Node. 
+     A Node may have zero or more Executors configured which corresponds to how many concurrent Projects or Pipelines are able 
+     to execute on that Node. 
+
+
+Qns:.How do I start Jenkins on a different port?
+Ans:
+
+    Go to the directory where you installed the Jenkins (In default, it is under Program Files/Jenkins)
+    Open the Jenkins.xml.
+    Search --httpPort=8080 and replace the 8080 with the new port number that you wish.
+
+Qns: How do I start Jenkins as a Windows service?
+Ans: Install Jenkins as a Windows service. First, you need to start Jenkins before installing it. This can be done from JNLP, or by running " java -jar jenkins.war ". 
+    Once Jenkins is started this way, look for the "Install as Windows Service" link in the "Manage Jenkins" page.
+
+Qns: How do I give permission to Jenkins?
+Security Realm
+
+    Select Manage Jenkins, then Configure Global Security.
+    Click Enable Security. The page will expand to offer a choice of access control.
+    Select Jenkins' own user database.
+    Place a check mark next to Allow users to sign up.
+    Continue with Authorization.
+
+Qns: How do I enable project based security in Jenkins?
+
+
+    Login to Jenkins with your credentials.
+    Go to "Manage Jenkins".
+    Go to "Configure Global Security".
+    In the option "Authorization" select "Project-based Matrix Authorization Strategy" and put the privileges as appropriate.
+
+
+Qns:How do I run a Jenkins WAR file on a different port?
+Ans: Using different ports for Jenkins
+
+     If you run Jenkins using the command line, 
+     then you can execute a command such as java -jar -httpPort=9999 jenkins.war to change the existing port from 8080 to 9999
+
+Qns: How do I create a workspace in Jenkins?
+Ans: Navigate to Jenkins->Manage Jenkins->Configure System and click on the Advanced Button on the right hand side.
+     Now you can change your workspace and build directory to any other location on your machine .
+
+
+Qns:What is an unstable build in Jenkins?
+Ans:
+    A build is stable if it was built successfully and no publisher reports it as unstable  
+   A build is unstable if it was built successfully and one or more publishers report it unstable. 
+    For example if the JUnit publisher is configured and a test fails then the build will be marked unstable.
+
+
+Qns.What are upstream and downstream jobs in Jenkins?
+Ans:  Understanding upstream and downstream jobs. An upstream job is a configured project that triggers a project as of its execution. 
+      A downstream job is a configured project that is triggered as part of a execution of pipeline. 
+   ... We can configure one or more projects as downstream jobs in Jenkins.
+
+Qns: What is Jenkins configuration file?
+Ans: The job configuration file is config.xml , the builds are stored in builds/ , and the working directory is workspace/ . 
+     See the Jenkins documentation for a visual representation and further details. 
+     Am adding few things related to jenkins configuration files storage.
+
+Qns:where do you find errors in jenkins
+Ans: Click on the 'Console Output
+
+or
+
+Click 'Back to Project'
+Then Click Workspace on the left and go to the specified file location. Ex: data-mart-db/target/ [You can find log files below the actual code files.]
+
+Qns:how do you integrate sonarqube in jenkins
+Ans: install sonar scannar plugin
+    configure the sonarqube in jenkins master
+
+
+Qns:how do you find logs in jenkins
+Ans:
+    locate jenkins service file : /etc/default/jenkins
+    Open it and probably you will see file /var/log/jenkins/jenkins.log 
+
+
+Qns: difference b/w ant and maven
+Ans:
+  Ant doesn't have formal conventions. You have to tell Ant exactly where to find the source, where to put the outputs, etc.
+  Ant is procedural. You have to tell Ant exactly what to do; tell it to compile, copy, then compress, etc.
+  Ant doesn't have a lifecycle.
+
+  Maven uses conventions. It knows where your source code is automatically, as long as you follow these conventions. You don't need to tell Maven where it is.
+  Maven is declarative; All you have to do is create a pom.xml file and put your source in the default directory. Maven will take care of the rest.
+  Maven has a lifecycle. You simply call mvn install and a series of sequence steps are executed. 
+
+
+Qns:what is pom.xml in jenkins
+Ans:  Once Jenkins build starts it will download the source code to .jenkins\jobs\yourjobname\workspace and builds it there,
+      Using pom.xml(Maven) you can configure dependencies needed for building testing and running code. Maven automatically downloads the 
+      necessary files from the repository while building the project
+
+
+59.what is poll scm?
+Ans: Poll SCM periodically polls the SCM to check whether changes were made (i.e. new commits) and builds the project if new commits
+     where pushed since the last build, whereas build periodically builds the project periodically even if nothing has changed.
+
+
+Qns:what is difference between github and bitbucket	
+Ans: 1) Github provides you inline editing and network graphs whereas bitbucket doesn't provide you that.
+     2) Github's monthly price is cheap, but bitbucket is cheaper than Github.
+     3) Github doesn't provide any free private repositories whereas Bitbucket provides you unlimited free private repositories.A
+
+
+Qns. Maven repositories?
+Ans: local Repository:
+       Maven local repository is a folder location on your machine. It gets created when you run any maven command for the first time.
+    
+    CentralRepository:
+             :Maven central repository is repository provided by Maven community. It contains a large number of commonly used libraries.
+   
+    Remote repository:
+                which is developer's own custom repository containing required libraries or other project jars.
+
+
+Qns: in jenkins how to give backup from one server to another server
+
+
+    Copy all the files in your JENKINS_HOME directory over to the new server.
+    Point JENKINS_HOME on the new server at the new directory.
+    Copy the Jenkins war file (or your servlet container setup if you have one) over to the new machine and start it up.
+
+All Jenkins settings, jobs, plugins, config, etc. live in JENKINS_HOME. You just need a copy of it to start it elsewhere.
+
+
+
+Qns: In how many ways you can install the Jenkins?
+   We can install Jenkins in 3 Ways
+   By downloading Jenkins archive file
+   By running as a service Java –jar Jenkins.war
+   By deploying Jenkins.war to the webapps folder in tomcat
+
+ 
+
+
+
+Docker Question:
+-------------------
+*********************************
+
+
+
+
+
+how to create the multiple image in docker at different place.
+
+Ans: 
+ FROM alpine as img1
+ COPY file1.txt .
+
+ FROM alpine as img2
+ COPY file2.txt .
+
+or
+FROM golang:1.7.3
+WORKDIR /go/src/github.com/alexellis/href-counter/
+RUN go get -d -v golang.org/x/net/html  
+COPY app.go .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+
+FROM alpine:latest  
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=0 /go/src/github.com/alexellis/href-counter/app .
+CMD ["./app"]  
+
+
+
+Qns: How to push the image the docker hub:
+Docker provides access to Docker Hub vial various CLI commands like docker search, login, pull and push. Let’s understand them:
+
+docker login: As seen above, This command is used to login to the Docker registry.
+docker search: It is used to search images in Docker Hub.
+docker pull: This command is used to pull an image or repository from the Docker registry.
+docker push: This is used to push a repository or an image to Docker registry.
+
+
+
+step: docker login
+      user name 
+      password:
+
+step: docker images
+
+      docker tag docker201 iankesh/docker201
+step: docker tag docker201 yogesh/docker201    
+      here docker tag is the command to create the tag and docker201 is the tag name
+
+
+step: push the image:
+     docker push iankesh/docker201
+
+
+
+Qns: how to start the service in docker compose.
+Ans: docker-compose up
+
+Qns: how to down the services in docker-compose
+Ans; docker-compose down
+
+
+Qns; how ro scale the services in docker-compose
+Ans: docker-compose --scale <service name>= 2 ex.
+
+
+Qns: How the start the service in docker swarm.
+Ans: docker service ps <service name>
+
+Qns: how to down the service in docker swarm.
+Ans: docker swarm leave.
+
+Qns : when  pod is slow where you can see.
+docker pod logs
+
+Qns: How To manage the container in docker
+Ans:  service or load blancer.
+
+Qns: what is IT in docker
+ans: it means interactive mode
+
+Qns: what is default network in docker
+ans: bridge network
+
+Qns: what is the default mode in docker.
+and: the attachable mode is the default mode in  docker
+
+Qns: How to open the port in Docker.
+Ans: There are two way to  expose or open the ports.
+     when we write a docker file ex: EXPOSE =8080
+     OR when we run the docker container run 
+      ex: docker run -p 8080:8080 image  
+
+Qns: What is diff. b/w copy instruction and ADD instruction in Docker.
+Ans:    ADD :  when we write a docker file to take the image from local machine or url
+        COPY:  when we write a docker file to take the imahe form the local machine.
+
+
+Qns: What is Difference b/w ENTRYPOINT and CMD instruction.
+Ans: 
+
+Qns: how many network in docker. which type of network you are using.
+Ans: There are three network. 
+     1. bridge network
+     2. local network
+     3. none
+
+
+Qns: if one bridge have one container and another bridge have another container . both container connect or not.
+Ans:    yes both container is connected.
+
+
+Qns: suppose five container running in one machine and you enter into container . which type  network show when we enter into container 
+ans:  it show only container network. 
+
+
+Qns: if i am use the application in enterypont and same application is cmd it running or not.
+Ans:  in entry point run by default if any thing run in CMD then in this case only CMD is run . 
+
+
+Qns:  if  i am use the application in entrypoint. it can be change at runtime. yes or no.
+ans:  no its does not change we container is start.
+
+Qns:   if use the anything in cmd it can be change in run time or not 
+ans:   anything run in cmd it cab be change when container run.
+
+Qns: What is diff. b/w small p  and the capital P in docker.
+Ans  when we use the small p in this case we define the port number and when we use the Capital P docker automatically define the port no.
+
+Qns: you the entrypoint [""] it run many time or only one times.
+Ans: it runs only one time we container is start.
+    ex: ENTRYPOINT ["ECHO"  , yogesh] is fixed is does not change.
+
+Qns: suppose we have two container in one atm machine they communicate or not.
+Ans: yes both container is communicate to each other.
+
+Qns: what is the diff. b/w docker compose and docker .
+Ans: in docker we can create the only single container but in case of docker compose we can create the multi-container at once.
+
+Qns. my container is run and i want to copy the some files from local machine into the running container how.
+ans: yes i can copy the files form local machine into the running container. with the help of following command:
+     docker cp  --help
+     docker cp container: src_path  dest_path
+     docker cp container id  /root/file name.
+
+
+Qns: my container run 1.4 version of tomcat and i want tomcat version 1.5 without stop the tomcat version 1.4 how.
+ans: 
+
+
+Qns: How to re-create the token in docker swarm:
+ans: docker swarm join-worker 
+
+
+
+Where does Docker images get stored?
+The location of the images vary depending on the driver Docker is using for storage. Actually, Docker images are stored in two files as shown by following command. 
+/var/lib/docker/aufs/diff/<id> 
+has the file contents of the images. /var/lib/docker/repositories-aufs is a JSON file containing local image information.Feb 23, 2016
+
+
+
+Qns: How to copy the files from local machine into running container.
+ans: docker cp containerid: src-path dest_path
+
+
+
+Qns: what find of process you follow the best practice for write a  docker file.
+
+
+Qns: I want to create a docker image from docker volume, so please give me a process.
+Ans:
+
+Qns: How to you login into the running container.
+ans: docker container exec -<id of the container> /bin/bash
+
+Qns: How to find out whose image are used for running container.
+ans: docker conatiner inspect <name or id of the container>
+
+Qns: How to find out whose network use your running container.
+ans: docker container inspect <id of the container>
+
+
+
+
+---------------------
+
+Qns: How many container running your company in Prod Environment for one app.
+Ans: As of now we are in process of migrating our monolitinc appication into micro services. Currently our micro service appilcation is in dev 
+     environment. Our Dev team is about to complete the migration by end of this year. Till now we have around 110 (Hundred n Ten)containers for
+     our application.
+
+     We are using Docker for contenirization and Openshift for orchestration. Currently I am wirting only Docker file for microservices, creating 
+     Images and pushing it to internal repository. Then a CI/CD pipeline is created in Openshift by my Lead.
+
+
+Qns: suppose you have a 40 conatiner is prod environment. if any Container is died how can handle this condition.
+Ans: Then This will be taken tace by Replication controller of Openshift.
+     Openshift is using Docker an dKubernetes in Background.
+     Replication Controller: 
+
+
+Qns: How the to the conatiner in prod, dev, and QA environments.
+ans: Cirrently we have not moved our application into containerization completely. So currently we are in development and testing phase.
+     And to manager conatiner we are using Openshift.
+
+
+Qns: Suppose server is running in prod environment. and how to create the config map in prod. environment.
+Ans:
+
+
+Qns How to remove old Docker containers?
+Ans: To remove one or more Docker images use the docker container rm command followed by the ID of thecontainers you want to remove. If you get an error similar to the following, it means that the container is running. You'll need to stop the container before removing it.
+
+     docker rmi <Image Name / Image ID>
+     docker rm <Container ID/ COntainer name>
+
+
+Qns: How can I copy files from the Docker container to the host?
+Ans: HOSTPATH -> CONTAINER:PATH. To copy filesfrom the host to a container one can use the `docker exec` command available since Docker1.3.0. When executed, the file is transferred from the current directory to the container 
+
+Qns:  How to get a Docker container's IP address from the host?
+Ans:  Modern Docker client system
+
+ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id
+
+
+Qns: How to copy Docker images from one host to another without using a repository?
+Ans: You will need to save the Docker image as a tar file:
+    docker save -o <path for generated tar file> <image name>
+   Then copy your image to a new system with regular file transfer tools such as cp or scp. After that you will have to load the image into Docker:
+
+ex:   docker save -o c:/myfile.tar centos:16
+      docker load -i <path to image tar file>
+
+
+Qns. From inside of Docker container how do I connect to local host of the machine? 
+Ans: Use --network="host" in your docker run command, then 127.0.0.1 in your docker container will point to your docker host.
+  docker run --network="host" -d -P 
+
+
+
+Qns:So I have a Nginx running inside a docker container, I have a mysql running on localhost, I want to connect to the MySql 
+     from within my Nginx. The MySql is running on localhost and not exposing a port to the outside world, so its bound on localhost, 
+     not bound on the ip address of the machine.
+
+Ans: 
+
+Qns: Where are Docker images stored on the host machine?
+Ans: the image are stored into /var/lib/docker 
+  for more info you can use the docker info
+
+
+Qns: How to remove old and unused Docker images?
+Ans: Remove dangling and unused images. Docker provides a docker image prune command that can be used to remove dangled and unused images.
+     You'll be prompted to continue, use the -f or --force flag to bypass the prompt. When removing dangling images, 
+     if the images build by you are not tagged they will be removed too.
+
+
+Qns: How do I pass environment variables to Docker containers?
+Ans: You can pass the values of environment variables from the host to your containers without much effort. Simply don't specify a 
+     value in the command line, and make sure that the environment variable is named the same as the variable the containerized app expects: 
+     $ docker run -e var_name (...)
+
+
+Qns: How to force Docker for a clean build of an image?
+Ans: I have build a Docker image from a Docker file using the below command.
+     $ docker build -t u12_core -f u12_core .
+    
+   you can rebuild the image without cache or clean build of an image.
+   docker build --no-cache -t u12_core -f u12_core
+
+Qns: How to change repository name or rename image?
+Ans:  docker tag <old_name> <new_name>
+      docker rmi <old_name>
+
+Qns: How to upgrade docker container after its image changed?
+Ans: docker container update [OPTIONS] CONTAINER [CONTAINER...]
+  ex: docker container update --cpus 4 id of the container.
+  
+ for : memeory : -memory , -m  
+ex: docker container update -m 500M id of the container.
+
+
+
+Qns: How to push a docker image to a private repository?
+Ans: Go into the hub, and create the repository first, and mark it as private. Then when you push to that repo, it will be private. 
+     This is the most common approach. log into your docker hub account, and go to your global settings.
+
+Qns: Where is the Docker daemon log?
+Ans: 
+
+Platform	File Location
+Boot2Docker	/var/log/docker.log
+Debian1	/var/log/daemon.log
+Systemd based OSes (CoreOS, SUSE, Fedora, CentOS, Red Hat Enterprise	journalctl -u docker.service
+Windows 10	%APPDATA%\Local\Docker\log.txt
+
+
+
+
+Qns: What is the best way to add users to a Docker container?
+Ans:  The trick is to use useradd instead of its interactive wrapper adduser. I usually create users with:
+
+RUN useradd -ms /bin/bash newuser
+
+which creates a home directory for the user and ensures that bash is the default shell.
+You can then add:
+USER newuser
+WORKDIR /home/newuser
+
+to your dockerfile. Every command afterwards as well as interactive sessions will be executed as user newuser:
+
+docker run -t -i image
+newuser@131b7ad86360:~$
+
+
+Qns: How to login into the container as a root user.
+Ans: docker exec -u root -t -i container_id /bin/bash
+
+
+
+
+Qns: How to use sudo inside a docker container?
+Ans: FROM ubuntu:12.04
+
+      RUN apt-get update && \
+      apt-get -y install sudo
+
+    RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+
+    USER docker
+    CMD /bin/bash
+
+Qns: Is it possible to generate a Dockerfile from an image?
+Ans: 
+
+Qns: Difference between Running and Starting a Docker container?
+Ans:  create/start    Create a new container
+      run       Run a command in a new container.
+
+    docker run = docker create + docker start
+
+Qns: How to change Root password inside a Docker container?
+Ans: To set the root password inside a Docker container:
+1. Log in as root: docker exec -ti -u root containerID /bin/bash.
+2. Use the passwd command to change the password.
+3. Commit changes in Docker (i.e., docker commit).
+
+
+Qns: Is there any way to add restarting policies to a container?
+Ans: docker update --restart=always <container>
+
+Qns: How to analyze a container's disk usage?
+Ans: with the help of docker system  df we can analysis the disk usage in docker.
+    The docker system df command displays information regarding the amount of disk space used by the docker daemon
+ 
+ Command	Description
+docker system df	Show docker disk usage
+docker system events	Get real time events from the server
+docker system info	Display system-wide information
+docker system prune	Remove unused dat 
+ 
+
+
+
+Qns: How To execute the multiple command is docker.  
+Ans:To run multiple commands in docker, use /bin/bash -c and semicolon ;
+    docker run image_name /bin/bash -c "cd /path/to/somewhere && python a.py"
+
+Qns: How to automatically update your docker containers, if base-images are updated?
+Ans: 
+
+
+Qns: How to change the docker image installation directory?
+Ans:You can change Docker’s storage base directory (where container and images go) using the -g option when starting the Docker daemon.
+    /etc/default/docker:
+   DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4 -g /home/bitcore/docker-data"
+
+
+or 
+I think the best solution is to add this -goption to /etc/defaults/docker instead of modifying
+Yes, change this line to DOCKER_OPTS="-dns 8.8.8.8 -dns 8.8.4.4 -g /mnt"
+
+Qns: How to start a stopped Docker container with a different command?
+Ans: step:
+
+1. first find the stop container 
+   docker ps -a
+2. This command saves modified container state into a new image user/test_image.
+   docker commit $CONTAINER_ID user/test_image
+3. Start/run with a different entry point:
+  docker run -ti --entrypoint=sh user/test_image
+
+Qns: How to run a cron job inside a docker container?
+Ans: You can copy your crontab into an image, in order for the container launched from said image to run the job.
+
+step:
+1. Let’s create a new file called "hello-cron" to describe our job.
+   * * * * *  echo "hello-world" >> /var/log/cron.log 2>&1
+2. The following Dockerfile describes all the steps to build your image.
+   FROM ubuntu:latest
+
+  RUN apt-get update && apt-get -y install cron
+
+  # Copy hello-cron file to the cron.d directory
+  COPY hello-cron /etc/cron.d/hello-cron
+
+  # Give execution rights on the cron job
+  RUN chmod 0644 /etc/cron.d/hello-cron
+
+ # Apply cron job
+ RUN crontab /etc/cron.d/hello-cron
+
+ # Create the log file to be able to run tail
+ RUN touch /var/log/cron.log
+
+ # Run the command on container startup
+ CMD cron && tail -f /var/log/cron.log
+
+
+
+
+
+
+Qns: How to determine if a process runs inside lxc/Docker?
+Ans: grep 'docker\|lxc' /proc/1/cgroup 
+
+Qns: How can I initialize a MySQL database with schema in a Docker container?
+Ans: 
+
+Qns: Can I run multiple programs in a Docker container?
+Ans: Run multiple services in a container. A container's main running process is the ENTRYPOINT and/or CMD at the end of the Docker file 
+     It's ok to have multiple processes.
+
+Qns: Can Windows Containers be hosted on linux?
+Ans:No, you cannot run windows containers directly on Linux. You can change between OS containers Linux and windows by right 
+   clicking on the docker in tray menu.
+     or
+Q: Can Windows containers to run on Linux?
+A: No. You cannot. Containers are using the underlying operational system resources and drivers, so Windows containers can run 
+   on Windows only, and Linux Containers can run on Linux only.
+    
+
+Qns: Docker error cannot delete docker container, conflict: unable to remove?
+Ans: First, remove the container names
+
+
+Qns: How to run shell script on host from docker container?
+Ans: Follow these steps:
+
+Use docker ps to get the name of the existing container.
+Use the command docker exec -it <container name> /bin/bash to get a bash shell in the container.
+Or directly use docker exec -it <container name> <command> to execute whatever command you specify in the container.
+
+
+
+Qns:  How to continue a Docker container which has exited?
+Ans:  You can restart an existing container after it exited and your changes are still there.
+
+   docker start  `docker ps -q -l` # restart it in the background
+   docker attach `docker ps -q -l` # reattach the terminal & stdin
+
+
+Qns: How to see docker image contents?
+Ans: You can just run an interactive shell container using that image and explore whatever content that image has.
+
+For instance:
+docker run -it image_name sh
+
+or docker image inspect <image name>
+
+Qns: How to Add User to Docker Container?
+Ans: There are many way to :
+1. docker conatiner run --name mongo -d -p 8080:8080 tomcat:8
+or 
+RUN useradd -ms /bin/bash newuser
+
+USER newuser
+WORKDIR /home/newuser
+
+
+
+Qns:  How do I run a sql file of inserts through docker run?
+Ans: docker container exec -i $(docker-compose ps -q postgres) psql exampledatabase < exampledata.sql
+
+
+Qns: How to mount a single file in a volume:
+Ans: There are a two way for mount a single file in a volume 
+   docker container run -v /logs:/var/log/tomcat -d -P tomcat
+
+
+
+Qns: How is Docker different from other container technologies?
+Ans: Docker is the latest and most popular container technology build in the Cloud era. With the help of Docker technology,
+     more applications run on the same old servers, and it also helps in making it possible to package and ship programs.
+  ...Docker has a Container HUB that acts as the repository of containers.
+
+
+
+Qns: What are the docker motor and docker form?
+Ans: 
+
+Qns: What are the containers?
+    Containers are the of lightweight virtualization, heavier than ‘chroot’ but lighter than ‘hypervisors’. 
+   They provide isolation among processes
+
+
+Qns:How to deploy docker container to aws?
+Ans: Amazon provides the service called Amazon Elastic Container Service. with the help of this service we can deploy the container in aws.
+
+Qns: what is Docker image?
+Ans: Docker image is the source of Docker container. Or in other words, Docker images are used to create containers.
+
+Qns: what is Docker Container?
+Ans: Docker Container is the running instance of Docker Image
+
+
+Qns: what is difference b/w devops and agile methodology.
+And: the agile methology implement only the development where as devops implement the development and operation.
+
+
+Qns:what is difference between grep -i and grep -v?
+Ans: gerp -i means ignore the alphabet 
+    ex) ls | grep -i docker
+     docker.tar.gz
+     Docker
+ls | grep -v docker
+  Docker 
+  Desktop
+
+Qns: What platforms does Docker run on?
+Ans: docker run only linux and cloud but now docker run on window platform.Amazon EC2 Google Compute Engin Microsoft Azure
+
+Qns: what are the tools used for docker networking?
+Ans: For docker networking basically used the docker swarm and kubernetes.
+
+
+
+
+Qns:i got an 403 forbidden error while get a file from s3 bucket how can i resolve it.
+ans: it looks like s3 bucket permission issue, make that s3 bucket as public.
+
+Qns: How to update the image into the docker or you have a image in docker. how you update it.
+Ans:step:
+     1. if you do not have a image then you pull the image from the repository.
+     2. then run the container from this image.
+     3. now login into container and add do you want.
+     4. then create a new image from this container.
+
+ex: # docker pull centos
+    # docker images
+    # docker run -it --name="centos_test" centos:latest /bin/bash
+      [root@e121d03b20dc /]# mkdir test_dir
+     [root@e121d03b20dc /]# cd test_dir
+     [root@e121d03b20dc test_dir]# echo "This is a sample text" > test_file         
+     [root@e121d03b20dc test_dir]# cat test_file
+     This is a sample text
+     [root@e121d03b20dc test_dir]# ls -lrt
+     total 4
+     -rw-r--r--. 1 root root 22 Nov 19 16:12 test_file
+   # docker commit -m="This a test image" centos_test new_centos_image
+   Here,
+     -m=”This a test image” : is a Commit message.
+      centos_test : Name of the container from which you are creating the image.
+      new_centos_image: Name of the new image created.
+  ## docker images
+     
+
+
+
+
+Qns: How to upgrede the older container.
+Ans: There are two option for change the upgrade the older container.
+   1. first you can take the volume of the older container and attach the this volume to the new conatiner at the container creation time from new image.
+
+   2.  is given into the following lines.
+docker pull mysql
+docker create --volumes-from my_mysql_container [...] --name my_mysql_container_tmp mysql
+
+docker stop my_mysql_container
+docker start my_mysql_container_tmp
+
+docker rm my_mysql_container
+docker rename my_mysql_container_tmp my_mysql_container
+
+
+
+
+kubernets Question: 
+-----------------------
+
+Pod just like a virtual machine:
+Qns: How to manage the pod in kubernets
+Ans: pod are manage by replication controller ,service Daemon set etc.
+
+Qns: How these controller And service Aware of pods to manage it.
+Ans: Labels and Selectors
+  labels: the labels have the key value which attach the pod.
+
+Qns: How can manage these pods in Cluster(master).
+Ans: These Pod are manage by Selector. Selector match the same labels based.
+
+Qns: How many PODs exits on the system;
+And: kubectl get pod
+
+Qns. How many raplicaset in system
+ans. kubectl get replicaset.
+
+Qns: How about now ? How many replicaset do you see.
+Ans.kubectl get replicaset
+
+Qns. How many desired in the new replica-set.
+Ans. kubectl get replicaset ans see the desired status
+
+Qns: what is the image used to create the pods in the new-replica-set?
+ans: kubectl describe replicaset and see the image.
+
+Qns: how many pods are ready in the new replicaset
+and:kubectl get replicaset and see the ready status.
+
+Qns:Why do think pods are not ready.
+Ans:kubectl describe replicaset
+
+Qns: Delete any one of the 4 pods
+      kubectl get pods
+Ans. kubectl delete pod replica-set
+
+
+Qns: why are there still 4 pods ,even after you deleted one.
+ans: replicaset ensure that desired number of pods always.
+
+
+
+
+Qns: how to  to manage diff.cluster. in kubernets
+Ans:
+
+Qns: when your cluster is low how can solve it
+Ans: kubectl cluster-logs
+
+
+Qns: what is replica and what is diff. b/w replicaset and replica controller.
+Ans: the replicaset are used to create the multiple pods in the kubernets. 
+
+Qnd: How to manage the pods in kubernetes
+Ans: pods are manage by replicaset, replica controller and service.
+
+
+Qns:what is the persistent volume and persistent clam in kubernets.
+Ans: to keep the back of pod when pod is died is called the persistent volume and how many pod used the vloume is done by persistent volume claims
+     in persistent vilume claim multiple claim
+     readwrite
+     read
+
+Qns: what is diff. b/w rollout 
+And: rollout is used in the deployments to back to the older version to the new version
+    command: kubectl rollout undu deployment <deployments name> releason=1
+
+
+Qns: why are using the config.
+Ans: 
+
+Qns: what is the componemts of kubernets in master and nodes.
+Ans: There are four componenets in kubernets master and three componenets in kubernets nodes or worker.
+     components of kubernetes master:
+     api , etcd, control manager(cm) and the control scheduler (CS)
+     componetes of nodes are.
+     kube-proxy , container-engine , kubectl 
+
+
+Qns: What is pods
+Ans: if you deploy the single container you can say  pod is a containers.
+
+Qns: what is difference b/w pods and deployments.
+Ans: A Kubernetes pod is a group of containers that are deployed together on the same host. 
+     If you frequently deploy single containers, you can generally replace the word "pod" with "container" and accurately understand the concept
+
+
+Qns: what is diff. b/w docker swarm and the kubernets and why are using the kubernets.
+Ans  docker swarm and kubernetes work with the multiple machine but in case of docker swarm we cannot maintain the state but in case of kubernetes
+     we maintain the state.
+
+
+Qns: which type of service used in kubernets and how many service in kubernets.
+ans: There are three type of service in kubernetes.
+     noadport , nodeservice and the nodeloadbalancer
+
+Qns: How many network in kubernets . and which type of network you are using.
+Ans:  There are many type of network such as flannel, waves, and cni but we use the flannel.
+
+Qns: Why are using the selector in kubernets.
+Ans: 
+    Type: Equality-based selectors
+
+Qns: what is the means of apiVersion in kubernets.
+Ans: apiVersion means what is version of your resource.
+
+
+Qns: How to manage the kubernetes cluster. 
+ans:
+
+Qns: what is the diff. b/w role binding and role cluster binding.
+ans: we assign the particular resource to the particular user is called the role binding. 
+
+Qns: what is tenancy in kubernetes.
+ans:
+
+
+
+Qns:  i have a three node and i want to manage three node from one node . how
+ans:
+
+
+Qns: we can connected  to the etcd without api or not.
+ans: 
+
+
+Qns: we assign the role to users or group of user is called the role binding. where as we assign the cluster role to the administractor is called
+     the cluster role binding . the scope or role with in the namespace where as the scopa of cluster role with all the namespace.
+
+Qns: How many pods you are using in one project.
+ans: ist depends on project but we using the 255 pods in our project
+
+Qns: How many node are you using in our project.
+ans: we using the 6 nodes in our project.
+
+Qns: how many cpu core using for our project for one node.
+ans: we using the 16 cpu core and 64 GB RAM.
+
+Qns: i have  a 3 nodes  i want to manage the 3 three from one nodes
+ans:  i can have  the three nodes when we make the one nodes as a cluster and and we use the token to manage the nodes.
+
+
+Qns: what is diff. b/w kubectl and kubelets.
+ans:  the command line util to talk to your cluster. where as 
+      the component that runs on all of the machines in your cluster and does things like starting pods and containers.
+
+Qns: kubelets present node or cluster.
+ans: it present all the machine or node which present in the cluster.
+
+Qns: what is kubeadmin:
+ans: kubeadmin is resonsible for create the multiple cluster. 
+
+
+
+Qns: How to take the backup of etcd in kubernetes.
+ans: Normally, start the etcd cluster and do the kubeadm init on the master node with etcd endpoints.
+    Make sure you put the backup certificates into /etc/kubernetes/pki folder before kubeadm init. It will pick up the same certificates.
+
+
+google: https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#restoring-an-etcd-cluster
+Qns:
+ans: Backing up an etcd cluster can be accomplished in two ways: etcd built-in snapshot and volume snapshot.
+     1. etcd supports built-in snapshot, so backing up an etcd cluster is easy.
+        A snapshot may either be taken from a live member with the etcdctl snapshot save command or by copying the member/snap/db file 
+       Command:
+           
+   elow is an example for taking a snapshot of the keyspace served by $ENDPOINT to the file snapshotdb:
+
+ETCDCTL_API=3 etcdctl --endpoints $ENDPOINT snapshot save snapshotdb
+# exit 0
+
+# verify the snapshot
+ETCDCTL_API=3 etcdctl --write-out=table snapshot status snapshotdb
++----------+----------+------------+------------+
+|   HASH   | REVISION | TOTAL KEYS | TOTAL SIZE |
++----------+----------+------------+------------+
+| fe01cf57 |       10 |          7 | 2.1 MB     |
++----------+----------+------------+------------+
+
+
+2: Volume snapshot
+If etcd is running on a storage volume that supports backup, such as Amazon Elastic Block Store, back up etcd data by taking a snapshot of the storage volume.
+
+
+Qns: my etcd size is 20 GB. my application is run . after some times etcd storage is full. then in this case we need to increase the size of etcd . how.
+ans: 
+
+
+
+
+
+Another way to take the backup of etcd:
+I have to use etcdctl to backup the etcd db so I sh into the etcd pod running on the master node to do it from there: 
+kubectl exec -it -n kube-system etcd-ip-x-x-x-x sh	
+
+
+NOTE: The master node hosts the etcd database in this path 
+/var/lib/etcd which is mounted on the pod as a VolumeMount in /var/lib/etcd
+
+
+
+Qns: Upgrading and rolling back etcd clusters
+ans: As of Kubernetes v1.13.0, etcd2 is no longer supported as a storage backend for new or existing Kubernetes clusters. 
+     Kubernetes v1.5.1: etcd3 support added, new clusters still default to etcd2
+
+
+Qns: How to increse the size of etcd. in kubernets.
+ans: we can find the etcd in .kube folder to increse the size this we can add  a  datadisk and mount to this location.
+     another way to add the create the parttion and mount the partition to the etcd.
+
+
+Qns: How many master and node use your company in Prod. Environment.
+Ans:
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+Ansible Questions:
+****************************
+
+Qns: how ansible nodes understand the ymal .
+ans: ymal are internally converted into python and our node have the python.so our
+     nodes understand the ymal .
+
+
+Qns: I want to install the any package in 10 nodes in parllel and sequence vise. 
+ ans: if you want to executed the any package in 10 server at in parellel use the forks.and 
+      you install the pacakge im 10 nodes in  sequence .just run the playbook.
+      note. by default we can run package in 5 node. you can change it in absible configure file.
+     configure file: /etc/ansible/ansible.cfg
+
+Qns: what is gathering_fact and how to customized the gethering facts.
+ans: gethering facts are nothing but. this is the extra tasks running and give the information about your system.
+    you can customized the gathering_fats using the zinja template.
+
+
+Qns: why are using the configuration server if you have a shell scripting for the automation.
+ans: the shell scripting are hard as compare to configuration server. main advantage of configuration is that. 
+
+ex: you install the apache server in nodes both(shell scripthing and and configuration server), if any people
+   uninstall the apache server from node. in case of shell scripting we need to running the shell scripting file again.
+  but in case of configuration server there is no need to executed the playbook again. because  CS autumatically install the apache2 server in node.
+
+
+Qns: which type of inventory are you using.
+Ans: i am using the dynamic inventory
+
+Qns: how many server used in ansible.
+Ans: There are many server..
+
+Qns: whose port are used in ansible.
+ans: use the 22 port in ansible.
+
+
+Qns: why are using the ansible server.
+ans: we are using the ansible server for deploying the application .  they asked we can deploying the app. with the help any srciptig lang.
+     the you asked but in case of ansible the result is idempotenec as compare to scripting lang. and ansible use the yml lang which are more easy
+     compare to shell scripting. that whay we are using the srcipting lang.
+
+
+Qns: how can check the logs in ansible.
+ans: we check the logs in /var/log/ansible.logs file.
+
+
+Qns: i have a 10 task in one playbook but i want run only 4 task .
+ans: in this case we use can use the when or ansible tag concept.
+
+
+Qns: what is the change from environment to environment. the environments are DEV , QA , STAGINGO/PRE PRODUCTION.
+Ans: only inventory are change from environment to env.
+     ex: ansible-playbook -i DEV/inventory <playbook name> 
+      ex: ansible-playbook -i QA/inventory <playbook name>
+        ex: ansible-playbook -i PRE/inventory <playbook name>
+ 
+Qns: how can encrypyed the data in ansible.
+Ans: we use the vault to encrypted the data in ansible.
+
+Qns: What is template ans why are using the template.
+ans: in ansible the template is a simple text file. we are using the template in ansible to write the dynamic file . we can write the template
+    in ansible with the jinja2 language.
+   ex: {{expression}}
+
+Qns: which type of inventory using your company.
+ans: There are two types of inventory.
+      static    2) dynamic
+     but our company using the static inventory.
+
+Qns: what is dynamic inventory.
+ans: we can write the dynamic inventory wirh the help of any scripting language. and provide the execution permission at this file then
+    ansible-playbook -i <dynamic inventory file>
+    
+    the  file written in json format.
+
+
+Qns: why are using the init command in ansible.
+ans: to initialize the task that why we are using the init command in ansible.
+     ex: ansible-galaxy init <folser name>
+
+Qns: How many server you are using in DEV and QA environment.
+ans: it depends on company standard . you asked our company using the 42 server in DEV and QA environment.
+
+Qns: How many cpu core using in production for one machine
+ans: our company using the 16 cpur core and sometime using the 32 cpu core. processor.
+
+Qns: How many node are you using in ansible.
+ans: we are using the 7 server in ansible. but it depends on compony.
+
+Qns: 
+
+
+
+
+
+GIt Question:
+************************
+
+
+
+Qns: what is git init
+Ans: git init is used to create the local repositort in local system.
+
+Qns: How to back the previous commit in git.
+ans: git checkout commit id
+
+Qns: what is Git flow
+Ans: 
+
+Qns: What is reset in git?
+Ans: moving the changes from staging area to the working directory is called the git reset
+
+    ex: git reset --hard
+        git reset  /branch/commit id 
+
+Qns: What is difference b/w  rebase. and merge.
+Ans.
+
+Qns: how to check the all the commit.
+ans: git logs
+
+Qns: what is stash in git
+Ans: stash is the temporary storage in git. here we can store the code before push the code into the staging area.
+
+Qns: What is Git clone?
+Ans: download the your repository from remote server to the local server is called the git clone.
+
+Qns: What is Git Pull.
+ans: pull the lastest copy of repositoty from the remote respository in your system.
+
+Qns: what is git Push.
+Ans: push the repository in the git gub account after the modified it. after do the work in git hub.
+
+Qns: what is git fork?
+Ans: git fork :means you are copying the repository to your Github account.
+
+
+Qns: what is differnence b/w git pull and git fetch?
+Ans:git fetch just "downloads" the changes from the remote to your local repository. 
+    Update your local repo from the remote (but don't merge):
+
+    pull downloads the changes and merges them into your current branch. 
+    git pull == git fetch + git merge
+
+
+
+Qns : What is Staging area or index area?
+Ans: before commit the file its is formatted or reviewed into the intermediate area or index area . this area is called the staging area.
+    ex: git add. 
+
+
+
+Qns: what is git stash?
+Ans: git statsh is temploray storage for storage the commit. before working directory
+
+git status list
+
+
+
+ git stash apply: 
+                 means apply the changes in working tree but list items or changes does not remove from item list from stash is called the git stash apply.
+      
+
+git stash pop:
+       means remove item from stash list and apply on the working tree
+
+Qns: what is git reset?
+ans: with the help of git reset we can move any file or directory in the local repository.
+
+Qns:What is difference b/w git header and ckeckout?
+Ans:
+
+
+
+Qns: How to rewritting the latest commit message:
+Ans: You can change the most recent commit message using the git commit --amend command.
+
+step: On the command line, navigate to the repository that contains the commit you want to amend.
+
+    Type git commit --amend and press Enter.
+
+ git push --force
+
+
+Qns: Amending older or multiple commit messages
+Ans: step: remove the special commit or edit the special commit we use the git rebase.
+
+On the command line, navigate to the repository that contains the commit you want to amend.
+
+Use the git rebase -i HEAD~n command to display a list of the last n commits in your default text editor.
+
+$ git rebase -i HEAD~3 # Displays a list of the last 3 commits on the current branch
+
+
+
+ Removing the last commit
+To remove the last commit from git, you can simply run git reset --hard HEAD^ If you are removing multiple commits from the top,
+ you can run git reset --hard HEAD~2 to remove the last two commits. You can increase the number to remove even more commits.
+
+
+Qns: How do I start a Git repository locally?
+
+    Create a new repository on GitHub. ...
+    Open TerminalTerminalGit Bashthe terminal.
+    Change the current working directory to your local project.
+    Initialize the local directory as a Git repository. ...
+    Add the files in your new local repository. ...
+    Commit the files that you've staged in your local repository
+
+
+
+Qns: What is Version control system:
+ans: The version control system is a software that helps software developers to work together and maintain a complete history of their work.
+    
+## Some of the feature of VCS as follows:
+   * Allow developers to work simultaneously
+   * Does not allow overwriting on each other changes.
+   * Maintain the history of every version.
+
+## There are two types of Version Control Systems:
+  * Central Version Control System, Ex: Git, Bitbucket
+  * Distributed/Decentralized Version Control System, Ex: SVN
+
+Qns: What is Git and explain the difference between Git and SVN?
+Ans: Git is a source code management (SCM) tool which handles small as well as large projects with efficiency. 
+    It is basically used to store our repositories in remote server such as GitHub.
+
+Git                                                                             SVN
+The Git is a Decenterlized Version control system.                          The SVN is a Centerlized Version control system.
+pull and push are fast.                                                 pull and push operation are slow compare to git.
+it belong to 3th generation version control system.                     it belongs to 2th generation version control system.
+commit can be done with offline                                     commit can be done only online.
+
+
+Qns: what language is used for git?
+Ans: git is written in c language and its a very faster and it reduce the overhead runtime.
+
+
+Qns: what is SubGit?
+Ans: SubGit is a tool for migrating SVN to Git. It creates a writable Git mirror of a local or remote Subversion repository 
+     and uses both Subversion and Git if you like.
+
+Qns: how can you clone a Git repository via Jenkins?
+Ans: First, we must enter the e-mail and user name for your Jenkins system, then switch into your job directory 
+     and execute the “git config” command.
+
+
+Qns: ) How do I see a list of all the ansible_ variables.
+Ans: Ansible -m setup hostname
+
+
+
+Qns: What is Scrum?
+Ans: Scrum are basically used the divide the your complex software and product development task into smaller chunks, 
+    using iterations and incremental practises.
+
+Qns: What does the commit object contain?
+Ans: The commit object contain the following things.
+
+it contain the set of files and present the state of project at a given point of time.
+
+
+Qns: How do we know in Git if a branch has already been merged into master?
+Ans: git branch –merged
+     
+    git branch –no-merged
+    this command lists the branches that have not been merged.
+
+Qns: What is ‘Staging Area’ or ‘Index’ in GIT?
+Ans: Before committing a file it must be formatted or reviewed into the intermediate area  this area is called the the staging area or index area.
+     git add <file_name>
+
+Qns: What is Git Stash?
+Ans: 
+
+
+Qns: I want to copy the artifacts from one location to another location in cloud. How
+Ans: Create two S3 buckets, one to use as the source, and the other to use as the destination and then create policies.
+
+
+Qns: How can I modify the commit message in git
+Ans: I have to use following command and enter the required message.
+    Git commit –amend
+
+Qns: How you handle the merge conflicts in git?
+Ans: Follow the steps
+    Create Pull request
+    Modify according to the requirement by sitting with developers
+   Commit the correct file to the branch
+  Merge the current branch with master branch.
+
+
+
+
+
+
+
+
+Qns: What is git diff. b/w git match and git rebase.
+Ans:
+
+
+
+how to modified the last commit.
+
+
+Qns: i have a  four branch and each brach have some commit. but in one brach some or one commit are wrong . how can modified it.
+
+
+Qns: What is jira . where are you using the jira.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Git commands:
+
+git init : initialize the git or create the local repository
+git status : check the status of git
+git add .  : adding the changes in the working directory to staging area
+git commit -m <"mess"> : adding the changes from staging area to local repo
+git checkout <commit id> : this command work for header . header is used for what do you want look the commit id
+git cat-file -p <commit id> : it show the tree and blob
+git reset --hard : adding change moves from staging area to working directory
+git reset <directory name> : moves specific directory changes
+git branch : it show how many branch in your repository
+git branch < branch name> : create a new branch
+git checkout <branch name> :  moves in branch
+git remote add origin <url of remote repository> : add the local repository in central repository
+git clone <url of central repository>
+git push origen <branch name> : push the branch in central repository
+git pull <url of your repository> : 
+git cherry-pick <commit id> : bring the specific commit from one barnch to another branch
+git rebase <barnch name>
+git rebase --continue
+
+
+
+
+What is Git Rebase:
+Ans: git rebase is command which integrate the changes from one branch into another branch . rebase is differ from merge by rewriting th 
+     commit history in order to produce the straight or liner of commit.    
+
+
+Qns: What is role of git branch in devops.
+Ans: There are important role in git branch in devops. because the branch you can pick the specific code of the application.
+
+
+Qns: what is the name server .
+
+Qns: what is diff. b/w  http and tcp.
+
+
+Qns: what is diff. b/w service. and ingress load balancer.
+Ans: ingress is a Kubernetes resource that encapsulates a collection of rules and configuration for routing external HTTP(S) traffic to internal services. ...
+    When you create an Ingress in your cluster, GKE creates an HTTP(S) load balancer and configures it to route traffic to your application.
+
+
+
+
+
+
+
+
+
+linux Question:
+--------------
+Qns: what is the permission of suid
+and: 4755
+
+Qns: whose permission is applied to the temp 
+and: 1755  by default sticky bit applied the temp command.
+
+
+Qns: what is the update commands in dns.
+and: /etc/named.rfc1912.conf
+
+Qns : plz tell me top command and its field.
+ans.
+
+Qns: why are used the netstate command.
+ans: netstate command are used for the network purpose . it open the which port is opne on which ip.
+
+Qns: whats is the command you used in daily purpose.
+ans: ps ,cd , top , pwd ,touch , cat, ls ls-l etc.
+
+Qns: what is the Raid and its type..
+and: The raid is redundent array independent disk . its combine the two or more partion from one or more hard drive
+     to improve the performance and the realibility.
+
+
+Qns: what is suid,GUid and sticky bit.
+ans: the suid is allow to run the application by the normal user with the privilles with the root user.
+     the default value of suid is 4777 and suid is by default applied to the ping commands.
+
+     Guid means : used for group inheritance. value of SGID is 2755 
+     sticky bit is used for restrict the other user to delete the file and directory. the value of sticky is 1755 and by default is
+     applied to the temp directory.
+
+
+Qns: what is diff b/w SAN, DAS, NAS
+
+
+	
+Qns: why we create the swap partion.
+ans: when RAM is full then system is slow. in this case remove the inactive pages from RAM to swap .
+    we can set the throuldshoud in swap
+
+Qns: how to increse the size of swap partition.
+ans:
+
+Qns: what is LVM: and you see the kernal notes.
+
+
+Qns: what is the booting process.
+
+
+Qns: what is ssh
+
+
+Qns: diff b/w soft link and the hard link
+and: ln is used to create the hardlink and ln -s is used to create the hard link
+     in case of hardlink the inode is same  but in softlink the inode is diff.
+     when we delete the original file the duplicate will remain but in case of softlink when we delete the original file the duplicate file will we delete.
+
+
+
+Qns: Runlevels and their Discription.
+and: There are six runlevels.
+     runlevel 0. poweroff.targer
+     runlevel 1  resce.target
+              2  multiuser.targer
+              3. multiuser.targer
+              4. unused
+              5. multiuser.target
+              6.   
+ 
+
+
+Qns: what is the dhcp:
+ans: Dhcp is a dynamic host configuration file which are used to assign the dynamic ip to the client and it work on port no. 67 and 68
+     service: dhcpd
+     package: dhcpd
+     configuration flle: /etc/dhcpd/dhcpd.conf
+    imp: dhclient -r is used for release the ip
+         dhclient -v is used to see the DORA process
+
+
+
+
+
+Qns: What is Crown tab:
+ans: the crown tab is job scheduler. when we want execuetd  to any task again in this case we use the crown tab and when we want to executed the any
+      task only one time we use the crown at
+      
+    file: crowntab -e for edit
+          cat /etc/crowntab to see the parameter
+     the parameter are   minute hours date of month month of the year  day of the week
+ 
+file /etc/crown.allow to allow those user to run the script
+    /etc/crown.deny to rescrict the user to run the script.
+
+
+
+Qns: what is the incident management:
+ans: may process running in the server sometimes any process is fail is called the incident and solve those problem is called the incident management.
+
+What is the change management:
+ans:
+
+
+
+Qns: what is diff. b/w scp and the rsyn
+and: scp is used the copy the data from source to destination in remotely in encrypted format. where as rsyn take the back up in plain text format.
+
+
+Qns: what is port no of nagios
+ans: the port no of nagios is 5666
+
+
+Qns: what is DNS. and how to work the dns.
+ans: the domain name system is used the resolve the naming resolution in the network. it change the friendlly name into ip address and ip address 
+    into friendlly name.
+  
+   package name: bind
+   service: named
+   port no. 53
+  configuration file or updater file: /etc/named.conf
+                                      /etc/named.rfc1912.conf
+
+  local dns name: /etc/hosts
+  central dns name: /etc/resolv.conf
+  root dns in the world: 13 in india only one in chain
+  daily purpose ex. in mobile , laptop
+
+
+
+
+Qns: what is diff. b/w http and https.
+and: the only one diff b/w http and httpd is that the http in not a secure ans https is a secure communication.
+    package name in http: httpd
+    package name in https: httpd and mod_ssl
+
+    port httpd:80
+   port htttps: 80 ,443
+   
+   service: httpd
+   
+imp: configuration file:
+     /etc/httpd/httpd.conf in http
+    /etc/httpd/conf.d/ssl.conf
+
+
+
+Qns: what is diff. b/w /etc/shoudoer and visudo
+ans: in case of  the visudo only single user edit the file  but in case of /etc/shoulder multiple user can edit the file.
+
+
+Qns: what is Acl. and where we applied the ACL
+ans: ACL is the access conrol list . acl permission are assign to the user and the groups.	
+
+
+Qns: How can check which service is open which port.
+ans. /etc/services.
+
+
+Qns: What is NFS . 
+ans: NFS is a file trasfer protocl . is used to trensfer the file and folder across same operating system.
+    package name: nfs_utils
+    port no. 111 for data transfer and 2049 for data controlling.
+    service: nfs
+    configuraion file: /etc/exports
+
+Qns: How to check the share name in client
+and: showmount -e <ip address of the nfs server> 
+
+
+Qns: what is the proxy server.
+Ans: The proxy server share the internet connection b/w diff. clinet
+     the proxy server storage the web page to improve the performance and it prevents the internet access.
+    
+   package name: squid
+   service name: squid
+   port no:
+   configuration file: /etc/squid/squid.conf
+   Directory name: 
+
+
+
+
+Qns: what is the top command:
+ans: the top command monitoring all the processes in the system.
+fields:
+The first line:
+"02:23:18" is the current time, "up 1 day" show how long time the system up for; " 3 user" how many users are logged in; "load avearge : 0.01,0.00,0.23" the laod average of the system (1 minutes
+ ,5 minutes, 15 minutes)
+
+Second line in the top:
+Task 273 total,   1 running  , 272 sleepiing    , 0 stopeed  0 zombiee
+* show the number of processes and their status
+
+
+The third line in the top:
+Cpu(s) 0.4%us, 0.5%sy , 0.0ni , 98.8%id ,0.3%wa , 0.0%hi ,0.0%si, 0.0%s
+show the cpu utilization details.
+
+The fourth and fifth line in the top:
+memeory details.
+
+
+
+Qns: what is netstate command:
+ans: netstate command tells about the network configuration and tells which port is open which ip. 
+     netstate -listen   lsof -l
+
+Qns: what is the firewall .
+ans: the firewall acts a geteway device b/w which sit b/w to different system.
+     firewall is application which run on a computer . the network traffic passing throuh it.
+
+    selinux: security enhance linux:
+    There are three modes.
+    disabled:  The service is not active and not running.
+    enforcing mode: the service is running and active. 
+   permissive mode: service is running but not active 
+
+Qns: what unauthorized user login into inforcing mode.
+ans: no.
+
+Qns: What is update command to the remount
+ans: mount -o remount <directory name>
+     mount -a is the command for update the remountig.
+
+
+Qns: where we can set the permanent mount and what is fields of its.
+ans: when can mount the permenant in /etc/fstab 
+      the fields are. partion name       mount point       filesystem type     default.
+        ex>             /dev/sda6         /yogesh          ext4                 0 0
+
+
+
+
+
+Qns: logical Volume manager. 
+ans: combine the physical harddisk into logical volume. 
+   command: of LVM:
+    create the physical volume.
+    pvcreate <partition name>
+   pvdisplay <partion name> or pvs
+
+  create the volume group from physical volume.
+  vgcreate  -n <name of vg> <partition>
+  ex: vgcreate -l 300M -n myvg  /dev/sda7
+  vgs to display the volume group.
+
+  create the logical volume.
+  lvcreate -l <size> -n <name of lv > <name of vg>
+ ex: lvcreate -l 300 -n mylv myvg
+  lvdisplay or lvs
+
+
+ 
+
+
+
+Qns: How to increse the size of swap partition.
+ans:     
+     
+
+
+
+Qns: what is the /etc/skel
+ans: it is a directory which contain by default three file. these three file are copied when user is created.
+      there are three  files are -
+   * .bash_profile 
+   * .bash_logout
+   * .bashrc
+
+
+
+Qns: How to check and verify the status of Bond interface.
+Ans: cat /proc/net/bonding/bond0
+
+
+Qns: How to check the size of directory.
+ans: du -sh <directory name>
+
+Qns: what is diff. b/w df and df -h
+ans: df  show the how many partition in encrypted format where as df -h show the partition in human readbale format.
+
+Qns: what we can install the dependecy with rpm.
+ans: yes we can install the dependecy forcefully but i never try.
+
+Qns: How to kill the process .
+ans: kill -9 <process id>
+
+
+Qns: how to take the backup of linux system.
+ans: sudo rsync -Axv | ---execute=("/dev/," " /proc)
+  there are many backup tools. such as
+  1. rsync
+  2. balva
+  3. timeshift
+  4. Amanda
+
+
+Qns: What is Cluster:
+Ans: A cluster is group of machines and other resource and acts as a single machine and enable higerability and load balancer.
+
+Qns: How to secure the one host.
+Ans: open the 22 port and mentaion the particular ip  so other do no access the this host.
+
+Qns: why we need partition:
+Ans: 1. Encapsulation
+      2. inrcese the disk space effiency
+
+
+Qns: what is /etc/nsswitch.conf
+And: All rules of authentication process is defined in this file
+
+Qns: How to check the signature process.
+Ans: rpm -qR
+
+Qns: when we enter into server.as a root user or normal user.
+Ans: if we have a standrad user then we login in to the server as  standrad user.
+
+Qns: how many types of issuse face in the nagios server.
+Ans: There are amny tpes of issuse  such as disk space , server is not pingable , user want to restart the database, etc.
+
+
+
+
+
+top: check what CPU and Memory running processes are utilising
+ps: see what processes are running
+strace: monitor interactions between processes
+lsof: list of open files
+netstat: monitoring network traffic
+ifconfig: configure or review your network interfaces
+iftop: monitors network traffic and displays table of bandwidth usage
+iptraf: monitoring network traffic (more visual than netstat, but not as detailed)
+tcpdump: network packet sniffer
+wireshark/tshark: network packet sniffer and analyser (create pcaps with tcpdump and analyse with tshark)
+telnet: utility for communicating with another host
+
+OSI Model
+Layer	Protocols	Description
+7.	Application	HTTP, FTP, SMTP	Window for user app processes
+6.	Presentation	JPEG, GIF, MPEG	Format the data to be presented to the Application layer (network translator)
+5.	Session	RPC, SQL, NFS	Allow session establishment between processes running on different stations
+4.	Transport	TCP, UDP, SPX	Flow control, ensures all messages are delivered error-free, in sequence, no losses or duplications
+3.	Network	IP, IPX, ICMP	Routers control operation of subnet, deciding physical path data takes
+2.	Data Link	PPP/SLIP	Provides error-free transfer of data over physical layer
+1.	Physical	Hub	Physical structure (cables, hubs etc)
+
+ 
+Qns: what is cpu utilization:
+Ans: The cpu utilization is depends on the numbers of the processor.
+    for exmple. if we have a only one cpu and cpu overhead is 100  its means that this cpu utilize fully
+                if we have a 2 cpu and cpu utilization is 50 it means that the cpu utilization is 100 percentage.
+                if we have a 3 cpu and cpu utilization is 60 it means that the cpu utilization is 180% 
+
+
+Qns: how to calculate the load average.
+Ans: the load average depends on number of the processor. the resource.
+  ex: cpu     load average    means
+      1         1            the load average is 100%
+      2         1             it means the load average is 50%
+      4         2             it meand that the load average is 50 %
+
+
+
+Qns: CPU Utilization:
+ans: cpu utilization arise some region. the regions are
+     a. the temp file is full
+     b. the unnecessary file is deleted but present in the system.
+
+How to remove the cpu load.
+fisrt login into the system and check df -h . and empty the temp file and remove the some unnecessary application. 
+and check the  cpu is few or not if load is not few then we run the script to remove the file which is deleted but present in the system.
+
+
+
+
+
+Qns: how many link are in linux.
+ans: There are two type of link 
+     1 . hardlink   2 softlink.
+
+
+
+
+
+Qns: How to change the owner
+
+
+Qns: what is greap:
+and: the grep is global regular expression print. it is used the pick required expression from the file and print the output.
+
+
+
+Qns: i wnat to display all the record from root
+and: grep /etc/root
+
+and: i want to display last 10 record:
+ans: grep tail /etc/passwd
+
+
+Qns: change the name of the user:
+and: usermod -l <new name>  <old name>
+
+Qns: To change the password of user:
+ams: chage -l <username>
+
+Qns: to delete the user:
+ans: userdel username
+    userdel -r username : delete the home directory
+
+Qns: To change the group name:
+ans: groupmod -n new name <old name>
+
+Qns: To remove the group:
+ans: groupdel <group name>
+
+Qns: To change the groupid
+ans: groupmod -g <id> <group name>
+
+Qns: To check the default acl
+ans: getfacl -d <dirnmae/filename>
+
+
+Note: three thing used in acl :
+      syntx: setfacl <option> <arguments>:<permission> <file/dir>
+    option: -m for modifies the acl
+             -x remove the user or group from the acl file/dir
+             -b completely remove the acl from file or directory.
+     1. setfacl -m u:yogesh:rw  radhe
+          how to get the acl is applied or not. 
+
+            getfacl dirname/filename
+
+    2. setfacl -m g:radhe:krishna  shankar
+
+    3. setfacl -x yogesh radhe
+    4. setfacl -x g radhe
+   
+    5. setfacl -b filename/dirname.
+
+
+
+Qns: How to change the ownership of the file.
+and: Chown  yogesh <filename>
+
+Qns: Free -m 
+ans: show the memory and swap memory.
+
+Qns: what is diff. b/w ls -lrt and ls -tlr
+ans: no
+
+Qns: how can see which process is running is the system.
+ans: pstree 
+
+Qns: How to see the zombiee process in the system
+ans.  ps -aux | grep Z
+
+Qns: how to read the data from zip file.
+ans: there are two way to read the data from two file
+      1. zcat <zip file name>
+      2. first unzip the file and read the data from file
+        command for unzip the file
+         gunzip <filename.gz>
+
+
+
+Qns: How to print the unix in given format
+      u
+      n
+      i
+      x
+Ans: for i in unix
+      { 
+       do
+           echo $i
+             echo /n
+           done
+} 
+
+
+
+Qns: how to find the processid without ps and top .
+ans: we can findout the process id with the help of /etc/proc command.
+
+Qns: how to set the strong password at user.
+ans:
+
+
+Qns: i have a five machine and four machine connected to the internet and one machine is not connected to the internet. how can solve it.
+ans: first check the nic card if nic card is good then check the proxy setting.
+
+
+Qns: which certified you have done?
+Ans: RHEL
+
+Qns: What is full form of RHEL?
+Ans: Redhat  Enterprice Linux?
+
+ 
+
+shell scripting question:
+-------------------------
+
+
+qns: how to start the shell scripting
+ans: sh <script name>
+     or first apply the execute persimission to the file the 
+     ./scriptname
+
+
+Qns: what is environment variables
+ans: environment variable are the system define variable they can be change at the execution time
+    set is the command to open the env variable.
+
+
+Qns: i have a one project and i want to give the access the this project for four employee.
+ans: in this case we add the user in this repository and and provide the authentication to the all users which are present in the repository. 
+
+
+ 
+
+
+
+
+AWS cloud Questions:
+------------------------
+
+Qns: why need a vpc
+Ans: to create a our resource like ec2 machine .rds database and use the other service in secure and which help in our
+     machine that why we need a vpc.
+
+Qns: what is diff. b/w EBS and s3
+Ans: Ebs is the harddisk where s3 is a blob storage
+     s3 is the region specific 
+
+
+Qns: what is the diff. b/w laod balancer and the application laod balancer
+ans: the classic load balancer is the tradition load balancer where as application laod is the smart laod balancer. the app, laod balancer work on port
+      based and the protocol based.
+
+Qns: what the network OSI Model and define the each layer in oci model.
+
+
+Qns: what is the diff b/w TCp and UDP
+ans: Tcp is connection oriented protocol where as UDP is a connection less protocol.
+     in tcp we get the ackowledge and in udp no ackowledge.
+
+Qns: how many type instance in aws
+ans: general purpose , storage optimized storage,
+
+Qns: how many security layer in aws.
+ans: Theare are two types of security in aws
+     1. Security group : which applied to the instance level
+     2. Nacl : which applied the Sunbet level
+
+
+Qns: How to calculate the load average  cpu in cloud.
+
+Qns: What is S3
+ AWS has storage classes
+        * Standard
+        * infrequenct access
+        * reduced redundancy
+        * Glacier (archival)
+    * S3 Lifecycle Transition
+            30 => Standard
+            30-60 => IA
+            60-90 => archive
+            120=> expire/delete
+
+
+Volume Types in Amazon 
+    * General Purpose SSD
+    * Provisioned IOPS SSD
+    * Throughput optimized (It is cheaper with more storage and costlier than cold hdd)
+    * Cold HDD (It is cheaper with more storage)
+
+Instacnce Family:
+General purpose
+computer-optimized
+storage-optimized
+
+Qns: What is 2/2 Checks:
+
+Ans:  If status checks shows status 2/2 checked passed, then the instance is in healthy state.
+
+AWS EC2 provides status checks that detect the problems with the underlying EC2 system used by the individual system. 
+   There are two types of checks performed every five minutes, which return a pass or a fail status. The two checks are:
+
+System Reachability 
+               Check, which confirms that AWS is able to get the network packets to the user’s instance.
+
+
+Instance Status Check,
+ which detects a problem within the EC2 instance.If both the checks are passed, the overall status of the instance will be OK.
+   If one of the checks fails, the overall status of the instance will be impaired. The following guide demonstrates how to set the status 
+   check alerts for the instance.
+
+The sample probable reasons for the failure of status checks include:
+
+A) System connectivity Checks:
+
+Loss of network connectivity
+Loss of system power
+Software issues on the physical host
+Hardware issues on the physical host
+B) Instance Status Checks:
+
+Mis-configured networking or startup configuration
+Exhausted memory
+Corrupted file system
+Incompatible kernel
+
+Qns: How Many Types of User data:
+Ans: You can pass two types of user data to Amazon EC2: shell scripts and cloud-init directives. You can also pass this data into the 
+     launch wizard as plain text, as a file.
+
+
+Qns: How Many Type of Security group in aws. and what is diff. b/w them.
+Ans: There are two type of security in aws. 
+      1. Security Group:  2. Nacl 
+Difference. 
+1.Security Group applied at the instance lavel where as Nacl applied at the Subnet lavel.
+2. we can write the rules only open the communication. where as in Nacl we can write the rule for allow or deny the traffic.
+
+
+Qns: What is Difference b/W public cloud and Private Cloud.
+Ans: MicroSoft Window Azuer is example of public cloud .  the network, stoarge and memory are provided by the provider 
+    for every one on the basic pay and use go. where private cloud is used only by the specific organization. 
+
+
+Qns: Why we attach the security Group.
+Ans: The Security Group is applied at the instance lavel. we attach the seurity group for the security group. with the help of security group 
+     we can protect the unauthorized traffic at the instance for the safey purpose.
+
+
+Qns: How Can Make the Ec2 instance is Public?
+Ans: when we attch the router to the subnet where my instance is create. after that my instance will be public instance.
+
+
+Qns: What is Load Balancer. And we can apply the load balance at the single instance or not?
+Ans: The load Balancer automatically distribute the incoming web traffic at the applications and the containers which are hosted into the ec2 instance.
+     and we do not apply the load Balancer at the single instance.
+
+
+Qns: What is Route 53?
+Ans: The route 53 is service in AWS . which are resolving the host name into the ip addresses and ip addresses into the host name.
+     The Route 53 work as private dns in cloud. 
+
+Qns: What is Role?
+Ans: When we applied the any policy at the ec2 instance or service in aws . then this policy is called the Role.
+    or You can say the role is service in aws which provide the service to the another service in AWS.
+   for example: applied the ssm role at the instance.
+
+
+Qns: What are metrics used in Autoscalig?
+Ans: there are many metrics in Autoscaling . but mostly use the cpu Utilization metrics.
+
+Qns: What is Port no. of ssh.
+Ans: 22
+
+Qns: Tell me about the firewall?
+Qns: As the name suggest the firewall is wall which sit b/w two different network. with the help of firewall we can deny the traffic or 
+    we can allowed the traffic.
+
+Qns: While doing the scale up does the old instance is terminated or collipse.
+Ans: for maintaing the state. or maintain the load of traffic .
+
+Qns: There are any limit of aws engineer for work or doing something into the linux machine.
+Ans:
+
+
+Qns: Tell me code or command to pull everything in linux machine.
+
+
+Qns: i have  a s3 bucket in origen region and i want to this bucket into another region. how
+Ans; To move an S3 bucket to a new region: Create a new S3 bucket in the destination region. 
+     It must have a different name from your original bucket. Copy your data to the new bucket, using the console or the command line.
+
+    or
+
+If you need the new bucket to have the same name:
+
+Create an intermediate bucket, you should set expiration rule so that this bucket and your data are deleted soon after your final 
+copy to the destination bucket.
+Copy your data
+Delete the original buck...
+
+
+Command line:
+$ aws s3 cp s3://my-bucket/ s3://new-bucket/ --recursive
+   aws s3 mv s3://my-bucket/ s3://-temp-bucket/ --recursive
+
+Qns: i have a s3 bucket in one region and how to push the object from another region how.
+Ans:
+
+
+Qns:  
+
+
+
+
+
+
+
+Qns: what is diff. b/w cloud formation and terraform
+ans: we can create the infrastructure from terraforn any place like aws ,azure and google cloud at the once but the scope of cloud formulation with in the cloud.
+
+Qns: How to migrate the on-premise server(application) into cloud. 
+
+
+
+RealTime work:
+*****************
+
+
+
+Qns: how many case server is not pingable.
+and: there are many case the server is not pingable
+    1. temp file is full
+    2. system memory is full(harddisk is full)
+    
+solve : in this case we the rac console and login into the server and here we can start , stop and  restart the server.
+
+
+
+Qns: How to login into window server:
+ans: we use the mstsc in search option. which open the remote desktop connection here we paste the password which given by the company.
+
+
+Qns: How to login into linux server:
+ans: here we using the putty tool for and  ssh public key  ex: ssh -y <user name>@ipaddtress
+
+
+Qns: how to logout the system:
+ans: window sign + L
+
+Qns: how to login the system:
+ans: ctrl+alt+delete
+
+
+Qns: what is your empid:
+ans: my Eid: 3252
+
+
+datapipeline and dynomo backup to s3 .
+
+
+monit is a utility for managing and monitoring processes, files, directories and filesystems on a Unix system.
+
+
+
+Linux File System or any file system generally is a layer which is under the operating system that handles the positioning of your data
+ on the storage,
+
+Ext, Ext2, Ext3, Ext4, JFS, XFS, btrfs and swap
+
+
+Why need a vpc:
+
+in our vpc we can create the our resource like ec2 instance, rds etc. in secure way. we can protect the aws resource in each subnet. 
+and you can use the multiple layer of the security. which include the security group and Nacl security.
+
+
+
+https://www.youtube.com/watch?v=ZuqoOJtLS5k&list=PLxv9HL8TPbSwBdAB2wpz-AUPB-we8zS3W&index=2
+
+
+
+What is difference b/w elk and nagios
+
+
+What is difference b/w shell and ansible and which case you use the shell and ansible.
+
+
+Qns: What is difference b/w http and tcp.
+Ans: the http work on a application layer  where as tcp work on a 4 layer.
+     the port no. of http is 80 where as the port no. of tcp..
+
+
+
+
+
+Qns: i have a image in docker  and i want to save the image into the pendrive it is possible or not.
+ans:
+

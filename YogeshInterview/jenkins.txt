@@ -1,0 +1,1289 @@
+24/04/2019 Jenkins Pracice:
+
+google: Jenkin founder
+         founder name: kohsuke Kawaguchi
+History:
+      sun micro system
+         start the project
+            name of project: hodson
+             purpose of project:
+                              continuous integration
+                              use java
+
+
+sun was purchase or taken over by oracle:
+There are some problem arised oracle want to closed source and sun want to opemsource
+in this case hudson project break into two part.
+
+
+hunson
+     jenkins
+           opensourced
+            cloudbees
+
+     hudson (oracle)
+               cloused source
+
+
+Basic Jenkins
+Techonology: Jenkins is developed in JAVA. As on today it works with Java 8.
+
+What is Jenkins? : Jenkins is CRON/Scheduler on Steriods
+What can Jenkins run? : Anything from commandline
+
+* jenkins work as a cron/shedular.
+
+  * the jenkins is a machine or system which useful for build up the pipeline.
+                        
+     ex: jenkin pull the code from git and build the code in from of url and deploy the application in ansible /chef configuration server.
+
+
+
+Installation:
+step:
+google: jenkins.io
+     =>  download
+     => Generci JavaPackage (war)
+     => go to download folder
+     => open the powershell as administractor
+     => fisrt install the java
+          : There are two way to download the java
+              1. go to the officail side and downlaod and install the java
+              2. search the choco install java in google and copy the command paste at the powershell.
+                  command:
+                          choco install jdk8
+     => paste the path of downloads folder
+     => copy the generaic javapackage (war )from download and paste powershell
+     => or java -jar .\jenkins.war
+     => once install is completed go to the url and write localhost:8080
+     =>result: home page of jenkins 
+     => here i donot the user name and password
+     => every software have the database but jenkins donot have the database . jenkins store all of its information 
+         in one folder that folder is knows as the home directory of jenkins.
+         Jenkin_home => jenkin db
+          home directory \.jenkins
+     => in windows home directoty goto the c => user=> name=>.jenkins
+     => delete the jenkins folder
+     => again running the java -jar .\jenkins.war
+     => copy the password from running the jenkin application
+     => goto the url and refresh localhost:8080
+     => paste the password here
+     => continue
+     => install suggested plugin  
+     => create user
+     => password
+     => emailid
+     => yes
+     => start loading jenkins click
+     =>
+
+
+
+
+Jenkins Setup
+
+
+
+Installing Jenkins
+Jenkins Standalone
+Server in Jenkins is considered as master Preview
+
+Steps:
+
+Create a Ubuntu linux vm
+install Openjdk 8
+Link
+sudo apt-get update
+sudo apt install openjdk-8-jdk -y
+java -version
+# ls /usr/lib/jvm/java-1.8.0-openjdk-amd64/bin
+# where is java
+# set JAVA_HOME Environment variable
+   why set the environments:
+     you programmer write the java applocation use the java and they look the path of the java. so define the environments variable:
+sudo nano /etc/environment
+JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/bin/"
+sudo vi /etc/environment
+# save the file
+Now reload this file to apply the changes to your current session:
+source /etc/environment
+
+Verify that the environment variable is set:
+echo $JAVA_HOME
+
+install jenkins: Refer here
+#wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+Before executing install of jenkins lets try to find the possible jenkins versions available
+
+##sudo apt-cache madison jenkins
+   Note: In this documentation 2.138.3 will be used
+
+
+## Installing Specific Version of Jenkins
+  sudo apt-get install jenkins=2.138.3 -y
+Note: Follow this steps to install any LTS version of jenkin
+copy the public key and paste 
+public key:8080 enter
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+paste password
+continue
+install suggested plugins
+ 
+username: yogeshkumar
+password: yogeshkumar
+emaidid: kshankar10252@gmail.com
+fullname: yogeshkumar
+
+install configuration:
+   change the ip of jenkins url and paste the private ip
+ex:
+http://172.31.21.187:8080/
+save and finish
+stating using jenkins
+click on new item
+             project name: helloworld
+              freestyle
+ok
+click on build
+add build
+ execute shell
+    echo "helloworld"
+    pwd
+    whoami
+save 
+build now.
+
+
+
+
+ you are running anything on jenkins machine or jenkins system.if it is not running
+ first check the who user running .
+ solution: running something on jenkins machine use the jenkins user.
+
+* you are running anything on jenkins machine or jenkins system. if 
+  result is command is not found. because jenkins user donot have a specific permission to run it.
+  solution: to make the jenkins user as a Administractor.
+
+
+
+project :
+      project is a design which run on executor. when executor run its need some space. this space is called the workspace.
+
+
+jobs:
+    when we create a project in jenkins it will stored in jobs folder. when create a project one file created inside the project
+    this file is called the config.xml. this file have  the full information about your project.
+
+
+workspace:
+         when a running a project in jenkins its need some space this space is called the workspace.
+
+Executor:
+         executor is used to run the project in jenkins.
+         one project have one executor.
+
+
+sudo -i
+su jenkins
+cd ~
+pwd
+sudo apt-get update
+password:  i do not the password because i not created the user jenkins
+try again
+result:
+    sudo password for jenkins
+
+first problem solve:
+how:
+   if you running jenkins at ui (Graphical way) it take the passwrd but i donot the password.
+   but you are running at jenkins at command line.
+   make the jenkins as a administractor .
+solution:
+exit
+ sudo -i
+      visudo
+jenkins ALL=(ALL:ALL) NOPASSWORD:ALL
+:press ctrl+x ,y ,press enter
+
+su jenkins
+cd ~ (goto the home directory)
+sudo apt-get update
+git --version
+result: it not asked the password.
+
+note: from jenkins runs the same command get the same result lets try.
+      copy the publiv ip of jenkins master paste into the url
+      username:
+      password:
+
+create a new item: exploring
+ click on free style project
+     ok
+  actual command  run from the build
+  Build:
+       shell execute
+      git --version
+      sudo apt-get update
+     save
+build now
+click on right make something file
+click on console 
+result:
+   same result running at the command line.
+
+
+note:
+     if you running anthing on jenkins machine .login into machine 
+     running the command as a jenkins user.
+
+
+note:
+    if you are doing any thing in jenkins machine its behaive as a some person in jenkins machine and running the commands.
+    jenkins behaive as a user in a machine.
+
+
+
+item: 
+   Dev-1
+   freestyle
+   description
+      : decription about the project.
+  source code:
+      the source code tells where is code. the code in git but there are no option of code.
+     then pick the code .this option is called the source code management.
+      
+Build Trigger:
+     the time of build the project. or when you want to build this project.
+
+Build:
+     execute shell
+
+google: spring petclinic
+        click on official website
+        take the clone 
+  paste in execute shell
+  git clone <paste>
+  ls spring-petclinic
+save
+click on build now
+click on file which see at right
+click on console now
+see the result:
+
+
+
+
+note:
+    manage plugins
+       there are many plugins
+         scroll bar
+            manage plugins
+              available
+                lots of plugins
+
+ex: company using bit bucket (git server) . this plugins generally developed by community.
+
+
+
+vvimp:
+   we have some code and where the jenkins stored.
+   login into the machine
+  sudo -i
+ su jenkins
+cd ~                             go to the website
+                                  click on jenkins it show the how many project here and these project have some name
+
+pwd
+reslut: /var/lib/jenkins (home directort)
+        ls
+ls /jobs
+these show the project name
+
+
+ls jobs/helloword/
+   config.xml : consists of all information which is returned by your project.
+                here you can take the backup of your project from config.xml file
+
+
+when you create a build now: what happend
+         ls /workspace
+         cd workspace/dev-1
+           sudo apt-get install tree -y
+           ls
+           cd spring-petclinic 
+            ls
+             ls -a
+whenever we create  something in jenkins jobs folder is important and whenever run something workspace folder is important
+whenever we create in  a project in jenkins file config.xml will be stored with the project(name) in the jobs folder.
+whenever run anything  asked to do that can done in the folder workspace. the workspace folder create with jobs and project name
+
+build environment.
+ls
+
+
+ 
+
+
+
+    ## jenkins project:
+when we  design a jenkins Freestyle project it have some section:
+
+* General
+* source Code
+             : VCS
+* Build Environment:
+                    in build environment you create a new workspace ,delete the workspace is the area of build environment.
+* Build
+       : Build the package ,we do the unit testing and smoke testing
+* PostBuild section:
+                    when once package is build then send the report through the email to admin. do you want to do. ex: you start the project.
+                    you want to show the target ,test repost you can do it. here you make a decision
+           
+
+why do you have these thing before understand first understand the  Continuous integration.
+
+google: Martion Flower
+
+Continuous Integration:
+                  in continuous integration will take all the code of all team and stored in one system is called the version control system .
+                    and converted the code into package and perform the unit testing 
+                      smoke testing and find the feedback. the feedback can be success or failure.
+                       if feedback is fail then try to currect the code . this whole concepts is called the continuous integration.  
+
+
+
+what is unit testing:
+what is the smoke testing:
+
+
+
+
+Path:
+    in any operating system  you type the command it search the command in special folder which folder is checked nothing but is called the path variable. 
+*************************************************************************************************************************************************
+                                                       { MAVEN }
+
+
+To develop a application developer need two thing 
+1. easier way to build the applicatioin
+      ex: make the code in form of package
+
+library:
+       the library is the place where already code and package stored.
+
+Dependency:
+          to use the code and package from library is called the dependency.
+
+Repository:
+            1. local repository: repository is the place where we stored the code and use the code and package which are required for run the project.
+               the local repository of maven present in user => .m2 folder
+            
+            2. central repository:
+                                the central repository present in web. when run the project and dependecy are not present in local repository then maven get the 
+                                dependency from the central repository which are hosted on the internet.
+
+
+
+Maven: 1
+    Maven belives in convention over configuration.
+
+ex: your gameoflife clone in gameoflife folder
+    open the src=> main=>java
+                           in this folder always perest the language.
+     open the src
+                main
+                 test
+                  in src there are two folder in this folder we are writing the unit test 
+                  
+
+2:
+  another convention of maven:
+ whenever creating a java component in the root writing the code where creating a file pom.xml 
+ in the xml you can define the some details of about the project.
+
+
+        
+Maven toosl: is used for compile the java code ,testing the code and build the package.
+
+
+install the maven in local machine(laptop):
+ command: choco install maven -y    
+               mvn --version
+Goals of Maven:
+              compile
+              test
+              package 
+              install
+              clean
+
+Command: mvn compile
+         mvn test
+         mvn package
+        mvn install
+       mvn clean
+
+note: you can do more than one goal at same time:
+
+command:
+
+    mvn clean compile
+    mvn clean test
+    mvn clean package
+
+
+
+change the behavior maven at system lebel: in setting.xml
+change the behavior maven at project lebel: pom.xml
+
+
+
+
+practice:
+Maven:
+    work of maven
+1 . easy way yo package
+2. dependency managment
+3. unit test executions
+
+
+
+
+********************************************************************************************************************
+
+
+Repository concept of maven:
+
+make a one folder
+open the gitbash
+take the clone of any project
+git clone <paste>
+goto the user=>your user name=> .m2=> change the repository name
+lets name is change repository=> mvn compile
+
+see something download:
+                  mav get the dependency from central repositoy which dependency not present is your local repository
+                  which dependency required for your project game of life .after complte the work of mvn compipile
+goto the .m2 folder  you see another repository is created.
+
+now download the dependency  is complete and see where dependency store
+open the pom.xml and see the dependency.
+
+ex: in case of devops  
+    in chef berks install all dependency which are required for cookbook.      
+
+ex:  if developer want to using the spring in your project goto the this site and take the dependency and paste in pom.xml file
+google maven spring dependency:
+
+ex: i am using the lambda in our project 
+  google: maven aws lambda dependency
+
+
+note: all dependency describe the section b/w
+       <dependency>
+       </dependency>
+  
+**************************************************************************************************************************
+open the pom.xml file and see this.
+
+<ModelVersion> this version used by maven
+<GroupId> is the organization name
+<artifactsId> artifactsid is the project id
+<version> this version of your project
+        
+this is the your project
+
+*******************************************************
+
+
+
+ex: take the another project:
+    google: spring petclinic github copy the clone
+    open the gitbash in temp folder
+    git clone <paste>
+    mvn compile
+
+note: after complete the compile one folder is created inside src this folder is
+     called the target folder .the target folder all the information about the project in binary format.
+
+*   when we build a project one folder is created this folder is called the target folder. this folder storage the classes
+
+
+clean:
+    clean is the operation to remove of all build earlier.
+ex: after  build a package target folder is create now i want to just freshely .
+  mvn clean
+after run this command target folder removed.
+
+mvn clean
+
+google: maven goals phases
+
+
+
+
+****************************************************************
+Practice :
+ex: create a machine which have the java installed and mvn installed.
+    open the gitbash 
+   git clone <paste>
+   mvn compile
+     after compile one folder is created is called the target folder.the target folder store all the .classes file you cannot give the .classes file to the customer
+   mvn test
+     after mvn test one folder create inside the target folder is called the surefire-reports which store all the report of project in xml format.
+  
+    mvn package
+       after mvn package command the package is created inside the target folder.
+
+
+*******************************************************************
+
+download the dependency always from the internet is not a good approach then. if you want to change the behaviour of maven
+create a one file inside the .m2 folder the name is setting.xml. it means the central repository stored in setting.xml file
+
+if do you want with project in local the pom.xml is used
+
+change the behavior maven at system lebel: in setting.xml
+change the behavior maven at project lebel: pom.xml
+
+
+
+
+
+
+
+******************************************************
+
+jenkins master node/slave configuration:
+
+executor:
+         to run a project parallely use the executor.
+
+
+jenkins node build in a environment:
+ex: java project build in java environment(linux)
+    dot net project build in .net environment(window). dot net project do not run  in linux environment
+
+* i am building a project how can fixed it this project run in to this node. this can be done  with the help of label
+
+
+
+                      {Mater node configuration }
+
+
+note: i want to run 100 project with different environment(java ,.net) paralley . in this case we use the jenkin master node/slave setup.
+       with the help executor we run multiple project at same time.
+
+
+
+
+
+Label concept: 
+              how can fixed it that java project build(run) in java environmet and dot net project build in dotnet(windows) environmet. 
+              this can be done by label concept.
+
+
+Post-Build -Action:
+            Archive the arctifact is way which want to showing into the console.
+            ex: i want to show target
+                 => target /* .war in form of java
+                 => bin/* .exe in  form of .net
+
+i want to show to test result on console:
+     => target/surefire-reports/*.xml
+
+
+
+
+Practice:
+step:
+=>manage jenkins
+=> manage nodes
+=> new node
+=> node name: HC-Node
+=> executeor :2
+=> home/jenkins
+=> lable:
+=> MYN
+=>usage: use this node as much as possible
+=>launch method: launch agent agent via ssh
+=>host name: private ip
+=>credential:
+=>hostkey verfication startegy: known hosts file verfication startegy
+ define that node present in master or not.
+=>availability: keep this agent online as much as possible
+=>save
+=> it show the error 
+=>click on launch agent
+=>result: cannot find ssh user credential:
+let define the user credential
+=> configure
+=> add
+=> ssh username with password
+=> scope: global
+=> username:...
+=> passwprd: ..
+=> iD service_account
+=> add
+=> none 
+=> select jenkins
+=> click on relaunch agent
+
+=> click on jenkins
+=> status
+
+=> goto jenkins master
+=>click on project<name>
+=> configue
+=>select restrict where this project can be run
+=> label expression: MYN
+=> save
+=> click on build schedule
+=> build now
+=> console output
+
+=> login into node
+=> ls
+=> cd workspace
+ls
+result: project name: ...
+cd project name
+ls
+ls -al
+note: when node connect to the jenkins master reporting.jar file is created
+      that why java is install in the node.
+
+* when ssh cummunicate is establish java is essential because jar file is created.
+
+
+
+now add one node.
+
+node: is nothing but project build environment.
+
+now create a one project:
+ new item: gameof life
+  click on freestyle
+   ok
+  restrict: 
+   label:MYN
+ git : 
+ git clone<>
+Branch : master*/  
+Build:
+     top label maven target
+       goal: package
+
+post-build action:
+   archive the artifact
+       gameoflife-web/target* war
+
+test report:
+      gameoflife-web/target/surefire-eports/*xml
+
+save
+
+build now
+
+console output:
+
+lets see what heppend in master
+  test result
+
+
+login into master
+sudo -i
+su jankins
+cd
+ls
+cd workspace
+ls
+result: no project in master
+cd gameoflide
+cd lastsuccessfull 
+ls
+sudo apt-get install tree -y
+cd archive
+ls game of life
+ls
+cd  gameof life-web/target
+ls
+
+
+note: only lastsuccessful test and information are copied when run the project in node
+
+
+Build Trigger:
+          build trigger is used when you want to executed your project.
+
+
+
+
+
+
+Build Terminology:
+
+## Day Build:
+            during the day build the developer work on the code and they commit code to the git and when they commit the code 
+            need some feedback (code working right or not) is called the day build . and they build never give the testing team. 
+            day build give the feedback of the developer team.
+
+night:
+    all the work of all the dev team in one day release to the tester team for the testing. those build are called the nightly-Build
+
+ Note:
+    All the deploy in the night build because the night build have a strong setup of build.
+
+note: in night build 
+    build environment: 
+                     delete the workspace and starting the working as freshely
+
+in day build:
+          poll SCM
+            schedule:
+
+
+Note:
+      whenever you make a any change the jenkins server speak with the git repository at every one minute and find out any change in  repository 
+      doing start what are you configure. this is the first case of day build.
+
+ it => hooks=> inform jenkins to start build
+if use the githook. when any commit change in the repository the genkins server speak with the git server
+and start the work to build( compile,test,package).
+
+but in case of pull scm : devepoer develop the code and developer commit the code in repository the jenkins server
+speak wirh the git server accroding to define the time in pull scm .then start the build.
+
+Night-Build: the night-build happend once in day at specific time.
+
+note: 
+  in every night build Deleting the workspace before executing the build because the whole idea is that during the night build want to every thing is clean
+  if have a  workspace it not doing the clean build its doing the incremental build
+
+Practice:
+
+
+
+jenkins practice 30/04/2019 redhat node setup
+
+step:
+1. create a linux vm
+2. ensure network connectivity b/w master & node
+3. install java
+4. create a  user <jenkins> on node
+5. if required give sudo permissions
+6. if AWS/Other Cloud 's enable password authentication
+7. if you already have a key copy id or else create ssh key & copy the id
+   ssh-keygen
+   ssh-copy-id <jenkins>@<ip>
+9. verify connection ssh <ip>
+10. Add  a node ,select remote directory ,credential & verfication strategy
+
+manage jenkins
+manage nodes
+     new node
+credential:
+           add
+save
+relaunch agent
+new item
+    Test
+freestyle project
+ok
+restrict project can be run
+git: take the copy the spring petclinic clone and paste here
+branch
+    master
+save 
+console
+
+******************************************************************
+ 
+Day_Build:
+step:
+1.New Item: Test
+2. Freestyle
+     ok
+3.source managenet:
+     Git: ...............
+4.Poll SCM
+        schedule: * * * * *
+
+5. Build:
+       Goals: package
+6. Restrict the project run on fixed node:
+                                     Label: ....(which lable have the node)
+5. save
+
+here no need the Build now because if any changing in repository the git server speak with the
+git and start the work which configure.
+
+
+open the gitbash in any drive in any folder
+git clone <paste the clone of any pjoject>
+cd <project name>
+ls
+vi readme.txt
+  yogesh kumar
+:wq
+
+git status
+git add .
+git status
+git commit -m "testing server"
+git status
+
+now goto the jenkins server
+click at console.
+see the result.
+
+
+
+Practice: PipeLine:
+
+
+Now i want to night build: for build the night same task are repetation .
+    for solving the this problem we used the scripting language.
+ here we use the Groovy scripting.
+
+
+pipeline:
+        jenkins pipeline creating a jenkins jobs using the groovy language.
+        every pipeline script always start form the node.
+
+
+now again create a new project:
+  name: spring-pipeline-Day
+         click on pipeline
+          ok
+pipeline
+ok
+sample: every pipeline scripting start form node.
+      sample step: node Allocate node
+  label: MVN
+  click on generate the scripting
+  copy the scripting and paste  pipeline scripting
+
+now build a project waht are the step:
+1. clone the git
+2. mvn package
+3. archive the artifact
+   target
+   Test
+   surefire-reports	
+
+etc.
+
+But in case of pipeline stasg is the activity divide the build.
+i divide the build in three category
+1. scm
+2. package
+3. post-build action
+            archive the artifacts
+
+
+
+sample step:
+    stage:
+  stage name:
+  generate the scripting
+
+now copy the scripting and paste in pipeline.
+
+sample: stage: git
+        repository
+        dev
+generate the scripting:
+copy the scripting and paste into the pipeline
+
+sample: stage: shell scripting
+        mvn package
+        
+generate the scripting:
+copy the scripting and paste into the pipeline
+
+save:
+build now
+console optput
+
+
+
+google: groovy totorial:
+        see the example: loop or if else condition.
+
+Blue-Ocean is project is used for visualising the pipeline of jenkins
+
+
+
+Advantage:
+  resuability of the pipeline groovy scripting
+ex: i want to run 10 clock it possible in scripting
+
+  
+
+
+
+
+
+                                               SonarQube:
+ 
+ * SonarQube is a web-based application which is used for improve the  of code quality.
+  * quality gate tells what is the coverage
+  * sometime Build is not fail due to the compile mistake it fail due to quality gate
+    Quality gate means , line coverage , symbol coverage and branch coverage.
+  * sonar work with many technology such that .net ,java python etc.
+  * sonar something called as a scanner .sonar integrated with mvn and jenkins
+ * Quality gate maintain the quality of the our code.
+  
+  line coverage:
+           Covrage: how many line of  code test is coverage so that kind of coverage is called as line coverage.
+           ex: suppose your project have 100 line and  conerage the 85 line is called the 85 % coverage.
+
+  symbol coverage:
+            your class have the function and variable . the test is teching the variable is called the symbol coverage.
+            how many symbol touch by your test is called the test coverage.
+
+Branch conerage:
+T T
+T F
+F T
+F F there are four branch.
+here coverage the only two
+then how many branch is conerage 4/2=2 it means conerage the 50%
+
+Practice:
+sonarqube yogesh: 813a360894c420b377fa6d4cab4dc6041ab0481f
+
+step:
+1. create a ec2 machine
+2.sudo apt-get update
+3.sudo apt-get install openjdk-8-jdk -y
+14. install the sonarqube
+15. sudo vi /etc/apt/sources.list
+      paste this command  deb [trusted=yes] http://downloads.sourceforge.net/project/sonar-pkg/deb  binary/
+16. sudo apt-get update
+17. sudo apt-get install sonar=6.7.4
+18. sudo service sonar start
+19. copy the public ip of sonarqube node and paste into the url https://<public ip>:9000
+      default name and password is admin
+20. you genetrate the code for nest login and save it
+21. goto the jenkins master
+     manage jenkins:
+                 manage plugins:
+                              available:=> seacrh soanar scanner
+                                     install
+22. login into jenkins master
+23. manage jenkins:
+                 configure system: => name of the sonar:
+                                      host: <private ip of the sonar qube node>
+                                      code or password which save in any file by self and paste here
+                                       apply
+                                       save
+24. manage jenkins:
+                   global tool configuration:
+                   name: sonar
+                   install from maven sacnner:
+                                            version:
+                    apply=> save.
+25.now connect the sonar qubw node from jenkins master
+29. now create a freestyle project/or pipeline project and run into the sonar node.
+30 goto the sonar node and check the quality of the project.
+
+
+
+  
+ 
+
+
+
+
+
+
+
+
+
+
+Artifactory:
+* The popular Jenkins Artifactory Plugin brings Artifactory's Build Integration support to jenkins.
+* if storage the project in jenkins . the jenkins server will slow. due to this region we have some possible option to       storage the project.
+   *  network drive
+   * upload the cloud like s3
+   * imp. artifactory repository
+
+* Artifactory is another location to store and retrieve what ever building .and whatever building is called the            arctifact.
+* it used for storage for building during the night build not the day build.
+
+
+
+
+***************************** 
+MSBUILD:
+* i want to build the some dotnet code from my jenkins machine . but my jenkins machine is linux machine
+  there is no way to execute the windows command .if execute the windows command the result is not work
+
+Dotnet have two version:
+1. core: its run on linux machine
+2. classic dotnet:  its run on windows machine
+
+practice:
+how to connect the windows machine with jenkins server
+solution:
+requirements:
+  1. create a  window machine
+       install the chocolatey in window machine
+  2. jdk 8 installed in window machine
+        choco install jdk8 -y
+  3. install the google chrome
+      chco install googlechrome -y
+  4.  <installation of necessary of (build tools)>
+        visual stdio
+       choco insatll microsoft-biild-tools -y
+  5. login into jenkins server for add the windows node.
+      manage jenkins=> configure global security=> tcp port JNlP agent either fixed or random
+      manage jenkins=> manage Nodes=>new node=> test-windows=> permenet agent> define the executor =2=>
+      directory= C:\jenkins=> lebel=wind => launch widard=web start1=> Node properties=>tool location => git => home: C:\Program files x86\git\bin\git.exe=>save
+       Test_window=> click on launch => copy the jar file=> cmd > run this command => now window connect to the jenkins server
+
+
+now executed  this project from jenkin server.
+step:
+ 1. create a freestyle project
+     name: dotnet-build
+ 2. source code management:
+      git: <paste the copy of the project>
+ 3. Build environment:
+      delete the workspace
+ 4. Build:
+     Execute the window batch command:
+        nuget restore  jenkinsBuildExample.sln
+ 5. MSBuild version:
+    MSBUild Build file: jenkinsBuildExample.sln
+   Command line argument: /t rebuild
+6. restrict the project:
+      label:
+    save
+7. buils now
+8 console output.
+
+
+
+otnet build are very simple it have two folder 
+1. jenkinBuildexapmle
+2. jenkinBuildexample.sh this folder is a solution folder
+  * jenkins tells where MsBuild store
+  * copy the Msbuild path and paste into the cmd
+  * now gine the path of sln file
+  * MSBuild <path of sln file>
+    result: fail because dependency is not downlaod
+  solution: download the dependeny
+
+Commad:
+      nuget restore <path of sln file>
+
+**************
+
+Parameter:
+   here are two way to create the  of parameter in jenkins
+
+     1.jenkins created
+     2. self(user) created
+
+       Types of parameter
+         String
+         Choose
+
+Parameter is variable what are you building pass to you
+
+
+
+Practice:
+Parameter:
+when building a project give some variable
+step:
+1.paramdemo
+2. This project is parameterized
+      Name: BUILD_GOAL
+      Default value: package
+3 git : paste the <project>
+4 Build:
+    execute shell
+      echo "GOAL: $BUILD_GOAL"
+      echo "BRANCH: $BRANCH_NAME"
+5 BUILD with paramete
+
+again:
+ Build:
+    execute shell
+      echo $BUILD_GOAL
+      echo  $BRANCH_NAME
+
+Build now
+
+again:
+   Build:
+    execute shell
+      echo  $BUILD_GOAL
+      echo  $BRANCH_ID
+Build now
+console output
+
+
+
+
+Parameter is variable what are you building pass to you
+
+choose parameter:
+  ACTUAL_BUIld _goal
+  choose:
+   package   
+   clean
+   test
+save:
+
+invoke shell $BUILD_ID
+invoke window batch: %BUILD_ID%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+***************************
+                                                          GIT FLOW
+
+Branching Strategy:
+ Note:
+     For every project there will writing code . give the branch code  to the customer.
+     they give some error like this feature is not working then how do you handle release from having one repository.
+
+
+The Branching strategy is called the git flow
+google: directdevops
+  
+ * only master branch give or release to the customer and master branch not allow to commit 
+ * to make commit special is called the tag. when give any release the customer is called  the tag.
+
+
+
+                                                              GIT Hooks:
+
+1. client side hooks: responsibility of developer
+2. server side hooks: reponsibility of devops engg.
+google: server side hooks:
+curl is a http request
+
+
+
+
+
+
+
+
+
+
+
+`
+****************************************************************
+
+
+
+
+
+
+qns: how to exports the jobs/project in jenkins.
+ans: you can exports the jobs of jenkins you take the xml file and you import the same xml file into other system and start the working.
+
+
+interview qns:
+qns: how to take the backup of jenkins project/job:
+ans: take the config.xml file
+
+Qns: how to take the backup of whole jenkins:
+ans: Take the backup of jenkins home directory.
+
+qns: if jenkin server fail what do in this condition:
+     copy the jenkins home directory and paste to another server.
+
+
+diff b/w git and github:
+git: the git is the way of organizationing the code where is github is the server or repository which hold your code. 
+
+qns:what is difference b/w continuous integration and continuous deployment
+ans:you taken the code and building the code and deploy the code in the local environment. is called the continuous integration.
+     where is taken the code building the code and deploy the code in server and send to the production environment is called the continuous deployment. 
+  
+qns: what is Build promotion. 
+  when  the day build is successful then build is promoted to the nighet build .when night build is successful the night build is promoted in the deploy build is called the build promotion.
+
+
+
+what is diff.b/w jar and war
+the package is defined by applications such as tomcat is called the war file
+the package id defined by system is called the jar file
+
+
+
+Qns what is test executed in night build.
+Ans: salenium test executed in night
+
+Qns:what is test executed in day build:
+ans: unit test are executed in day build.
+
+
+Qns:day build and night build devops engg. work on one project or multiple project.
+Ans: they  work on multiple project.
+
+
+
+Jenkins pipeline.
+*******************
+Raghu raddy.
+https://github.com/lucky509/devops-total/blob/master/jenkins-master/pipeline-jobs/declarative/CI-CD-DEV-API.Jenkinsfile
+lucky509/devops-total
+
+
+executor nu. depend on the n0.mof processor.
+
+pendind the our project it means executor is busy for running the project.
+
+where is logs in jenkins
+open the workspace there are many logs 
+
+
+
+
+
+
+i faced this question in interview
+
+i want to install one plugin . the plug required after installation the server must be restart but in server some important 
+jobs are running but i dont want to restart the server but i must install that plugin how you can achieve this task.
+
+
+
+qns: how jenkins is fetching the jenkins file present in the root directory.
+ans: pipeline from scm and use the jenkins file .that why jenkins fetch the  jenkins file from the root .
+
+Qns: which port on sonar
+ans: 9000
+
+ 
+
+
+
+
+
+How To Install manually Jenkins plugin
+Step 1: First download plugin from Jenkins plugin directory. https://updates.jenkins-ci.org/download/plugins/
+Step 2: Here you find your desired plugin and clicked on plugin name, now .hpi file will downloaded.
+Step 4: Upload your-plugin.hpi file and save.
+Step 5: Restart Jenkins.

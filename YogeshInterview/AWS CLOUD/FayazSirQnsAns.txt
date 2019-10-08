@@ -1,0 +1,92 @@
+Qns: What is 2/2 Checks:
+
+Ans:  If status checks shows status 2/2 checked passed, then the instance is in healthy state.
+
+AWS EC2 provides status checks that detect the problems with the underlying EC2 system used by the individual system. 
+   There are two types of checks performed every five minutes, which return a pass or a fail status. The two checks are:
+
+System Reachability 
+               Check, which confirms that AWS is able to get the network packets to the user’s instance.
+
+
+Instance Status Check,
+ which detects a problem within the EC2 instance.If both the checks are passed, the overall status of the instance will be OK.
+   If one of the checks fails, the overall status of the instance will be impaired. The following guide demonstrates how to set the status 
+   check alerts for the instance.
+
+The sample probable reasons for the failure of status checks include:
+
+A) System connectivity Checks:
+
+Loss of network connectivity
+Loss of system power
+Software issues on the physical host
+Hardware issues on the physical host
+B) Instance Status Checks:
+
+Mis-configured networking or startup configuration
+Exhausted memory
+Corrupted file system
+Incompatible kernel
+
+Qns: How Many Types of User data:
+Ans: You can pass two types of user data to Amazon EC2: shell scripts and cloud-init directives. You can also pass this data into the 
+     launch wizard as plain text, as a file.
+
+
+Qns: How Many Type of Security group in aws. and what is diff. b/w them.
+Ans: There are two type of security in aws. 
+      1. Security Group:  2. Nacl 
+Difference. 
+1.Security Group applied at the instance lavel where as Nacl applied at the Subnet lavel.
+2. we can write the rules only open the communication. where as in Nacl we can write the rule for allow or deny the traffic.
+
+
+Qns: What is Difference b/W public cloud and Private Cloud.
+Ans: MicroSoft Window Azuer is example of public cloud .  the network, stoarge and memory are provided by the provider 
+    for every one on the basic pay and use go. where private cloud is used only by the specific organization. 
+
+
+Qns: Why we attach the security Group.
+Ans: The Security Group is applied at the instance lavel. we attach the seurity group for the security group. with the help of security group 
+     we can protect the unauthorized traffic at the instance for the safey purpose.
+
+
+Qns: How Can Make the Ec2 instance is Public?
+Ans: when we attch the router to the subnet where my instance is create. after that my instance will be public instance.
+
+
+Qns: What is Load Balancer. And we can apply the load balance at the single instance or not?
+Ans: The load Balancer automatically distribute the incoming web traffic at the applications and the containers which are hosted into the ec2 instance.
+     and we do not apply the load Balancer at the single instance.
+
+
+Qns: What is Route 53?
+Ans: The route 53 is service in AWS . which are resolving the host name into the ip addresses and ip addresses into the host name.
+     The Route 53 work as private dns in cloud. 
+
+Qns: What is Role?
+Ans: When we applied the any policy at the ec2 instance or service in aws . then this policy is called the Role.
+    or You can say the role is service in aws which provide the service to the another service in AWS.
+   for example: applied the ssm role at the instance.
+
+
+Qns: What are metrics used in Autoscalig?
+Ans: there are many metrics in Autoscaling . but mostly use the cpu Utilization metrics.
+
+Qns: What is Port no. of ssh.
+Ans: 22
+
+Qns: Tell me about the firewall?
+Qns: As the name suggest the firewall is wall which sit b/w two different network. with the help of firewall we can deny the traffic or 
+    we can allowed the traffic.
+
+Qns: While doing the scale up does the old instance is terminated or collipse.
+Ans: for maintaing the state. or maintain the load of traffic .
+
+Qns: There are any limit of aws engineer for work or doing something into the linux machine.
+Ans:
+
+
+Qns: Tell me code or command to pull everything in linux machine.
+

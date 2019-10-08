@@ -1,0 +1,731 @@
+cloud Architecture AWS Note 7 May2019
+
+
+Application Architecture:
+
+
+Note: for any Architecture given thing are very important.
+1.Networking
+2. Storage
+3. Compute
+4. DataBases
+5. BAckup/Recovery
+6. Templating
+
+Note: 
+    what is the realible message:
+                               the message are not lost after see or not see the message is called the realible message.
+                                ex: in mobile message.
+
+   what is unrealible message:
+                            the message are losted after give the response or not give the response in some time is called the unrealible message.
+                            ex: https request.
+
+Note: The mobile application are do not run in application server the run on API 
+
+cloud Architeture Practice AWS 7MAy 2019()no practice
+
+
+cloud Architecture AWS Note 8no May2019
+
+google: 
+OSI Layers
+
+Networking:
+
+1. physical Layer: the physical layer is the actual place where one machine connected to another machine. t
+   transmitted tha data from one machine to another machine.
+   transmitted the data in binary format (101110)
+
+2.Datalink:
+         Datalink all about the Mac Address.
+
+3. Network Layer:
+               Every machine is uniquely identified the moment is have network layer.
+4.Transport layer:
+                in transport layer portocal comes into play.(TCPP/UDP)
+
+5.Session Layer:
+                your system have the knowledge of port it should have session layer.
+
+6. Presentation layer:
+                     SSL: this layer is responsible for encrypted format.
+                      
+
+7. Application layer:
+                     one system communicate to other system using the http
+                      application layer is all about the http.
+
+Note: the Transfer the data from one machine to another machine all above thing are required.
+
+
+IPaddress:
+         the ip address is a unique id given to you with in a network.
+        ex: your  mobile connected to the router because it have a unique id. it means it have a address.
+
+
+*******************************************************************************
+
+ex:
+192.168.x.x
+
+private:
+       private network with in a restriction area .
+
+public Network:
+            in public network connected to the internet any where.
+
+Every host convert into ip address. it have many record but here we discuss only two record.
+
+DNS Server
+1. Canonical:
+            google.com=> 3.4.5.6
+2.Alias Name:
+        fb.com  => fackbook.com
+C=> fackbook.com => 4.5.6.7
+
+There are two type of DNS server
+1. Private Uses:
+             the DNS server use with in office is called the private DNS.
+
+2. public uses:
+             
+Note: 
+    you can communicate to other system with same network only
+
+
+*********************************************************
+
+ipaddress            192.168.10.11
+
+subnet mask           255.255.255.0
+
+Default Gateway        192.168.10.1
+
+what is in ip?
+
+ip is combination of network id and host id
+                    (  network address+ host address)
+
+
+
+ex: 10.10.11.20
+you tells the network address we need subnet mask.
+
+10.10.10.11
+255.255.255.0
+
+10.10.10 => Network id
+11 => host id
+
+*******************************
+192.168.11.20
+255.255.0.0
+
+Network id: 192.168
+host id: 11.20
+
+note: two machine are considered in same network have same network id
+
+Size of the network:
+
+
+A route table specifies how packets are forwarded between the subnets within your VPC, the internet, and your VPN connection.
+
+cloud Architecture AWS Practice 8  May2019 NO practice.
+
+
+
+AWS Architecture Network note 3Day 9May 2019
+
+****************
+192.168.10.22
+255.255.255.0
+
+192.168.10 => Network id
+22 => host id
+
+**********************************
+
+
+192.168.10.11
+255.255.255.0
+
+192.168.10 => Network id
+11 => host id
+Note: In subnet mask every treat as a host id.
+and every . dot treat as 1 byte
+
+here host =1 byte => 8
+  => 2^8 -1 => 255-2= 253
+
+*************************************
+
+192.168.10.11
+255.255.0.0
+
+N=> 192.168
+H=>10.11
+
+********************
+192.168.20.16
+255.255.0.0
+
+N=> 192.168
+H=> 20.16
+
+
+google: private ip change
+10.0.0.0 to 255.255.255.
+172.16.0.0 to 172.31.255.255.
+192.168.0.0 to 192.168.255.255.
+
+**************************************************
+
+
+Note:RULE 1.
+    A system in network can communicate A system in same Network.
+
+
+192.168.10.11
+
+
+192.168.11.23
+
+but i communicate with the google which are other network how. can cummunicate with google to our laptop or mobile.
+
+Router:
+      Sending Network packets from one anetwork to another network.
+       its means with the help of router we  can communicate in other network.
+
+ex: open cmd
+    tracert google.com
+
+Note: the packet transfer form one network to another n/w
+      ex: https: fackbook.com
+  this packets firts reached to routre then thansfer to another , and the reached the destination.
+
+
+
+Default Gateway:
+              knowing the device forward the packets from one network to another network is called the default gateway.
+
+ipconfig:
+         ipaddress
+         subnet mask
+         Default gateway
+
+************************************************************************************
+
+
+
+i want to create ipaddress for 5000 system.
+255.255.255.0 => 2^8--3=>253
+
+255.255.0.0 => 2^16-3=> 65000 here ip are wasted
+
+
+now use the number :
+ use the binary number into subnetmask.
+
+google: Numbers to Binary convertor online
+  255
+
+1111111.1111111.11111111.0000000
+1111111.1111111.11111110.0000000
+
+google:
+BInary to decaimal convertor online
+1111111=>255
+1111110=> 254
+11111100=>252
+11111000=>248
+11110000=>240
+111000000=>224
+11000000=>192
+10000000=128
+
+255.255.254.0
+
+
+*************************************************
+192.168.10.0
+1111111.1111111.11111111.1000000
+
+192.168.10.0/25
+
+192.168.0.0/16
+1111111.1111111.0000000.0000000
+
+192.168.0.0/19
+1111111.1111111.11100000.0000000
+
+THis convention is called CIDR (class less interdomain routing)
+
+***********************************************
+
+Subneting:
+         Breaking the networking into smaller network is called the subneting.
+
+break the this network:
+192.168.0.0/16
+
+192.168.1.0/24
+network id=> 192.168.1
+
+192.168.0.0./24
+network id=>192.168.0
+
+**********************************
+Qns:
+   i have a  apartment which are divied into four flor and each flor have a 250 flats and each flat have the 250 system.
+
+how many ip address is needed:
+Ans: each flor have 250 house and each house have 250 have 250 ipaddress.
+
+250*250=>250000
+
+sol:
+255.255.255.0 => 2^8-3=253
+255.255.0.0=>  65000
+255.0.0.0
+
+
+10.0.0.0/8
+1. => 10.0.0.0/16
+      a: 10.0.0.0/24
+      b: 10.0.1.0/24
+2. => 10.1.0.0/16
+      a: 10.1.0.0/24
+       b: 10.1.1.0/24
+3. => 10.2.0.0/16
+       a: 10.2.0.0/24
+       b: 10.2.1.0/24
+4. => 10.3.0.0/16
+       a: 10.3.0.0/24
+       b: 10.3.1.0/24
+
+
+AWS Architecture Network Practice 3Day 9May 2019 no practice.
+
+WS Note 4Day 10May 2019
+google: aws region:
+Note:
+   Region: The region is giographically are where amazon have our data center
+            region is not hosting the data center .really availability zone hosted the data center
+
+Availability zone:
+                 which location hosted the data center is called the data center.
+                 the communication availability zone to availability zone established by amazon not by the internet.
+                  the communication  b/w one availability zone to  another availability zone amazon use high power optical fiber cable.
+
+                  
+Note: the creating a subnet linked to availability zone and creating a vpc which are linked to region.
+
+ AWS Practice 4Day 10May 2019 VPC
+
+step:
+1. login into aws account and goto the service and search the VPC
+2. create a VPC 
+3. create two subnet 
+4. create a internet gateway and attach the internet gateway to the VPC
+5.create the route and attach the edit the router.
+
+
+AWS Note VPC Bastion host Concept 5Day 11May
+
+public subnet:
+              Any subnet which connect from  ineternet is called the public subnet.
+
+Private subnet:
+             Any subnet which not connected from internet is called the private subnet
+
+
+Note: if you are not associated subnet any route table . by default subnet assocaited to the default route.
+
+Note:
+     Any machine in subnet can connect to any other machine in other subnet in the same region.
+
+Note: copy the private subnet pem key into the public subnet.
+
+Note: scp -i vpclearn vpclearn.pem ec2-user@<publiv ip>:/home/ec2-user 
+ chmod 400 vpclearn.pem
+scp -i packer.pem jenkins.pem ubuntu@54.245.0.115:/home/ubuntu
+ ssh -i vpclearn.pem ec2-user@<private ip>
+
+Bastion Host:  the bastion host is nothing but the machine in public subnet which help you to connect the machine in private subnet
+
+Rule Network:
+            Any machine can communicate to the other machine in the same network
+
+
+
+
+
+
+
+
+
+
+
+
+
+AWS Practice VPC Bastion host Concept 5Day 11May
+
+step:
+1. create a vpc
+2. create a two subnet
+Mote: in this case the network dot have a internet to provide the internet in the network create the internet gateway
+3. create internet gateway and attatch to the vpc
+4.create one machine in public subnet and one in private subney
+5. in this case your subnet cannot connect to the internet.
+6. create a route and attach to the internet gateway
+7. now associated the router to the public sunbet.
+   in this case which machine in public subnet connect to the internet and internet connected to the machine
+   but machine in private subnet cannot connected to the internet in this case . we use the bastion host concept to connected the machine to the internet.
+8. copy the pem file of public subnet into the private subnet
+   command:
+   scp -i <pem file>  <pemfile> <username><publivip>:/home/<username>
+   chmod 400 vpclearn.pem
+   ssh -i vpclearn.pem ec2-user@<private ip>
+
+
+
+
+
+
+AWS Note VPC 12 May 2019
+
+
+Note: 
+your machine(db server) in private subnet and db server want to access to the internet for 
+download the some package but not connected to the internet. in this case you create  a route connected to your machine to 
+the router. and create a nat gateway in public subnet and connect the nat gateway to the router.
+
+
+
+Note:
+  Igress NAT Gateway:
+                       if you want to make complete vpc(Network) is private in this case use the ingress Nat Gateway.
+
+*********************************************************
+Securing your network:
+
+ENI=> Elastic Network interface.ex: your laptop  want to connect network in this case we use the cable
+ENI get the ip address.
+
+qns: your machine want to one ENI or Multiple
+Qns: Multiple ENI 
+
+
+****************************************************
+
+Note:
+  Amazon give the two type of security
+1. Network interface (SG) level
+2. subnet lavel(Network ACL)
+
+
+*************************************
+
+concept of 
+0.0.0.0/0
+
+note: you can put the restriction with network id not the host id.
+
+192.168.0.0/16 Alllow
+
+192.168.1.1/16  Allow
+
+192.168.x.x
+
+
+40.50.x.x/16 Allow
+40.51.0.0 not allow
+
+0.0.0.0/0 so allow everything.
+
+now only this ip address.
+33.32.15.18/32
+
+
+***************************************************
+
+
+AWS Practice VPC 12 May 2019 NAT Gateway concept.
+
+
+step:
+1. create  a vpc
+2. create two subnet one is public and another is private.
+3. create a ec2 machine both subnet
+create a internet gateway and associate to the vpc.
+4. create a two route and  associate the one router to public subnet and another is private subnet
+5. associate the one public router to the internet gateway.
+6. in this case pulic machine can connected to the internet and internet connect to the public machine..
+7. now i want to my machine in private access to internet but not connected to the internet.
+8. in this case create a Nat Gateway in public subnet and connect to the Nat GateWay to the private router.
+
+
+
+AWS  VPC Security  Note. 13 May 2019
+
+Note:
+1. security group create in one VPC and cannot used in another VPC.
+2. Nacl create in one VPC and cannot used in another VPC. but it can by any machine which present in same  VPC    
+3. the resuable of security group and NACL with in same vpc.
+4. Any traffic coming inside vpc generally called the Ingress/incoming/Inbound
+5. Any Traffic or packet going outside the VPC is generally called the Egress/outbond/outbond rule.
+   ex: search google.com
+
+
+6. in security group write the rules for open not the closed.
+7. in case of nacl write the rules for open and closed the port/protocol/ipaddress.
+8. its have the priority 
+9. it have a numbers . write the lower number have the more priority and height number have the lowest priority.
+*******************************************
+10. default NACL rules inbound/outbound rules allow everything
+11. if create a NACL the inbound/outbound rules deny everything.
+
+Rules:
+
+Ingress/Inbound
+ 100 Allow All ssh (tcp/22)
+
+110 deny all http (tcp/80)
+
+120 Allow all tcp/udp on all ports
+
+ssh 3.5.2.5 allow              i have two ip address 3.5.2.5/25.34.45.67
+
+http://3.5.2.5 deny
+
+http://3.5.2.5:8080 allow
+
+
+*********************************
+
+Note: I have a two VPC
+       and one machine in one vpc and other machine in another vpc
+  how to cummunicate both machine
+
+solution:
+         1. connect the both machine with the help of public ip address
+    but i want to connect the machines from private ip in this case we use the vpn
+
+
+* but in cloud we use the vpc peering
+
+
+
+AWS  VPC Security  Practice. 13 May 2019
+write the Rules for NACL
+step:
+1. create a VPC
+2. create a sunbet inside our vpc
+3. create a NACL
+4. associate the NACL to the subnet 
+4. write the outbond rule
+   ex: 500 all trafic allow
+5. write inbound rules
+   ex: 1000 ssh(22) ....allow
+       1100 http(80)..allow
+       1200 https:8080 allow
+       900 all tcp 192.168.0.0/16
+
+************************
+
+Write the Rules for security group
+
+step.
+. create a VPC
+2. create a sunbet inside our vpc
+3. create a Security group in pur VPC
+4. write the inbound rule
+   ex: Type     Protocol    port
+        ssh      tcp        22
+        http     tcp         80
+        icmp    echo replay   N/A
+
+*********************************************
+
+Assignment: 1.
+1. create a vm in publiv subnet
+2. Block all the traffic into public subnet on everything apart form ssh,http,icmp
+
+
+Assignment:2
+create 4 subnet
+   web,Business,data and managenet
+Rules:
+  web: any one form internet & managenet subnet should be able to access
+   
+  Business: Only Web & Managenet Subnet should be allowed to access
+  
+  Data:
+       only from Business & Managenet
+
+**************************************************
+
+
+
+AWS Note VPC Peering 14 May 2019
+Rule:
+* CIDR range should not be colride . if CIDR range are colriding no chance of VPN
+* one machine in one region and another machine in another region . and  i want to connect the one machine to another machine
+  but donot want to expose to all(public means over the world). in this case we use the VPC peering.
+
+Note:
+    Peering connection help to connect two network in aws using the private ip.
+
+Amazon Backbone network:
+                       The amazon backbone network is a network of amazon which connect all the regions.
+
+
+Note:
+    whole netwok  try to access to another network this type of vpn is called the site to site VPN's
+
+
+Point to point VPN:
+                 Give the all access of  virtual network to one machine this type of network is called the point to point vpn.
+
+
+These network are not transitive:
+A=B
+B=C
+A=C
+
+
+
+AWS practice VPC Peering 14 May  
+
+step:
+ one vpc in north Virginia
+1. create a vpc(webserver)
+2. create two subnet
+3. create internet gateway attatch to the vpc
+4. create router and edit the route 0.0.0.0/0 and attatch the router to the internet gateway
+5. associated the router to the subnet
+6. create a ec2 machines in both subnets
+
+
+Step:
+in another vpc oregon:
+step:
+1.create a one one vpc(dbderver)
+2. create a two subnet
+
+
+
+1.Goto the webserver vpc and create the vpc peering connection
+name:  
+requestor: webserver
+accout : same
+Region: diff(oregon)
+VPC Acceptor(give the id of dbserver vpc id)
+create peering connection.
+
+goto the peering connection
+action: Accept request
+
+goto the router table of webserver vpc(north.VIRgina) and edit the router table
+10.20.0.0/16     select:
+                  vpc peering
+                             close.
+
+goto the router table of dbserver vpc(Oregon) and edit the router table
+10.10.0.0/16     select:
+                  vpc peering
+                             close.
+
+
+
+***********************************************************
+
+Note:
+ In sort term:
+1. create 2 vpc
+  create necessary subnets
+   in one vpc i have igw
+    
+create a peering  connection from vpc A to vpc B
+
+Get into VPC B And Approve connection
+
+Modify route tables
+
+Modify route table of A to allow communication B
+
+Modify route table of B to allow communication A
+
+create one machine VPC A and one Machine into the VPC B.
+
+and try to ping 
+
+
+
+
+
+
+
+Note: Internet-gateway is a virtual router which specify the how internet connect to the vpc.
+      
+router table specify that the packet is transfer from vpc to subnet,
+A route table specifies how packets are forwarded between the subnets within your VPC, the internet, and your VPN connection
+
+
+Route Tables. A route table contains a set of rules, called routes, that are used to determine where network traffic is directed.
+ Each subnet in your VPC must be associated with a route table; the table controls the routing for the subnet.
+
+
+You can use a network address translation (NAT) gateway to enable instances in a private subnet to connect to the internet 
+or other AWS services, but prevent the internet from initiating a connection with those instances 
+
+
+
+
+
+NAT Instances. You can use a network address translation (NAT) instance in a public subnet in your VPC to enable instances in the private subnet 
+to initiate outbound IPv4 traffic to the Internet or other AWS services, 
+but prevent the instances from receiving inbound traffic initiated by someone on the Internet.
+
+
+
+
+         
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
